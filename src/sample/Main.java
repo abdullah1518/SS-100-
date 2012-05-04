@@ -2357,7 +2357,7 @@ public class Main extends Application {
         //buttons
         Button editButton = new Button("Edit profile");
         Button certifButton = new Button("Preview certificate");
-        //textfields
+
         //labels
         Label topLabel = new Label("Manage a runner");
 
@@ -2383,11 +2383,14 @@ public class Main extends Application {
         Label rightracekitLabel = new Label("");
         Label righteventLabel = new Label("");
 
+        Label registrationLabel = new Label("Registration Status");
         Label registeredstatusLabel = new Label("Registered");
         Label paymentstatusLabel = new Label("Payment Confirmed");
-        Label racekitstatusLabel = new Label("");
-        Label attendedstatusLabel = new Label("");
+        Label racekitstatusLabel = new Label("Race Kit Sent");
+        Label attendedstatusLabel = new Label("Race Attended");
         //Styling nodes
+        topLabel.setId("body-font");
+        registrationLabel.setId("body-font");
         //-------------------panes and scene--------------
         HBox topHbox = new HBox(topLabel);
         GridPane leftGridpane = new GridPane();
@@ -2410,8 +2413,19 @@ public class Main extends Application {
             leftGridpane.add(labels2[i], 1, i);
         }
 
+        Label[] labels3 = {registeredstatusLabel ,paymentstatusLabel ,racekitstatusLabel ,attendedstatusLabel};
+        for (int i=0;i<labels3.length;i++){
+            rightGridpane.add(labels3[i], 0, i+1);
+        }
+        rightGridpane.add(registrationLabel, 0, 0);
+        rightGridpane.add(certifButton, 0, 6);
+        rightGridpane.add(editButton, 1, 6);
+
         main.add(topHbox, 0, 0);
         main.add(leftGridpane, 0, 1);
+        main.add(rightGridpane, 5, 1);
+
+        primaryStage.setWidth(600);
         //-----------------sql-------------
         ResultSet infoRs = sqlquery("select user.email, user.FirstName, User.LastName, Runner.Gender, Runner.DateOfBirth, Country.CountryName, charity.CharityName, registration.sponsorshipTarget, racekitoption.RaceKitOptionid, event.EventName , registrationstatus.RegistrationStatus\n" +
                 "\tfrom user inner join runner inner join country inner join charity inner join registration inner join racekitoption inner join registrationevent inner join event inner join registrationstatus\n" +
@@ -2430,10 +2444,16 @@ public class Main extends Application {
                 righttargetLabel.setText(infoRs.getString(infocolumns[7]));
                 rightracekitLabel.setText(infoRs.getString(infocolumns[8]));
                 righteventLabel.setText(infoRs.getString(infocolumns[9]));
+
+                /*String[] statuses = {"registered", "payment confirmed", "race kit sent" ,"race attended"};
+                for (String status : statuses){
+                    if (infoRs.getString("RegistrationStatus").equals(statuses[0])){}
+                    if (infoRs.getString("RegistrationStatus").equals(statuses[2])){}
+                    if (infoRs.getString("RegistrationStatus").equals(statuses[3])){}
+                    if (infoRs.getString("RegistrationStatus").equals(statuses[4])){}
+                }*/
             }
         }catch (SQLException se){se.printStackTrace();}
-        String[] statuses = {"registered", "payment confirmed", "race kit sent" ,"race attended"};
-        for
         //--------------button actions--------------
     }
 
