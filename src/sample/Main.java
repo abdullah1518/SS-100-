@@ -272,6 +272,8 @@ public class Main extends Application {
         TextField expireyear = new TextField();
         TextField cvc = new TextField();
         TextField payamount = new TextField();
+
+        expiremonth.setPrefSize(50, 0);
         //labels
         Label titletxt = new Label("Marathon Skill 2015");
         Label headertxt = new Label();
