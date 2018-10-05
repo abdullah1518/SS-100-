@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
 
 
 public class Main extends Application {
@@ -256,6 +257,8 @@ public class Main extends Application {
 
         Scene aaa = new Scene(root, 500, 500);
 
+
+
         //--------------defining nodes---------------
         //buttons
         Button back = new Button("back");
@@ -274,16 +277,17 @@ public class Main extends Application {
         TextField payamount = new TextField();
 
         expiremonth.setPrefSize(50, 0);
+        payamount.setPrefSize(50, 0);
         //labels
         Label titletxt = new Label("Marathon Skill 2015");
-        Label headertxt = new Label();
+        Label headertxt = new Label("Sponsor a runner");
         Label countdowntxt = new Label();
         Label body1txt = new Label("Please choose the runner you would like to sponsor and the amount you would like to sponsor them for. Thank you for your support of the runners and their charities");
         Label sponsdetailslabel = new Label("Sponsorship details");
-        Label charitylabel = new Label();
-        Label charitynametxt = new Label();
-        Label amountlabel = new Label();
-        Label amountxtt = new Label();
+        Label charitylabel = new Label("charity");
+        Label charitynametxt = new Label("Runner's charity");
+        Label amountlabel = new Label("Amount to donate");
+        Label amountxtt = new Label("50");
         Label urnametxt = new Label("Your Name");
         Label runnername = new Label("Runner");
         Label cardnametxt = new Label("Name on Card");
@@ -297,7 +301,7 @@ public class Main extends Application {
         //----------pane properties------------
         GridPane[] panelist = {root, header, footer, main, mainbott, maintop, mainbottleft, mainbottright};
         for (GridPane pane : panelist){
-            pane.setPadding(new Insets(10));
+            pane.setPadding(new Insets(5));
             pane.setVgap(5);
             pane.setHgap(5);
             pane.setAlignment(Pos.CENTER);
@@ -309,6 +313,8 @@ public class Main extends Application {
 
         header.add(back, 0, 0);
         header.add(titletxt, 1, 0);
+
+        footer.add(countdowntxt, 0, 0);
 
         main.add(maintop, 0, 0);
         main.add(mainbott, 0, 1);
@@ -333,6 +339,16 @@ public class Main extends Application {
         mainbottleft.add(expireyear,1, 5);
         mainbottleft.add(expiremonth,2, 5);
         mainbottleft.add(cvc,1, 6);
+
+        mainbottright.add(charitylabel, 1, 0);
+        mainbottright.add(charitynametxt, 1, 1);
+        mainbottright.add(amountlabel, 1, 2);
+        mainbottright.add(amountxtt, 1, 3);
+        mainbottright.add(minus10, 0, 4);
+        mainbottright.add(plus10, 2, 4);
+        mainbottright.add(payamount, 1, 4);
+        mainbottright.add(paynow, 1, 5);
+        mainbottright.add(cancel, 1, 6);
 
         //-----------------------primary stage properties-----------------
         primaryStage.setMinWidth(500);
