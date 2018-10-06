@@ -1,6 +1,7 @@
 package sample;
 
 import java.sql.*;
+import java.util.InputMismatchException;
 
 import com.sun.org.apache.xpath.internal.operations.And;
 import javafx.application.Application;
@@ -104,7 +105,7 @@ public class Main extends Application {
     }
 
 
-    public void page1(Stage primaryStage) throws Exception {
+    public void page1(Stage primaryStage)  {
 
         GridPane root1 = new GridPane();
         GridPane bpane1 = new GridPane();
@@ -266,6 +267,7 @@ public class Main extends Application {
         Button cancel = new Button("cancel");
         Button plus10 = new Button("+");
         Button minus10 = new Button("-");
+
         //textfields
         TextField yourname = new TextField();
         TextField runner = new TextField();
@@ -298,10 +300,10 @@ public class Main extends Application {
         body1txt.setWrapText(true);
         body1txt.prefHeightProperty().bind(aaa.heightProperty());
 
-        //----------pane properties------------
+        //------------------------pane properties--------------------------------
         GridPane[] panelist = {root, header, footer, main, mainbott, maintop, mainbottleft, mainbottright};
         for (GridPane pane : panelist){
-            pane.setPadding(new Insets(5));
+            pane.setPadding(new Insets(3));
             pane.setVgap(5);
             pane.setHgap(5);
             pane.setAlignment(Pos.CENTER);
@@ -340,7 +342,7 @@ public class Main extends Application {
         mainbottleft.add(expiremonth,2, 5);
         mainbottleft.add(cvc,1, 6);
 
-        mainbottright.add(charitylabel, 1, 0);
+        mainbottright.add(charitylabel,0, 0);
         mainbottright.add(charitynametxt, 1, 1);
         mainbottright.add(amountlabel, 1, 2);
         mainbottright.add(amountxtt, 1, 3);
@@ -356,8 +358,16 @@ public class Main extends Application {
         primaryStage.setTitle("Sponsor a runner");
         primaryStage.setScene(aaa);
         primaryStage.show();
-
-
+        //----------------------button actions---------------------------
+        back.setOnAction(value ->{
+            page1(primaryStage);
+        });
+        plus10.setOnAction(value ->{
+            try{
+                System.out.println(Integer.parseInt(payamount.getText().toString()));
+            }
+            catch (NumberFormatException e){payamount.setText("10");}
+        });
     }
 
     public void signin(String uemail, String upassword){
