@@ -183,8 +183,8 @@ public class Main extends Application {
 
         Text text1 = new Text("E-mail");
         Text text2 = new Text("Password");
-        TextField txtfield1 = new TextField("zulma.laurie@saucedout.com");
-        TextField txtfield2 = new TextField("E6V7enaE");
+        TextField txtfield1 = new TextField("zulma.laurie@saucedout.com dean.pinilla@gmail.com");
+        TextField txtfield2 = new TextField("E6V7enaE WQnbEyjo");
         Button btn1 = new Button("Log in");
         Button btn2 = new Button("Clear");
         Button bbtn = new Button("Back");
@@ -197,8 +197,8 @@ public class Main extends Application {
         btn1.setOnAction(value -> {
             String token = signin(txtfield1.getText(), txtfield2.getText());
             if (token.equals("R")){runner_menu(primaryStage);}
-            if (token.equals("C")){}
-            if (token.equals("A")){}
+            if (token.equals("C")){coordinator_menu(primaryStage);}
+            if (token.equals("A")){admin_menu(primaryStage);}
 
         });
 
@@ -302,7 +302,7 @@ public class Main extends Application {
 
         body1txt.setWrapText(true);
         body1txt.prefHeightProperty().bind(aaa.heightProperty());
-
+        headertxt.setAlignment(Pos.CENTER);
         //------------------------pane properties--------------------------------
         GridPane[] panelist = {root, header, footer, main, mainbott, maintop, mainbottleft, mainbottright};
         for (GridPane pane : panelist){
@@ -311,6 +311,9 @@ public class Main extends Application {
             pane.setHgap(5);
             pane.setAlignment(Pos.CENTER);
         }
+
+        maintop.setPadding(new Insets(10));
+
         root.add(header,0, 0);
         root.add(main,0, 5);
         root.add(footer,0, 10);
@@ -449,6 +452,134 @@ public class Main extends Application {
         primaryStage.setTitle("runner menu");
         primaryStage.setScene(scene);
         primaryStage.show();
+        //----------------------------buttons-----------------------------
+        back.setOnAction(value ->{
+            start(primaryStage);
+        });
+        logout.setOnAction(value ->{
+            page2(primaryStage);
+        });
+    }
+
+
+    public void coordinator_menu(Stage primaryStage){
+        //-------------------panes and scene--------------
+        GridPane root = new GridPane();
+        GridPane header = new GridPane();
+        GridPane main = new GridPane();
+        GridPane maintop = new GridPane();
+        GridPane mainbot = new GridPane();
+        GridPane footer = new GridPane();
+        Scene scene = new Scene(root, 500, 500);
+
+        //------------------node definitions-----------
+        //buttons
+        Button back = new Button("back");
+        Button logout = new Button("logout");
+        Button runners = new Button("Runners");
+        Button sponsorship = new Button("Sponsorship");
+        //labels
+        Label titlelbl = new Label("Marathon skills 2015");
+        Label headerlbl = new Label("Coordinator Menu");
+        Label footerlbl = new Label("date");
+
+        //------------------------pane properties--------------
+        GridPane[] panelist = {root, header, footer, main, mainbot, maintop};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.TOP_CENTER);
+        }
+        footer.setAlignment(Pos.BOTTOM_CENTER);
+
+        root.prefHeight(500);
+        root.prefWidth(500);
+        root.add(header, 0, 0);
+        root.add(main, 0, 1);
+        root.add(footer, 0, 2);
+
+        main.add(maintop, 0, 0);
+        main.add(mainbot, 0, 2);
+
+        header.add(back, 0, 0);
+        header.add(titlelbl, 5, 0);
+        header.add(logout, 10, 0);
+
+        maintop.add(headerlbl, 0, 0);
+
+        mainbot.add(runners, 0, 0);
+        mainbot.add(sponsorship, 1, 0);
+
+        footer.add(footerlbl, 0, 0);
+
+        //-----------------------primary stage properties-----------------
+        primaryStage.setMinWidth(500);
+        primaryStage.setMinHeight(500);
+        primaryStage.setTitle("runner menu");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        //--------------button actions--------------
+
+    }
+
+
+    public void admin_menu(Stage primaryStage){
+        //-------------------panes and scene--------------
+        GridPane root = new GridPane();
+        GridPane header = new GridPane();
+        GridPane main = new GridPane();
+        GridPane maintop = new GridPane();
+        GridPane mainbot = new GridPane();
+        GridPane footer = new GridPane();
+        Scene scene = new Scene(root, 500, 500);
+
+        //------------------node definitions-----------
+        //buttons
+        Button back = new Button("back");
+        Button logout = new Button("logout");
+        Button users = new Button("Users");
+        Button volunteers = new Button("Volunteers");
+        Button charities = new Button("Charities");
+        Button Inventory = new Button("Inventory");
+        //labels
+        Label titlelbl = new Label("Marathon skills 2015");
+        Label headerlbl = new Label("Coordinator Menu");
+        Label footerlbl = new Label("date");
+
+        //------------------------pane properties--------------
+        GridPane[] panelist = {root, header, footer, main, mainbot, maintop};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+        root.add(header, 0, 0);
+        root.add(main, 0, 1);
+        root.add(footer, 0, 2);
+
+        main.add(maintop, 0, 0);
+        main.add(mainbot, 0, 2);
+
+        header.add(back, 0, 0);
+        header.add(titlelbl, 1, 0);
+        header.add(logout, 2, 0);
+
+        maintop.add(headerlbl, 0, 0);
+
+        mainbot.add(users, 0, 0);
+        mainbot.add(volunteers, 1, 0);
+        mainbot.add(charities, 0, 1);
+        mainbot.add(Inventory, 1, 1);
+
+        //-----------------------primary stage properties-----------------
+        primaryStage.setMinWidth(500);
+        primaryStage.setMinHeight(500);
+        primaryStage.setTitle("runner menu");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        //--------------button actions--------------
 
     }
 
@@ -485,7 +616,7 @@ public class Main extends Application {
                     if(role.equals("C")){
                         System.out.println("Coordinator");
                     }
-                    else{
+                    if(role.equals("A")){
                         System.out.println("Admin");
                     }
                     roleid = role;
@@ -526,6 +657,7 @@ public class Main extends Application {
         }
         return (roleid);
     }
+
 
     public static void main(String[] args) {
 
