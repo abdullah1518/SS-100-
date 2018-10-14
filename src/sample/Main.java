@@ -8,12 +8,14 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.*;
 import javafx.scene.control.*;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
-
+import javafx.scene.shape.*;
 
 public class Main extends Application {
 
@@ -400,6 +402,9 @@ public class Main extends Application {
         GridPane footer = new GridPane();
         Scene scene = new Scene(root, 500, 500);
 
+        Stage secondarystage = new Stage();
+        GridPane popup = new GridPane();
+        Scene scene2 = new Scene(popup, 300, 300);
         //-------------------node definitions-------------
         //buttons
         Button back = new Button("back");
@@ -413,9 +418,12 @@ public class Main extends Application {
         Label title = new Label("Marathon skills 2015");
         Label runner = new Label("Runner menu");
         Label timer = new Label("do this k?");
+        Label contactinfolbl = new Label("For more information about marathon skills, please contact the coordinators using these contact details.\n\nphone: +55 11 9988 7766\n\nEmail: coordinators@marathonskills.org");
 
+        contactinfolbl.setWrapText(true);
+        contactinfolbl.prefHeightProperty().bind(scene2.heightProperty());
         //------------------------pane properties--------------
-        GridPane[] panelist = {root, header, footer, main, mainbot, maintop};
+        GridPane[] panelist = {root, header, footer, main, mainbot, maintop, popup};
         for (GridPane pane : panelist){
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
@@ -446,6 +454,7 @@ public class Main extends Application {
         mainbot.add(myspons, 1, 1);
         mainbot.add(contact_information, 0, 2);
 
+        popup.add(contactinfolbl, 0, 0);
         //-----------------------primary stage properties-----------------
         primaryStage.setMinWidth(500);
         primaryStage.setMinHeight(500);
@@ -459,12 +468,17 @@ public class Main extends Application {
         logout.setOnAction(value ->{
             page2(primaryStage);
         });
+        contact_information.setOnAction(value ->{
+            secondarystage.setTitle("hhe8");
+            secondarystage.setScene(scene2);
+            secondarystage.show();
+        });
     }
 
 
     public void coordinator_menu(Stage primaryStage){
         //-------------------panes and scene--------------
-        GridPane root = new GridPane();
+        BorderPane root = new BorderPane();
         GridPane header = new GridPane();
         GridPane main = new GridPane();
         GridPane maintop = new GridPane();
@@ -484,23 +498,21 @@ public class Main extends Application {
         Label footerlbl = new Label("date");
 
         //------------------------pane properties--------------
-        GridPane[] panelist = {root, header, footer, main, mainbot, maintop};
+        GridPane[] panelist = { header, footer, main, mainbot, maintop};
         for (GridPane pane : panelist){
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
             pane.setHgap(10);
-            pane.setAlignment(Pos.TOP_CENTER);
+            pane.setAlignment(Pos.CENTER);
         }
         footer.setAlignment(Pos.BOTTOM_CENTER);
 
-        root.prefHeight(500);
-        root.prefWidth(500);
-        root.add(header, 0, 0);
-        root.add(main, 0, 1);
-        root.add(footer, 0, 2);
+        root.setTop(header);
+        root.setCenter(main);
+        root.setBottom(footer);
 
         main.add(maintop, 0, 0);
-        main.add(mainbot, 0, 2);
+        main.add(mainbot, 0, 1);
 
         header.add(back, 0, 0);
         header.add(titlelbl, 5, 0);
@@ -516,11 +528,16 @@ public class Main extends Application {
         //-----------------------primary stage properties-----------------
         primaryStage.setMinWidth(500);
         primaryStage.setMinHeight(500);
-        primaryStage.setTitle("runner menu");
+        primaryStage.setTitle("coordinator menu");
         primaryStage.setScene(scene);
         primaryStage.show();
         //--------------button actions--------------
-
+        back.setOnAction(value ->{
+            start(primaryStage);
+        });
+        logout.setOnAction(value ->{
+            page2(primaryStage);
+        });
     }
 
 
@@ -658,6 +675,36 @@ public class Main extends Application {
         return (roleid);
     }
 
+    public ResultSet sqlquery(String query){
+        Connection conn = null;
+        Statement stmnt = null;
+        try{
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmnt = conn.createStatement();
+            return stmnt.executeQuery(query);
+        }catch (Exception se) {
+            se.printStackTrace();
+            return null;
+        }
+        finally {
+            //finally block used to close resources
+            try {
+                if(stmnt != null)
+                    stmnt.close();
+            }
+            catch (SQLException se2){
+                // nothing we can do
+            }
+            try {
+                if (conn!=null)
+                    conn.close();
+            }
+            catch (SQLException se){
+                se.printStackTrace();
+            }
+        }
+    }
 
     public static void main(String[] args) {
 
