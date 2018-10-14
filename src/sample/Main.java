@@ -26,40 +26,40 @@ public class Main extends Application {
     static final String PASS = "dickssss";
 
     @Override
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) {
 
         GridPane root0 = new GridPane();
         GridPane bpane = new GridPane();
         GridPane lpane = new GridPane();
         GridPane tpane = new GridPane();
-        Scene scene0 = new Scene(root0,400, 400);
+        Scene scene0 = new Scene(root0, 400, 400);
 
         Button btn0 = new Button("I want to be a runner");
         Button btn1 = new Button("I want to sponsor a runner");
         Button btn2 = new Button("I want to find out more");
         Button btn3 = new Button("Login");
-        btn0.setPrefSize(300,50);
-        btn1.setPrefSize(300,50);
-        btn2.setPrefSize(300,50);
-        btn3.setPrefSize(150,30);
+        btn0.setPrefSize(300, 50);
+        btn1.setPrefSize(300, 50);
+        btn2.setPrefSize(300, 50);
+        btn3.setPrefSize(150, 30);
 
-        btn0.setOnAction(value ->{
+        btn0.setOnAction(value -> {
             try {
-            page1(primaryStage);
+                page1(primaryStage);
+            } catch (Exception e) {
             }
-            catch (Exception e){}
         });
 
-        btn1.setOnAction(value ->{
+        btn1.setOnAction(value -> {
             sponsor_a_runner(primaryStage);
         });
 
-        btn2.setOnAction(value ->{
+        btn2.setOnAction(value -> {
 
         });
 
-        btn3.setOnAction(value ->{
-            page2(primaryStage);
+        btn3.setOnAction(value -> {
+            loginpage(primaryStage);
         });
 
         Label msb = new Label();
@@ -88,15 +88,15 @@ public class Main extends Application {
 
         tpane.add(btn1, 0, 0);
 
-        bpane.add(btn0,0, 0);
-        bpane.add(btn1,0, 10);
-        bpane.add(btn2,0, 20);
+        bpane.add(btn0, 0, 0);
+        bpane.add(btn1, 0, 10);
+        bpane.add(btn2, 0, 20);
 
-        lpane.add(btn3,50,0);
+        lpane.add(btn3, 50, 0);
 
-        root0.add(tpane,0,0);
-        root0.add(bpane,0,20);
-        root0.add(lpane,0,40);
+        root0.add(tpane, 0, 0);
+        root0.add(bpane, 0, 20);
+        root0.add(lpane, 0, 40);
 
         primaryStage.setMinWidth(500);
         primaryStage.setMinHeight(500);
@@ -107,7 +107,7 @@ public class Main extends Application {
     }
 
 
-    public void page1(Stage primaryStage)  {
+    public void page1(Stage primaryStage) {
 
         GridPane root1 = new GridPane();
         GridPane bpane1 = new GridPane();
@@ -125,18 +125,20 @@ public class Main extends Application {
         lbtn.setPrefSize(150, 30);
         bbtn.setPrefSize(50, 30);
 
-        btn0.setOnAction(value ->{
-            page2(primaryStage);
+        btn0.setOnAction(value -> {
+            loginpage(primaryStage);
         });
-        btn1.setOnAction(value ->{
+        btn1.setOnAction(value -> {
 
         });
-        lbtn.setOnAction(value ->{
-            page2(primaryStage);
+        lbtn.setOnAction(value -> {
+            loginpage(primaryStage);
         });
-        bbtn.setOnAction(value ->{
-            try { start(primaryStage); }
-            catch (Exception e) {}
+        bbtn.setOnAction(value -> {
+            try {
+                start(primaryStage);
+            } catch (Exception e) {
+            }
         });
 
 
@@ -176,7 +178,7 @@ public class Main extends Application {
     }
 
 
-    public void page2(Stage primaryStage) {
+    public void loginpage(Stage primaryStage) {
 
         GridPane root = new GridPane();
         GridPane bpane = new GridPane();
@@ -185,8 +187,8 @@ public class Main extends Application {
 
         Text text1 = new Text("E-mail");
         Text text2 = new Text("Password");
-        TextField txtfield1 = new TextField("zulma.laurie@saucedout.com dean.pinilla@gmail.com");
-        TextField txtfield2 = new TextField("E6V7enaE WQnbEyjo");
+        TextField txtfield1 = new TextField("zulma.laurie@saucedout.com dean.pinilla@gmail.com leila.azedeva@mskills.com");
+        TextField txtfield2 = new TextField("E6V7enaE WQnbEyjo MvTQ3itX");
         Button btn1 = new Button("Log in");
         Button btn2 = new Button("Clear");
         Button bbtn = new Button("Back");
@@ -198,9 +200,15 @@ public class Main extends Application {
 
         btn1.setOnAction(value -> {
             String token = signin(txtfield1.getText(), txtfield2.getText());
-            if (token.equals("R")){runner_menu(primaryStage);}
-            if (token.equals("C")){coordinator_menu(primaryStage);}
-            if (token.equals("A")){admin_menu(primaryStage);}
+            if (token.equals("R")) {
+                runner_menu(primaryStage);
+            }
+            if (token.equals("C")) {
+                coordinator_menu(primaryStage);
+            }
+            if (token.equals("A")) {
+                admin_menu(primaryStage);
+            }
 
         });
 
@@ -210,8 +218,10 @@ public class Main extends Application {
         });
 
         bbtn.setOnAction(value -> {
-            try { start(primaryStage); }
-            catch (Exception e) {}
+            try {
+                start(primaryStage);
+            } catch (Exception e) {
+            }
         });
 
         root.setPadding(new Insets(10));
@@ -250,7 +260,7 @@ public class Main extends Application {
     }
 
 
-    public void sponsor_a_runner(Stage primaryStage){
+    public void sponsor_a_runner(Stage primaryStage) {
         //----------------panes and scene------------------------
         GridPane root = new GridPane();
         GridPane header = new GridPane();
@@ -262,7 +272,6 @@ public class Main extends Application {
         GridPane mainbottright = new GridPane();
 
         Scene aaa = new Scene(root, 500, 500);
-
 
 
         //--------------defining nodes---------------
@@ -307,7 +316,7 @@ public class Main extends Application {
         headertxt.setAlignment(Pos.CENTER);
         //------------------------pane properties--------------------------------
         GridPane[] panelist = {root, header, footer, main, mainbott, maintop, mainbottleft, mainbottright};
-        for (GridPane pane : panelist){
+        for (GridPane pane : panelist) {
             pane.setPadding(new Insets(3));
             pane.setVgap(5);
             pane.setHgap(5);
@@ -316,9 +325,9 @@ public class Main extends Application {
 
         maintop.setPadding(new Insets(10));
 
-        root.add(header,0, 0);
-        root.add(main,0, 5);
-        root.add(footer,0, 10);
+        root.add(header, 0, 0);
+        root.add(main, 0, 5);
+        root.add(footer, 0, 10);
 
         header.add(back, 0, 0);
         header.add(titletxt, 1, 0);
@@ -336,20 +345,20 @@ public class Main extends Application {
 
         mainbottleft.add(sponsdetailslabel, 1, 0);
         mainbottleft.add(urnametxt, 0, 1);
-        mainbottleft.add(runnername,0, 2);
-        mainbottleft.add(cardnametxt,0, 3);
-        mainbottleft.add(cardnumtxt,0, 4);
-        mainbottleft.add(expiretxt,0, 5);
-        mainbottleft.add(cvctxt,0, 6);
+        mainbottleft.add(runnername, 0, 2);
+        mainbottleft.add(cardnametxt, 0, 3);
+        mainbottleft.add(cardnumtxt, 0, 4);
+        mainbottleft.add(expiretxt, 0, 5);
+        mainbottleft.add(cvctxt, 0, 6);
         mainbottleft.add(yourname, 1, 1);
-        mainbottleft.add(runner,1, 2);
-        mainbottleft.add(cardname,1, 3);
-        mainbottleft.add(cardnum,1, 4);
-        mainbottleft.add(expireyear,1, 5);
-        mainbottleft.add(expiremonth,2, 5);
-        mainbottleft.add(cvc,1, 6);
+        mainbottleft.add(runner, 1, 2);
+        mainbottleft.add(cardname, 1, 3);
+        mainbottleft.add(cardnum, 1, 4);
+        mainbottleft.add(expireyear, 1, 5);
+        mainbottleft.add(expiremonth, 2, 5);
+        mainbottleft.add(cvc, 1, 6);
 
-        mainbottright.add(charitylabel,1, 0);
+        mainbottright.add(charitylabel, 1, 0);
         mainbottright.add(charitynametxt, 1, 1);
         mainbottright.add(amountlabel, 1, 2);
         mainbottright.add(amountxtt, 1, 3);
@@ -366,33 +375,35 @@ public class Main extends Application {
         primaryStage.setScene(aaa);
         primaryStage.show();
         //----------------------button actions---------------------------
-        back.setOnAction(value ->{
+        back.setOnAction(value -> {
             start(primaryStage);
         });
-        plus10.setOnAction(value ->{
+        plus10.setOnAction(value -> {
             Integer x;
-            try{
-                x = Integer.valueOf(payamount.getText())+10;
+            try {
+                x = Integer.valueOf(payamount.getText()) + 10;
                 payamount.setText(x.toString());
                 amountxtt.setText(x.toString());
+            } catch (NumberFormatException e) {
+                payamount.setText("10");
             }
-            catch (NumberFormatException e){payamount.setText("10");}
         });
-        minus10.setOnAction(value ->{
+        minus10.setOnAction(value -> {
             Integer x;
-            try{
-                x = Integer.valueOf(payamount.getText())-10;
-                if(!(x<0)){
+            try {
+                x = Integer.valueOf(payamount.getText()) - 10;
+                if (!(x < 0)) {
                     payamount.setText(x.toString());
                     amountxtt.setText(x.toString());
                 }
+            } catch (NumberFormatException e) {
+                payamount.setText("0");
             }
-            catch (NumberFormatException e){payamount.setText("0");}
         });
     }
 
 
-    public void runner_menu(Stage primaryStage){
+    public void runner_menu(Stage primaryStage) {
         //-------------------panes and scene--------------
         GridPane root = new GridPane();
         GridPane header = new GridPane();
@@ -424,12 +435,12 @@ public class Main extends Application {
         contactinfolbl.prefHeightProperty().bind(scene2.heightProperty());
         //------------------------pane properties--------------
         GridPane[] panelist = {root, header, footer, main, mainbot, maintop, popup};
-        for (GridPane pane : panelist){
+        for (GridPane pane : panelist) {
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
             pane.setHgap(10);
             pane.setAlignment(Pos.CENTER);
-            }
+        }
 
         root.prefHeight(500);
         root.prefWidth(500);
@@ -462,13 +473,13 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         //----------------------------buttons-----------------------------
-        back.setOnAction(value ->{
+        back.setOnAction(value -> {
             start(primaryStage);
         });
-        logout.setOnAction(value ->{
-            page2(primaryStage);
+        logout.setOnAction(value -> {
+            loginpage(primaryStage);
         });
-        contact_information.setOnAction(value ->{
+        contact_information.setOnAction(value -> {
             secondarystage.setTitle("hhe8");
             secondarystage.setScene(scene2);
             secondarystage.show();
@@ -476,7 +487,7 @@ public class Main extends Application {
     }
 
 
-    public void coordinator_menu(Stage primaryStage){
+    public void coordinator_menu(Stage primaryStage) {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -498,8 +509,8 @@ public class Main extends Application {
         Label footerlbl = new Label("date");
 
         //------------------------pane properties--------------
-        GridPane[] panelist = { header, footer, main, mainbot, maintop};
-        for (GridPane pane : panelist){
+        GridPane[] panelist = {header, footer, main, mainbot, maintop};
+        for (GridPane pane : panelist) {
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
             pane.setHgap(10);
@@ -532,18 +543,18 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         //--------------button actions--------------
-        back.setOnAction(value ->{
+        back.setOnAction(value -> {
             start(primaryStage);
         });
-        logout.setOnAction(value ->{
-            page2(primaryStage);
+        logout.setOnAction(value -> {
+            loginpage(primaryStage);
         });
     }
 
 
-    public void admin_menu(Stage primaryStage){
+    public void admin_menu(Stage primaryStage) {
         //-------------------panes and scene--------------
-        GridPane root = new GridPane();
+        BorderPane root = new BorderPane();
         GridPane header = new GridPane();
         GridPane main = new GridPane();
         GridPane maintop = new GridPane();
@@ -565,16 +576,16 @@ public class Main extends Application {
         Label footerlbl = new Label("date");
 
         //------------------------pane properties--------------
-        GridPane[] panelist = {root, header, footer, main, mainbot, maintop};
-        for (GridPane pane : panelist){
+        GridPane[] panelist = {header, footer, main, mainbot, maintop};
+        for (GridPane pane : panelist) {
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
             pane.setHgap(10);
             pane.setAlignment(Pos.CENTER);
         }
-        root.add(header, 0, 0);
-        root.add(main, 0, 1);
-        root.add(footer, 0, 2);
+        root.setTop(header);
+        root.setCenter(main);
+        root.setBottom(footer);
 
         main.add(maintop, 0, 0);
         main.add(mainbot, 0, 2);
@@ -590,6 +601,8 @@ public class Main extends Application {
         mainbot.add(charities, 0, 1);
         mainbot.add(Inventory, 1, 1);
 
+        footer.add(footerlbl, 0, 0);
+
         //-----------------------primary stage properties-----------------
         primaryStage.setMinWidth(500);
         primaryStage.setMinHeight(500);
@@ -597,11 +610,87 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         //--------------button actions--------------
+        back.setOnAction(value -> {
+            start(primaryStage);
+        });
+        logout.setOnAction(value -> {
+            loginpage(primaryStage);
+        });
+    }
+
+
+    public void register_runner(Stage primaryStage) {
+        //-------------------panes and scene--------------
+        BorderPane root = new BorderPane();
+        GridPane header = new GridPane();
+        GridPane main = new GridPane();
+        GridPane maintop = new GridPane();
+        GridPane mainmid = new GridPane();
+        GridPane mainmidright = new GridPane();
+        GridPane mainmidleft = new GridPane();
+        GridPane mainbot = new GridPane();
+        GridPane footer = new GridPane();
+
+        Scene scene = new Scene(root, 500, 500);
+
+        //------------------node definitions-----------
+        //buttons
+        Button back = new Button("Back");
+        Button register = new Button("Register");
+        Button cancel = new Button("cancel");
+        //textfields
+        TextField email = new TextField();
+        TextField password = new TextField();
+        TextField passwordcheck = new TextField();
+        TextField firstname = new TextField();
+        TextField lastname = new TextField();
+        //dropdownlist
+        ComboBox gender = new ComboBox();
+        ComboBox country = new ComboBox();
+        DatePicker dateofbirth = new DatePicker();
+        //labels
+        Label titlelbl = new Label("Marathon skills 2015");
+        Label maintop1 = new Label("Register as a runner");
+        Label maintop2 = new Label("Please fill out all of the following information to be registered as a runner");
+        Label footerlbl = new Label("Date");
+        Label emaillbl = new Label("Email");
+        Label passwordlbl = new Label("Password");
+        Label passwordchecklbl = new Label("Re-type Password");
+        Label firstnamelbl = new Label("First Name");
+        Label lastnamelbl = new Label("Last Name");
+        Label genderlbl = new Label("Gender");
+        Label countrylbl = new Label("Country");
+        Label dateofbirthlbl = new Label("Date of Birth");
+
+        //------------------------pane properties--------------
+        GridPane[] panelist = {header, main, mainbot, mainmid, maintop, footer};
+        for (GridPane pane : panelist) {
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+        root.setTop(header);
+        root.setCenter(main);
+        root.setBottom(footer);
+
+        main.add(maintop, 0, 0);
+        main.add(mainmid, 0, 1);
+        main.add(mainbot, 0, 2);
+
+
+        //-----------------------primary stage properties-----------------
+        primaryStage.setMinWidth(500);
+        primaryStage.setMinHeight(500);
+        primaryStage.setTitle("register as a runner");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        //--------------button actions--------------
 
     }
 
 
-    public String signin(String uemail, String upassword){
+    public String signin(String uemail, String upassword) {
         String roleid = new String();
         Connection conn = null;
         Statement stmt = null;
@@ -619,88 +708,81 @@ public class Main extends Application {
             ResultSet rs = stmt.executeQuery(sql);
             //extracting data from result set
             boolean signedin = false;
-            while(rs.next()){
+            while (rs.next()) {
                 String email = rs.getString("email");
                 String password = rs.getString("password");
                 String role = rs.getString("roleid");
-                if (uemail.equals(email)  && upassword.equals(password)){
+                if (uemail.equals(email) && upassword.equals(password)) {
                     signedin = true;
                     System.out.println("signed in");
-                    System.out.println(email+"\n"+password);
-                    if(role.equals("R")){
+                    System.out.println(email + "\n" + password);
+                    if (role.equals("R")) {
                         System.out.println("runner");
                     }
-                    if(role.equals("C")){
+                    if (role.equals("C")) {
                         System.out.println("Coordinator");
                     }
-                    if(role.equals("A")){
+                    if (role.equals("A")) {
                         System.out.println("Admin");
                     }
                     roleid = role;
                     break;
                 }
             }
-            if (!signedin) {System.out.println("email or password is incorrect");}
+            if (!signedin) {
+                System.out.println("email or password is incorrect");
+            }
 
             rs.close();
             stmt.close();
             conn.close();
-        }
-        catch(SQLException se){
+        } catch (SQLException se) {
             //Handles jdbc errors
             se.printStackTrace();
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             //Handles errors for Class.forname
             e.printStackTrace();
-        }
-
-        finally {
+        } finally {
             //finally block used to close resources
             try {
-                if(stmt != null)
+                if (stmt != null)
                     stmt.close();
-            }
-            catch (SQLException se2){
+            } catch (SQLException se2) {
                 // nothing we can do
             }
             try {
-                if (conn!=null)
+                if (conn != null)
                     conn.close();
-            }
-            catch (SQLException se){
+            } catch (SQLException se) {
                 se.printStackTrace();
             }
         }
         return (roleid);
     }
 
-    public ResultSet sqlquery(String query){
+    public ResultSet sqlquery(String query) {
         Connection conn = null;
         Statement stmnt = null;
-        try{
+        try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmnt = conn.createStatement();
             return stmnt.executeQuery(query);
-        }catch (Exception se) {
+        } catch (Exception se) {
             se.printStackTrace();
             return null;
-        }
-        finally {
+        } finally {
             //finally block used to close resources
             try {
-                if(stmnt != null)
+                if (stmnt != null)
                     stmnt.close();
-            }
-            catch (SQLException se2){
+            } catch (SQLException se2) {
                 // nothing we can do
             }
             try {
-                if (conn!=null)
+                if (conn != null)
                     conn.close();
-            }
-            catch (SQLException se){
+            } catch (SQLException se) {
                 se.printStackTrace();
             }
         }
@@ -708,6 +790,38 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-    launch(args);
+        launch(args);
     }
 }
+
+
+/*    //-------------------panes and scene--------------
+    BorderPane root = new BorderPane();
+
+    Scene scene = new Scene(root, 500, 500);
+
+    //------------------node definitions-----------
+    //buttons
+
+    //textfields
+
+    //labels
+
+
+    //------------------------pane properties--------------
+    GridPane[] panelist = {};
+        for (GridPane pane : panelist){
+                pane.setPadding(new Insets(10));
+                pane.setVgap(10);
+                pane.setHgap(10);
+                pane.setAlignment(Pos.CENTER);
+                }
+
+
+                //-----------------------primary stage properties-----------------
+                primaryStage.setMinWidth(500);
+                primaryStage.setMinHeight(500);
+                primaryStage.setTitle("register as a runner");
+                primaryStage.setScene(scene);
+                primaryStage.show();
+//--------------button actions--------------*/
