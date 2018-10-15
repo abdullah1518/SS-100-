@@ -129,7 +129,7 @@ public class Main extends Application {
             loginpage(primaryStage);
         });
         btn1.setOnAction(value -> {
-
+            register_runner(primaryStage);
         });
         lbtn.setOnAction(value -> {
             loginpage(primaryStage);
@@ -661,13 +661,16 @@ public class Main extends Application {
         Label genderlbl = new Label("Gender");
         Label countrylbl = new Label("Country");
         Label dateofbirthlbl = new Label("Date of Birth");
-
+        //Styling nodes
+        header.setStyle("-fx-background-color: #00903E");
+        footer.setStyle("-fx-background-color: #00903E");
+        titlelbl.setStyle("-fx-font:  normal 30px 'Open Sans'; -fx-text-fill: white; ");
         //------------------------pane properties--------------
-        GridPane[] panelist = {header, main, mainbot, mainmid, maintop, footer};
+        GridPane[] panelist = {header, main, mainbot, mainmid, maintop, footer, mainmidright, mainmidleft};
         for (GridPane pane : panelist) {
             pane.setPadding(new Insets(10));
-            pane.setVgap(10);
-            pane.setHgap(10);
+            pane.setVgap(5);
+            pane.setHgap(5);
             pane.setAlignment(Pos.CENTER);
         }
         root.setTop(header);
@@ -678,6 +681,36 @@ public class Main extends Application {
         main.add(mainmid, 0, 1);
         main.add(mainbot, 0, 2);
 
+        maintop.add(maintop1, 0, 0);
+        maintop.add(maintop2, 0, 1);
+
+        mainmid.add(mainmidright, 1, 0);
+        mainmid.add(mainmidleft, 0, 0);
+
+        mainmidleft.add(emaillbl, 0, 0);
+        mainmidleft.add(email, 1, 0);
+        mainmidleft.add(password, 1, 1);
+        mainmidleft.add(passwordlbl, 0, 1);
+        mainmidleft.add(passwordcheck, 1, 2);
+        mainmidleft.add(passwordchecklbl, 0, 2);
+        mainmidleft.add(firstname, 1, 3);
+        mainmidleft.add(firstnamelbl, 0, 3);
+        mainmidleft.add(lastname, 1, 4);
+        mainmidleft.add(lastnamelbl, 0, 4);
+
+        mainmidright.add(genderlbl, 0, 0);
+        mainmidright.add(gender, 1, 0);
+        mainmidright.add(dateofbirthlbl, 0, 1);
+        mainmidright.add(dateofbirth, 1, 1);
+        mainmidright.add(countrylbl, 0, 2);
+        mainmidright.add(country, 1, 2);
+
+        mainbot.add(register, 0, 0);
+        mainbot.add(cancel, 1, 0);
+
+        footer.add(footerlbl, 0, 0);
+
+        header.add(titlelbl, 0, 0);
 
         //-----------------------primary stage properties-----------------
         primaryStage.setMinWidth(500);
@@ -686,7 +719,11 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         //--------------button actions--------------
-
+        register.setOnAction(value -> {
+            if (email.getText().equals("\S+@\S+\.com")){
+                System.out.println("yOTe");
+            }
+        });
     }
 
 
@@ -807,6 +844,7 @@ public class Main extends Application {
 
     //labels
 
+    //Styling nodes
 
     //------------------------pane properties--------------
     GridPane[] panelist = {};
