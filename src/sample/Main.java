@@ -720,9 +720,42 @@ public class Main extends Application {
         primaryStage.show();
         //--------------button actions--------------
         register.setOnAction(value -> {
-            if (email.getText().equals("\S+@\S+\.com")){
+            boolean emailbool=false;
+            boolean passwordbool=false;
+            boolean birthbool=false;
+            boolean fieldsbool=false;
+            if (email.getText().matches("\\S+@\\S+\\.com")){
                 System.out.println("yOTe");
+                emailbool=true;
             }
+            else {
+                System.out.println("email is incorrect");
+            }
+            if (
+                    password.getText().length()>=6
+                    && password.getText().matches(".*[!@#$%^]+.*")
+                    && password.getText().matches(".*[A-Z]+.*")
+                    && password.getText().matches(".*\\d+.*")
+                    && password.getText().equals(passwordcheck.getText())
+            ){
+                System.out.println("yayeet");
+                passwordbool=true;
+            }
+            else{
+                System.out.println("password is incorrect");
+            }
+            if(
+                    email.getText().matches("[\\S]")
+                    && password.getText().matches("[\\S]")
+                    && passwordcheck.getText().matches("[\\S]")
+                    && firstname.getText().matches("[\\S]")
+                    && lastname.getText().matches("[\\S]")
+                    /*&& country.getButtonCell().getText().matches("[\\S]")
+                    && gender.getButtonCell().getText().matches("[\\S]")*/
+            ){
+                fieldsbool=true;
+            }
+            else {System.out.println("All fields must be filled");}
         });
     }
 
