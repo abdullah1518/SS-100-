@@ -1,0 +1,25 @@
+.button{
+        -fx-color:  rgba(255, 255, 255, 0.5);/* blue */
+        -fx-text-align: center;
+        -fx-text-fill : black;
+        text-decoration: none;
+        -fx-border-style: solid;
+        -fx-border-width: 2px;
+        -fx-border-color: rgb(150, 186, 255);
+        -fx-border-radius: 7px;
+
+}
+
+
+#header-footer{
+    -fx-background-color: rgb(20, 163, 248)
+}
+
+#mainpane{
+    -fx-background-color : rgb(255, 255, 255)
+}
+
+#heading-font{
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font:  normal 30px 'Open Sans';
+}

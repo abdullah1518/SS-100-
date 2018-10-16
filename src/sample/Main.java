@@ -28,11 +28,15 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        GridPane root0 = new GridPane();
+        BorderPane root0 = new BorderPane();
         GridPane bpane = new GridPane();
         GridPane lpane = new GridPane();
         GridPane tpane = new GridPane();
         Scene scene0 = new Scene(root0, 400, 400);
+        scene0.getStylesheets().add(getClass().getResource("styling.css").toString());
+
+        Label titlelbl = new Label("Marathon skills 2015");
+        titlelbl.setId("heading-font");
 
         Button btn0 = new Button("I want to be a runner");
         Button btn1 = new Button("I want to sponsor a runner");
@@ -66,27 +70,27 @@ public class Main extends Application {
         msb.setText("marathon");
         msb.setFont(Font.font("Open Sans", FontWeight.SEMI_BOLD, FontPosture.REGULAR, 50));
 
-        root0.setPadding(new Insets(10));
-        root0.setHgap(5);
-        root0.setVgap(5);
-        root0.setAlignment(Pos.BOTTOM_CENTER);
-
         bpane.setPadding(new Insets(10));
         bpane.setHgap(5);
         bpane.setVgap(5);
         bpane.setAlignment(Pos.CENTER);
+
+        bpane.setId("mainpane");
 
         lpane.setPadding(new Insets(10));
         lpane.setHgap(5);
         lpane.setVgap(5);
         lpane.setAlignment(Pos.CENTER);
 
+        lpane.setId("header-footer");
+
         tpane.setPadding(new Insets(10));
         tpane.setHgap(5);
         tpane.setVgap(5);
         tpane.setAlignment(Pos.CENTER);
 
-        tpane.add(btn1, 0, 0);
+        tpane.add(titlelbl, 0, 0);
+        tpane.setId("header-footer");
 
         bpane.add(btn0, 0, 0);
         bpane.add(btn1, 0, 10);
@@ -94,9 +98,9 @@ public class Main extends Application {
 
         lpane.add(btn3, 50, 0);
 
-        root0.add(tpane, 0, 0);
-        root0.add(bpane, 0, 20);
-        root0.add(lpane, 0, 40);
+        root0.setTop(tpane);
+        root0.setCenter(bpane);
+        root0.setBottom(lpane);
 
         primaryStage.setMinWidth(500);
         primaryStage.setMinHeight(500);
@@ -114,6 +118,7 @@ public class Main extends Application {
         GridPane lpane1 = new GridPane();
         GridPane hpane1 = new GridPane();
         Scene scene1 = new Scene(root1, 500, 500);
+        scene1.getStylesheets().add(getClass().getResource("styling.css").toString());
 
         Button btn0 = new Button("I have competed before");
         Button btn1 = new Button("I am a new competitor");
@@ -175,6 +180,7 @@ public class Main extends Application {
         primaryStage.setScene(scene1);
         primaryStage.setTitle("tfo 3leek");
         primaryStage.show();
+
     }
 
 
@@ -184,6 +190,7 @@ public class Main extends Application {
         GridPane bpane = new GridPane();
         GridPane hpane = new GridPane();
         Scene scene = new Scene(root, 500, 500);
+        scene.getStylesheets().add(getClass().getResource("styling.css").toString());
 
         Text text1 = new Text("E-mail");
         Text text2 = new Text("Password");
@@ -272,7 +279,7 @@ public class Main extends Application {
         GridPane mainbottright = new GridPane();
 
         Scene aaa = new Scene(root, 500, 500);
-
+        aaa.getStylesheets().add(getClass().getResource("styling.css").toString());
 
         //--------------defining nodes---------------
         //buttons
@@ -281,7 +288,7 @@ public class Main extends Application {
         Button cancel = new Button("cancel");
         Button plus10 = new Button("+");
         Button minus10 = new Button("-");
-
+        back.setFocusTraversable(false);
         //textfields
         TextField yourname = new TextField();
         TextField runner = new TextField();
@@ -314,6 +321,11 @@ public class Main extends Application {
         body1txt.setWrapText(true);
         body1txt.prefHeightProperty().bind(aaa.heightProperty());
         headertxt.setAlignment(Pos.CENTER);
+        //styling nodes
+        header.setId("header-footer");
+        footer.setId("header-footer");
+        titletxt.setId("heading-font");
+        root.setId("mainpane");
         //------------------------pane properties--------------------------------
         GridPane[] panelist = {root, header, footer, main, mainbott, maintop, mainbottleft, mainbottright};
         for (GridPane pane : panelist) {
@@ -412,6 +424,8 @@ public class Main extends Application {
         GridPane mainbot = new GridPane();
         GridPane footer = new GridPane();
         Scene scene = new Scene(root, 500, 500);
+        scene.getStylesheets().add(getClass().getResource("styling.css").toString());
+
 
         Stage secondarystage = new Stage();
         GridPane popup = new GridPane();
@@ -433,6 +447,11 @@ public class Main extends Application {
 
         contactinfolbl.setWrapText(true);
         contactinfolbl.prefHeightProperty().bind(scene2.heightProperty());
+        //styling nodes
+        header.setId("header-footer");
+        footer.setId("header-footer");
+        title.setId("heading-font");
+        main.setId("mainpane");
         //------------------------pane properties--------------
         GridPane[] panelist = {root, header, footer, main, mainbot, maintop, popup};
         for (GridPane pane : panelist) {
@@ -496,6 +515,7 @@ public class Main extends Application {
         GridPane mainbot = new GridPane();
         GridPane footer = new GridPane();
         Scene scene = new Scene(root, 500, 500);
+        scene.getStylesheets().add(getClass().getResource("styling.css").toString());
 
         //------------------node definitions-----------
         //buttons
@@ -507,7 +527,11 @@ public class Main extends Application {
         Label titlelbl = new Label("Marathon skills 2015");
         Label headerlbl = new Label("Coordinator Menu");
         Label footerlbl = new Label("date");
-
+        //styling nodes
+        header.setId("header-footer");
+        footer.setId("header-footer");
+        titlelbl.setId("heading-font");
+        main.setId("mainpane");
         //------------------------pane properties--------------
         GridPane[] panelist = {header, footer, main, mainbot, maintop};
         for (GridPane pane : panelist) {
@@ -561,6 +585,7 @@ public class Main extends Application {
         GridPane mainbot = new GridPane();
         GridPane footer = new GridPane();
         Scene scene = new Scene(root, 500, 500);
+        scene.getStylesheets().add(getClass().getResource("styling.css").toString());
 
         //------------------node definitions-----------
         //buttons
@@ -574,7 +599,11 @@ public class Main extends Application {
         Label titlelbl = new Label("Marathon skills 2015");
         Label headerlbl = new Label("Coordinator Menu");
         Label footerlbl = new Label("date");
-
+        //styling nodes
+        header.setId("header-footer");
+        footer.setId("header-footer");
+        titlelbl.setId("heading-font");
+        main.setId("mainpane");
         //------------------------pane properties--------------
         GridPane[] panelist = {header, footer, main, mainbot, maintop};
         for (GridPane pane : panelist) {
@@ -632,7 +661,7 @@ public class Main extends Application {
         GridPane footer = new GridPane();
 
         Scene scene = new Scene(root, 500, 500);
-
+        scene.getStylesheets().add(getClass().getResource("styling.css").toString());
         //------------------node definitions-----------
         //buttons
         Button back = new Button("Back");
@@ -662,9 +691,10 @@ public class Main extends Application {
         Label countrylbl = new Label("Country");
         Label dateofbirthlbl = new Label("Date of Birth");
         //Styling nodes
-        header.setStyle("-fx-background-color: #00903E");
-        footer.setStyle("-fx-background-color: #00903E");
-        titlelbl.setStyle("-fx-font:  normal 30px 'Open Sans'; -fx-text-fill: white; ");
+        header.setId("header-footer");
+        footer.setId("header-footer");
+        titlelbl.setId("heading-font");
+        main.setId("mainpane");
         //------------------------pane properties--------------
         GridPane[] panelist = {header, main, mainbot, mainmid, maintop, footer, mainmidright, mainmidleft};
         for (GridPane pane : panelist) {
@@ -720,6 +750,11 @@ public class Main extends Application {
         primaryStage.show();
         //--------------button actions--------------
         register.setOnAction(value -> {
+            ResultSet rs = sqlquery("select gender gender");
+            /*while (rs.next()){
+
+            }*/
+
             boolean emailbool=false;
             boolean passwordbool=false;
             boolean birthbool=false;
