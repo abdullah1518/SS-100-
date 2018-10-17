@@ -1,12 +1,12 @@
 .button{
-        -fx-color:  rgba(255, 255, 255, 0.5);/* blue */
+        -fx-background-color:  rgb(255, 255, 255);/* blue */
         -fx-text-align: center;
         -fx-text-fill : black;
         text-decoration: none;
         -fx-border-style: solid;
         -fx-border-width: 2px;
         -fx-border-color: rgb(150, 186, 255);
-        -fx-border-radius: 7px;
+        -fx-border-radius: 10px;
 
 }
 

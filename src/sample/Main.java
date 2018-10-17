@@ -1,6 +1,10 @@
 package sample;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.InputMismatchException;
 
 import com.sun.org.apache.xpath.internal.operations.And;
@@ -35,7 +39,7 @@ public class Main extends Application {
         Scene scene0 = new Scene(root0, 400, 400);
         scene0.getStylesheets().add(getClass().getResource("styling.css").toString());
 
-        Label titlelbl = new Label("Marathon skills 2015");
+        Label titlelbl = new Label("Marathon skills 2019");
         titlelbl.setId("heading-font");
 
         Button btn0 = new Button("I want to be a runner");
@@ -302,7 +306,7 @@ public class Main extends Application {
         expiremonth.setPrefSize(50, 0);
         payamount.setPrefSize(50, 0);
         //labels
-        Label titletxt = new Label("Marathon Skill 2015");
+        Label titletxt = new Label("Marathon Skill 2019");
         Label headertxt = new Label("Sponsor a runner");
         Label countdowntxt = new Label();
         Label body1txt = new Label("Please choose the runner you would like to sponsor and the amount you would like to sponsor them for. Thank you for your support of the runners and their charities");
@@ -440,7 +444,7 @@ public class Main extends Application {
         Button myspons = new Button("my sponsorship");
         Button contact_information = new Button("contact information");
         //labels
-        Label title = new Label("Marathon skills 2015");
+        Label title = new Label("Marathon skills 2019");
         Label runner = new Label("Runner menu");
         Label timer = new Label("do this k?");
         Label contactinfolbl = new Label("For more information about marathon skills, please contact the coordinators using these contact details.\n\nphone: +55 11 9988 7766\n\nEmail: coordinators@marathonskills.org");
@@ -524,7 +528,7 @@ public class Main extends Application {
         Button runners = new Button("Runners");
         Button sponsorship = new Button("Sponsorship");
         //labels
-        Label titlelbl = new Label("Marathon skills 2015");
+        Label titlelbl = new Label("Marathon skills 2019");
         Label headerlbl = new Label("Coordinator Menu");
         Label footerlbl = new Label("date");
         //styling nodes
@@ -596,7 +600,7 @@ public class Main extends Application {
         Button charities = new Button("Charities");
         Button Inventory = new Button("Inventory");
         //labels
-        Label titlelbl = new Label("Marathon skills 2015");
+        Label titlelbl = new Label("Marathon skills 2019");
         Label headerlbl = new Label("Coordinator Menu");
         Label footerlbl = new Label("date");
         //styling nodes
@@ -677,8 +681,22 @@ public class Main extends Application {
         ComboBox gender = new ComboBox();
         ComboBox country = new ComboBox();
         DatePicker dateofbirth = new DatePicker();
+        //fetching gender and country form database and  inserting into combo box
+        ResultSet genderrs = sqlquery("select gender from gender");
+        try {
+            while (genderrs.next()) {
+                gender.getItems().addAll(genderrs.getString("gender"));
+            }
+        }catch (SQLException se){se.printStackTrace();}
+
+        ResultSet countryrs = sqlquery("select countryname from country");
+        try {
+            while (countryrs.next()) {
+                country.getItems().addAll(countryrs.getString("countryname"));
+            }
+        }catch (SQLException se){se.printStackTrace();}
         //labels
-        Label titlelbl = new Label("Marathon skills 2015");
+        Label titlelbl = new Label("Marathon skills 2019");
         Label maintop1 = new Label("Register as a runner");
         Label maintop2 = new Label("Please fill out all of the following information to be registered as a runner");
         Label footerlbl = new Label("Date");
@@ -750,11 +768,6 @@ public class Main extends Application {
         primaryStage.show();
         //--------------button actions--------------
         register.setOnAction(value -> {
-            ResultSet rs = sqlquery("select gender gender");
-            /*while (rs.next()){
-
-            }*/
-
             boolean emailbool=false;
             boolean passwordbool=false;
             boolean birthbool=false;
@@ -768,10 +781,10 @@ public class Main extends Application {
             }
             if (
                     password.getText().length()>=6
-                    && password.getText().matches(".*[!@#$%^]+.*")
-                    && password.getText().matches(".*[A-Z]+.*")
-                    && password.getText().matches(".*\\d+.*")
-                    && password.getText().equals(passwordcheck.getText())
+                            && password.getText().matches(".*[!@#$%^]+.*")
+                            && password.getText().matches(".*[A-Z]+.*")
+                            && password.getText().matches(".*\\d+.*")
+                            && password.getText().equals(passwordcheck.getText())
             ){
                 System.out.println("yayeet");
                 passwordbool=true;
@@ -780,18 +793,28 @@ public class Main extends Application {
                 System.out.println("password is incorrect");
             }
             if(
-                    email.getText().matches("[\\S]")
-                    && password.getText().matches("[\\S]")
-                    && passwordcheck.getText().matches("[\\S]")
-                    && firstname.getText().matches("[\\S]")
-                    && lastname.getText().matches("[\\S]")
-                    /*&& country.getButtonCell().getText().matches("[\\S]")
-                    && gender.getButtonCell().getText().matches("[\\S]")*/
+                    email.getText().matches(".*\\S+.*")
+                            && password.getText().matches(".*\\S+.*")
+                            && passwordcheck.getText().matches(".*\\S+.*")
+                            && firstname.getText().matches(".*\\S+.*")
+                            && lastname.getText().matches(".*\\S+.*")
+                            && country.getSelectionModel().getSelectedItem().toString().matches(".*\\S+.*")
+                            && gender.getSelectionModel().getSelectedItem().toString().matches(".*\\S+.*")
             ){
                 fieldsbool=true;
+                System.out.println("aaa");
             }
             else {System.out.println("All fields must be filled");}
+            //if(dateofbirth.getValue()==){}
         });
+        cancel.setOnAction(value ->{
+            page1(primaryStage);
+        });
+        //----------testing--------
+        DateTimeFormatter formatter =  DateTimeFormatter.BASIC_ISO_DATE;
+        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime birth = LocalDateTime.of(2001,10, 1, 1, 1);
+        //System.out.println(formatter.format(Instant.from(localDateTime, birth));
     }
 
 
@@ -855,12 +878,6 @@ public class Main extends Application {
             } catch (SQLException se2) {
                 // nothing we can do
             }
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
         }
         return (roleid);
     }
@@ -869,7 +886,7 @@ public class Main extends Application {
         Connection conn = null;
         Statement stmnt = null;
         try {
-            Class.forName(JDBC_DRIVER);
+            Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmnt = conn.createStatement();
             return stmnt.executeQuery(query);
@@ -878,18 +895,6 @@ public class Main extends Application {
             return null;
         } finally {
             //finally block used to close resources
-            try {
-                if (stmnt != null)
-                    stmnt.close();
-            } catch (SQLException se2) {
-                // nothing we can do
-            }
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
         }
     }
 
