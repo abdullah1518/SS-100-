@@ -4,7 +4,9 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.InputMismatchException;
 
 import com.sun.org.apache.xpath.internal.operations.And;
@@ -811,10 +813,11 @@ public class Main extends Application {
             page1(primaryStage);
         });
         //----------testing--------
-        DateTimeFormatter formatter =  DateTimeFormatter.BASIC_ISO_DATE;
-        LocalDateTime localDateTime = LocalDateTime.now();
-        LocalDateTime birth = LocalDateTime.of(2001,10, 1, 1, 1);
-        //System.out.println(formatter.format(Instant.from(localDateTime, birth));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar birthd = new GregorianCalendar(2001, 12, 1);
+        birthd.add(Calendar.DAY_OF_MONTH, -10);
+        System.out.println("Date : " + sdf.format(birthd.getTime()));
+
     }
 
 
