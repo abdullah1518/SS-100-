@@ -1588,7 +1588,7 @@ public class Main extends Application {
         Connection conn = null;
         Statement stmt = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver").newInstance ();
 
             //connecting to the database
             System.out.println("Connecting to a database");
