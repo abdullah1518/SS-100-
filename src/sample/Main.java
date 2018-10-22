@@ -1608,6 +1608,81 @@ public class Main extends Application {
     }
 
 
+        public void how_long(Stage primaryStage){
+            Scene scene = null;
+            scene = rootheadfoot(scene);
+            //------------------node definitions-----------
+            //buttons
+
+            //textfields
+            //labels
+            Label howlong = new Label("How long is a marathon?");
+            Label selected = new Label("selected");
+
+            //Styling nodes
+            //-------------------panes and scene--------------
+            GridPane mtop = new GridPane();
+            VBox mleft = new VBox();
+            GridPane mright = new GridPane();
+            BorderPane mpane = new BorderPane();
+            //------------------------pane properties--------------
+            GridPane[] panelist = {mtop};
+            for (GridPane pane : panelist){
+                pane.setPadding(new Insets(10));
+                pane.setVgap(10);
+                pane.setHgap(10);
+                pane.setAlignment(Pos.CENTER);
+            }
+            mpane.setTop(mtop);
+            mpane.setLeft(mleft);
+            mpane.setRight(mright);
+            //-----------------------primary stage properties-----------------
+            primaryStage.setMinWidth(500);
+            primaryStage.setMinHeight(500);
+            primaryStage.setTitle("register as a runner");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+            //--------------button actions--------------
+        }
+
+
+        public Scene rootheadfoot(Scene scene){
+            //-------------------panes and scene--------------
+            BorderPane root = new BorderPane();
+            GridPane header = new GridPane();
+            GridPane footer = new GridPane();
+            GridPane main = new GridPane();
+            scene = new Scene(root, 600, 600);
+            //------------------node definitions-----------
+            //buttons
+            Button back= new Button("Back");
+            //labels
+            Label titlelabel = new Label("Marathon Skills 2019");
+            //Styling nodes
+            header.setId("header-footer");
+            footer.setId("header-footer");
+            main.setId("mainpane");
+            //------------------------pane properties--------------
+            GridPane[] panelist = {header, main, footer};
+            for (GridPane pane : panelist){
+                pane.setPadding(new Insets(10));
+                pane.setVgap(10);
+                pane.setHgap(10);
+                pane.setAlignment(Pos.CENTER);
+            }
+
+            root.setTop(header);
+            root.setCenter(main);
+            root.setBottom(footer);
+
+            header.add(back, 0, 0);
+            header.add(titlelabel, 1, 0);
+            //-----------------------primary stage properties-----------------
+
+            return  scene;
+        }
+
+
         public String signin (String uemail, String upassword){
         String roleid = new String();
         Connection conn = null;
