@@ -36,16 +36,16 @@ import java.util.*;
 
 public class Main extends Application {
 
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver?allowPublicKeyRetrieval=true&useSSL=False";
-    static final String DB_URL = "jdbc:mysql://localhost/cpt01?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false";
+        static final String JDBC_DRIVER = "com.mysql.jdbc.Driver?allowPublicKeyRetrieval=true&useSSL=False";
+        static final String DB_URL = "jdbc:mysql://localhost/cpt01?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false";
 
-    static final String USER = "root";
-    static final String PASS = "mypass";
+        static final String USER = "root";
+        static final String PASS = "mypass";
 
-    String currentEmail;
+        String currentEmail;
 
-    @Override
-    public void start(Stage primaryStage) {
+        @Override
+        public void start (Stage primaryStage){
 
         BorderPane root0 = new BorderPane();
         GridPane bpane = new GridPane();
@@ -126,7 +126,7 @@ public class Main extends Application {
     }
 
 
-    public void page1(Stage primaryStage) {
+        public void page1 (Stage primaryStage){
 
         BorderPane root1 = new BorderPane();
         GridPane bpane1 = new GridPane();
@@ -185,7 +185,7 @@ public class Main extends Application {
         lpane1.setAlignment(Pos.CENTER);
 
         hpane1.add(bbtn, 0, 0);
-        hpane1.add(titlelbl , 12, 0);
+        hpane1.add(titlelbl, 12, 0);
 
         bpane1.add(btn0, 0, 0);
         bpane1.add(btn1, 0, 15);
@@ -203,7 +203,7 @@ public class Main extends Application {
     }
 
 
-    public void loginpage(Stage primaryStage) {
+        public void loginpage (Stage primaryStage){
 
         BorderPane root = new BorderPane();
         GridPane bpane = new GridPane();
@@ -294,9 +294,9 @@ public class Main extends Application {
     }
 
 
-    public void sponsor_a_runner(Stage primaryStage) {
+        public void sponsor_a_runner (Stage primaryStage){
         //----------------panes and scene------------------------
-        GridPane root = new GridPane();
+        BorderPane root = new BorderPane();
         GridPane header = new GridPane();
         GridPane footer = new GridPane();
         GridPane main = new GridPane();
@@ -356,19 +356,21 @@ public class Main extends Application {
             runnersSet.beforeFirst();
             String[][] charityTable = new String[numberOfRunners][4];
 
-            while (runnersSet.next()){
+            while (runnersSet.next()) {
                 runner.getItems().addAll(
-                        runnersSet.getString("LastName")+", "
-                                +runnersSet.getString("FirstName")+" - "
-                                +runnersSet.getString("BibNumber") +" ("
-                                +runnersSet.getString("CountryCode")+")");
+                        runnersSet.getString("LastName") + ", "
+                                + runnersSet.getString("FirstName") + " - "
+                                + runnersSet.getString("BibNumber") + " ("
+                                + runnersSet.getString("CountryCode") + ")");
                 charityTable[x][0] = runnersSet.getString("CharityName");
                 charityTable[x][1] = runnersSet.getString("CharityDescription");
                 charityTable[x][2] = runnersSet.getString("CharityLogo");
                 charityTable[x][3] = runnersSet.getString("RunnerId");
                 x++;
             }
-        }catch (SQLException se){se.printStackTrace();}
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
 
 
         body1txt.setWrapText(true);
@@ -378,9 +380,9 @@ public class Main extends Application {
         header.setId("header-footer");
         footer.setId("header-footer");
         titletxt.setId("heading-font");
-        root.setId("mainpane");
+        main.setId("mainpane");
         //------------------------pane properties--------------------------------
-        GridPane[] panelist = {root, header, footer, main, mainbott, maintop, mainbottleft, mainbottright};
+        GridPane[] panelist = { header, footer, main, mainbott, maintop, mainbottleft, mainbottright};
         for (GridPane pane : panelist) {
             pane.setPadding(new Insets(3));
             pane.setVgap(5);
@@ -390,9 +392,9 @@ public class Main extends Application {
 
         maintop.setPadding(new Insets(10));
 
-        root.add(header, 0, 0);
-        root.add(main, 0, 5);
-        root.add(footer, 0, 10);
+        root.setTop(header);
+        root.setCenter(main);
+        root.setBottom(footer);
 
         header.add(back, 0, 0);
         header.add(titletxt, 1, 0);
@@ -465,21 +467,20 @@ public class Main extends Application {
                 payamount.setText("0");
             }
         });
-        paynow.setOnAction(value ->{
-            if(!(runnername.getText().isEmpty()) &&
+        paynow.setOnAction(value -> {
+            if (!(runnername.getText().isEmpty()) &&
                     !(cardname.getText().isEmpty()) &&
                     cardnum.getText().length() == 16 &&
-                    cvc.getText().length() == 3){
-                sponsor_thank(primaryStage,runnerId[0],payamount.getText());
-            }
-            else {
+                    cvc.getText().length() == 3) {
+                sponsor_thank(primaryStage, runnerId[0], payamount.getText());
+            } else {
                 System.out.println("Must fill all fields correctly");
             }
         });
     }
 
 
-    public void sponsor_thank(Stage primaryStage, String amount, String runnerId){
+        public void sponsor_thank (Stage primaryStage, String amount, String runnerId){
         BorderPane rootBorderPane = new BorderPane();
         Label thxLabel = new Label("Thank you for your sponsorship!");
         Label smolThxLabel = new Label("Thank you for sponsoring a runner in Marathon Skills 2019!\nYour donation will help out their chosen charity.");
@@ -487,7 +488,7 @@ public class Main extends Application {
         Label charityNameLabel = new Label();
         Label amountLabel = new Label(amount);
         Button backButton = new Button("Back");
-        VBox centerBox = new VBox(thxLabel,smolThxLabel,runnerInfoLabel,charityNameLabel,amountLabel,backButton);
+        VBox centerBox = new VBox(thxLabel, smolThxLabel, runnerInfoLabel, charityNameLabel, amountLabel, backButton);
         ResultSet runnerInfo;
 
         //----------Proprieties----------
@@ -499,17 +500,19 @@ public class Main extends Application {
             System.out.println();
             charityNameLabel.setText(runnerInfo.getString("CharityName"));
             runnerInfoLabel.setText(runnerInfo.getString("FirstName") + " " + runnerInfo.getString("LastName") + " (" + runnerInfo.getString("BibNumber") + ") from " + runnerInfo.getString("CountryCode"));
-        }catch (SQLException se){se.printStackTrace();}
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
 
         backButton.setOnAction(value -> {
             start(primaryStage);
         });
-        primaryStage.setScene(new Scene(rootBorderPane,500,500));
+        primaryStage.setScene(new Scene(rootBorderPane, 500, 500));
         primaryStage.show();
     }
 
 
-    public void runner_menu(Stage primaryStage) {
+        public void runner_menu (Stage primaryStage){
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -547,7 +550,7 @@ public class Main extends Application {
         title.setId("heading-font");
         main.setId("mainpane");
         //------------------------pane properties--------------
-        GridPane[] panelist = { header, footer, main, mainbot, maintop, popup};
+        GridPane[] panelist = {header, footer, main, mainbot, maintop, popup};
         for (GridPane pane : panelist) {
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
@@ -597,25 +600,31 @@ public class Main extends Application {
             secondarystage.setScene(scene2);
             secondarystage.show();
         });
-        edit.setOnAction(value ->{
+        edit.setOnAction(value -> {
             try {
                 edit_runner(primaryStage);
-            }catch (SQLException se){se.printStackTrace();}
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         });
-        myrace.setOnAction(value ->{
+        myrace.setOnAction(value -> {
             try {
                 my_race_results(primaryStage);
-            }catch (SQLException se){se.printStackTrace();}
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         });
-        regis.setOnAction(value ->{
+        regis.setOnAction(value -> {
             try {
                 register_event(primaryStage);
-            }catch (SQLException se){se.printStackTrace();}
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         });
     }
 
 
-    public void coordinator_menu(Stage primaryStage) {
+        public void coordinator_menu (Stage primaryStage){
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -682,15 +691,17 @@ public class Main extends Application {
         logout.setOnAction(value -> {
             loginpage(primaryStage);
         });
-        runners.setOnAction(value ->{
+        runners.setOnAction(value -> {
             try {
                 edit_runner_2(primaryStage);
-            }catch (SQLException se){se.printStackTrace();}
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         });
     }
 
 
-    public void admin_menu(Stage primaryStage) {
+        public void admin_menu (Stage primaryStage){
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -759,15 +770,17 @@ public class Main extends Application {
         logout.setOnAction(value -> {
             loginpage(primaryStage);
         });
-        users.setOnAction(value ->{
+        users.setOnAction(value -> {
             try {
                 edit_runner_2(primaryStage);
-            }catch (SQLException se){se.printStackTrace();}
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         });
     }
 
 
-    public void register_runner(Stage primaryStage) {
+        public void register_runner (Stage primaryStage){
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -803,14 +816,18 @@ public class Main extends Application {
             while (genderrs.next()) {
                 gender.getItems().addAll(genderrs.getString("gender"));
             }
-        }catch (SQLException se){se.printStackTrace();}
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
 
         ResultSet countryrs = sqlquery("select countryname from country");
         try {
             while (countryrs.next()) {
                 country.getItems().addAll(countryrs.getString("countryname"));
             }
-        }catch (SQLException se){se.printStackTrace();}
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
         //labels
 
         Label titlelbl = new Label("Marathon skills 2019");
@@ -886,49 +903,47 @@ public class Main extends Application {
         primaryStage.show();
         //--------------button actions--------------
         register.setOnAction(value -> {
-            boolean emailbool=false;
-            boolean passwordbool=false;
-            boolean birthbool=false;
-            boolean fieldsbool=false;
-            if (email.getText().matches("\\S+@\\S+\\.com")){
-                emailbool=true;
-            }
-            else {
+            boolean emailbool = false;
+            boolean passwordbool = false;
+            boolean birthbool = false;
+            boolean fieldsbool = false;
+            if (email.getText().matches("\\S+@\\S+\\.com")) {
+                emailbool = true;
+            } else {
                 System.out.println("email is incorrect");
                 Stage secondarystage = new Stage();
                 GridPane popup = new GridPane();
                 popup.setAlignment(Pos.CENTER);
                 Scene scene2 = new Scene(popup, 400, 300);
                 Label errorlabel = new Label("email is incorrect");
-                errorlabel.setFont(Font.font("Open Sans",30));
+                errorlabel.setFont(Font.font("Open Sans", 30));
                 popup.add(errorlabel, 0, 0);
                 secondarystage.setScene(scene2);
                 secondarystage.setTitle("Error");
                 secondarystage.show();
             }
             if (
-                    password.getText().length()>=6
+                    password.getText().length() >= 6
                             && password.getText().matches(".*[!@#$%^]+.*")
                             && password.getText().matches(".*[A-Z]+.*")
                             && password.getText().matches(".*\\d+.*")
                             && password.getText().equals(passwordcheck.getText())
-            ){
-                passwordbool=true;
-            }
-            else{
+            ) {
+                passwordbool = true;
+            } else {
                 System.out.println("password is incorrect");
                 Stage secondarystage = new Stage();
                 GridPane popup = new GridPane();
                 popup.setAlignment(Pos.CENTER);
                 Scene scene2 = new Scene(popup, 400, 300);
                 Label errorlabel = new Label("password is incorrect");
-                errorlabel.setFont(Font.font("Open Sans",30));
+                errorlabel.setFont(Font.font("Open Sans", 30));
                 popup.add(errorlabel, 0, 0);
                 secondarystage.setScene(scene2);
                 secondarystage.setTitle("Error");
                 secondarystage.show();
             }
-            if(
+            if (
                     email.getText().matches(".*\\S+.*")
                             && password.getText().matches(".*\\S+.*")
                             && passwordcheck.getText().matches(".*\\S+.*")
@@ -936,31 +951,44 @@ public class Main extends Application {
                             && lastname.getText().matches(".*\\S+.*")
                             && country.getSelectionModel().getSelectedItem().toString().matches(".*\\S+.*")
                             && gender.getSelectionModel().getSelectedItem().toString().matches(".*\\S+.*")
-            ){
-                fieldsbool=true;
+            ) {
+                fieldsbool = true;
 
-            }
-            else {
+            } else {
                 System.out.println("All fields must be filled");
                 Stage secondarystage = new Stage();
                 GridPane popup = new GridPane();
                 popup.setAlignment(Pos.CENTER);
                 Scene scene2 = new Scene(popup, 400, 300);
                 Label errorlabel = new Label("All fields must be filled");
-                errorlabel.setFont(Font.font("Open Sans",30));
+                errorlabel.setFont(Font.font("Open Sans", 30));
                 popup.add(errorlabel, 0, 0);
                 secondarystage.setScene(scene2);
                 secondarystage.setTitle("Error");
                 secondarystage.show();
             }
-            if (fieldsbool&&passwordbool&&emailbool){
+            if (fieldsbool && passwordbool && emailbool) {
                 System.out.println("Runner created");
-                sqlinsert("INSERT INTO User VALUES ('"+email.getText()+"','"+password.getText()+"','"+firstname.getText()+"','"+lastname.getText()+"','R');");
-                sqlinsert("INSERT INTO Runner (Email,Gender,DateOfBirth,CountryCode) VALUES ('"+email.getText()+"','"+gender.getSelectionModel().getSelectedItem().toString()+"','"+dobValues[0]+"-"+dobValues[1]+"-"+dobValues[2]+"', (SELECT CountryCode FROM Country WHERE CountryName = '"+country.getSelectionModel().getSelectedItem().toString()+"'));");
-                try {register_event(primaryStage);}catch (SQLException se){se.printStackTrace();}
+                sqlinsert("INSERT INTO User VALUES ('" + email.getText() + "','" + password.getText() + "','" + firstname.getText() + "','" + lastname.getText() + "','R');");
+                sqlinsert("INSERT INTO Runner (Email,Gender,DateOfBirth,CountryCode) VALUES ('" + email.getText() + "','" + gender.getSelectionModel().getSelectedItem().toString() + "','" + dobValues[0] + "-" + dobValues[1] + "-" + dobValues[2] + "', (SELECT CountryCode FROM Country WHERE CountryName = '" + country.getSelectionModel().getSelectedItem().toString() + "'));");
+                try {
+                    register_event(primaryStage);
+                } catch (SQLException se) {
+                    se.printStackTrace();
+                    Stage secondarystage = new Stage();
+                    GridPane popup = new GridPane();
+                    popup.setAlignment(Pos.CENTER);
+                    Scene scene2 = new Scene(popup, 400, 300);
+                    Label errorlabel = new Label(se.toString());
+                    errorlabel.setFont(Font.font("Open Sans", 30));
+                    popup.add(errorlabel, 0, 0);
+                    secondarystage.setScene(scene2);
+                    secondarystage.setTitle("Error");
+                    secondarystage.show();
+                }
             }
         });
-        cancel.setOnAction(value ->{
+        cancel.setOnAction(value -> {
             start(primaryStage);
         });
         //----------testing--------
@@ -972,18 +1000,18 @@ public class Main extends Application {
     }
 
 
-    public void register_event(Stage primaryStage) throws SQLException {
+        public void register_event (Stage primaryStage) throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
         Button backButton = new Button("Back");
-        HBox topBox = new HBox(backButton,titleLabel);
+        HBox topBox = new HBox(backButton, titleLabel);
         HBox bottomBox = new HBox(countdownLabel);
         Label headerLabel = new Label("Register for an event");
         Label descLabel = new Label("Please fill out all of the following information to register for events");
         Label eventsLabel = new Label("Competition events");
         ScrollPane eventsScrollPane = new ScrollPane();
-        VBox topLeftBox = new VBox(eventsLabel,eventsScrollPane);
+        VBox topLeftBox = new VBox(eventsLabel, eventsScrollPane);
         VBox checkBoxesBox = new VBox();
         int numOfEvents = 0;
         final int[] finalAmount = {0};
@@ -991,13 +1019,13 @@ public class Main extends Application {
 
         //--------top-left-----------
         ResultSet eventsRS = sqlquery("SELECT * FROM Event;");
-        while (eventsRS.next())numOfEvents++;
+        while (eventsRS.next()) numOfEvents++;
         eventsRS.beforeFirst();
         CheckBox[] eventsCheckBoxes = new CheckBox[numOfEvents];
 
         int eventId = 0;
-        while (eventsRS.next()){
-            CheckBox event = new CheckBox(eventsRS.getString("EventName")+" ($"+eventsRS.getString("Cost")+")");
+        while (eventsRS.next()) {
+            CheckBox event = new CheckBox(eventsRS.getString("EventName") + " ($" + eventsRS.getString("Cost") + ")");
             checkBoxesBox.getChildren().add(event);
             eventsCheckBoxes[eventId] = event;
             eventId++;
@@ -1012,15 +1040,15 @@ public class Main extends Application {
         ComboBox charities = new ComboBox();
         Label amountToRaiseLabel = new Label("Target to raise");
         TextField amountTextField = new TextField("0");
-        VBox labelsBox = new VBox(charityLabel,amountToRaiseLabel);
-        VBox fieldBox = new VBox(charities,amountTextField);
+        VBox labelsBox = new VBox(charityLabel, amountToRaiseLabel);
+        VBox fieldBox = new VBox(charities, amountTextField);
         Button registerButton = new Button("Register");
         Button cancelButton = new Button("Cancel");
-        HBox buttonsBox = new HBox(registerButton,cancelButton);
-        HBox labelFieldBox = new HBox(labelsBox,fieldBox);
-        VBox bottomLeftBox = new VBox(sponsorTitleLabel,labelFieldBox,buttonsBox);
+        HBox buttonsBox = new HBox(registerButton, cancelButton);
+        HBox labelFieldBox = new HBox(labelsBox, fieldBox);
+        VBox bottomLeftBox = new VBox(sponsorTitleLabel, labelFieldBox, buttonsBox);
 
-        while (charitiesRS.next()){
+        while (charitiesRS.next()) {
             charities.getItems().add(charitiesRS.getString("CharityName"));
         }
         sponsorTitleLabel.setFont(Font.font(18));
@@ -1033,11 +1061,11 @@ public class Main extends Application {
         ToggleGroup options = new ToggleGroup();
         VBox topRightBox = new VBox(raceKitTitle);
 
-        while (optionsRS.next()){
-            RadioButton option = new RadioButton("Option "+optionsRS.getString("RaceKitOptionId")+" ($"+optionsRS.getString("Cost")+"): "+optionsRS.getString("RaceKitOption"));
+        while (optionsRS.next()) {
+            RadioButton option = new RadioButton("Option " + optionsRS.getString("RaceKitOptionId") + " ($" + optionsRS.getString("Cost") + "): " + optionsRS.getString("RaceKitOption"));
             option.setToggleGroup(options);
             topRightBox.getChildren().add(option);
-            if(optionsRS.getRow() == 1){
+            if (optionsRS.getRow() == 1) {
                 options.selectToggle(option);
             }
         }
@@ -1046,11 +1074,11 @@ public class Main extends Application {
         //--------bottom-right-------
         Label registrationTitle = new Label("Registration cost");
         Label amountLabel = new Label("$0");
-        VBox bottomRightBox = new VBox(registrationTitle,amountLabel);
+        VBox bottomRightBox = new VBox(registrationTitle, amountLabel);
 
-        HBox topBoxes = new HBox(topLeftBox,topRightBox);
-        HBox bottomBoxes = new HBox(bottomLeftBox,bottomRightBox);
-        VBox mainBox = new VBox(headerLabel,descLabel,topBoxes,bottomBoxes);
+        HBox topBoxes = new HBox(topLeftBox, topRightBox);
+        HBox bottomBoxes = new HBox(bottomLeftBox, bottomRightBox);
+        VBox mainBox = new VBox(headerLabel, descLabel, topBoxes, bottomBoxes);
         registrationTitle.setFont(Font.font(18));
         //--------Proprieties--------
         topBox.setId("header-footer");
@@ -1058,10 +1086,10 @@ public class Main extends Application {
         titleLabel.setId("heading-font");
         bottomBox.setPadding(new Insets(15));
         topBox.setPadding(new Insets(20));
-        topLeftBox.setPadding(new Insets(50,50,10,50));
-        topRightBox.setPadding(new Insets(50,50,10,50));
-        bottomLeftBox.setPadding(new Insets(10,50,0,50));
-        bottomRightBox.setPadding(new Insets(10,50,0,50));
+        topLeftBox.setPadding(new Insets(50, 50, 10, 50));
+        topRightBox.setPadding(new Insets(50, 50, 10, 50));
+        bottomLeftBox.setPadding(new Insets(10, 50, 0, 50));
+        bottomRightBox.setPadding(new Insets(10, 50, 0, 50));
         mainBox.setPadding(new Insets(20));
 
         topLeftBox.setSpacing(15);
@@ -1100,23 +1128,23 @@ public class Main extends Application {
             start(primaryStage);
         });
         checkBoxesBox.setOnMouseMoved(value -> {
-            if(amountTextField.getText().equals(""))amountTextField.setText("0");
+            if (amountTextField.getText().equals("")) amountTextField.setText("0");
             finalAmount[0] = 0;
             numOfSelectedMarathons[0] = 0;
-            for (int v = 0; v<eventsCheckBoxes.length;v++){
-                if(eventsCheckBoxes[v].isSelected()){
-                    float marathonCost = Float.parseFloat(eventsCheckBoxes[v].getText().substring(eventsCheckBoxes[v].getText().indexOf("$")+1,eventsCheckBoxes[v].getText().indexOf(")")));
+            for (int v = 0; v < eventsCheckBoxes.length; v++) {
+                if (eventsCheckBoxes[v].isSelected()) {
+                    float marathonCost = Float.parseFloat(eventsCheckBoxes[v].getText().substring(eventsCheckBoxes[v].getText().indexOf("$") + 1, eventsCheckBoxes[v].getText().indexOf(")")));
                     finalAmount[0] += marathonCost;
                     numOfSelectedMarathons[0]++;
                 }
             }
-            float optionCost = Float.parseFloat(options.getSelectedToggle().toString().substring(options.getSelectedToggle().toString().indexOf("$")+1,options.getSelectedToggle().toString().indexOf(")")));
-            finalAmount[0] += optionCost* numOfSelectedMarathons[0];
+            float optionCost = Float.parseFloat(options.getSelectedToggle().toString().substring(options.getSelectedToggle().toString().indexOf("$") + 1, options.getSelectedToggle().toString().indexOf(")")));
+            finalAmount[0] += optionCost * numOfSelectedMarathons[0];
             finalAmount[0] += Integer.parseInt(amountTextField.getText());
-            amountLabel.setText("$"+finalAmount[0]);
+            amountLabel.setText("$" + finalAmount[0]);
         });
         amountTextField.setOnKeyReleased(value -> {
-            if(!amountTextField.getText().equals("")) {
+            if (!amountTextField.getText().equals("")) {
                 finalAmount[0] = 0;
                 numOfSelectedMarathons[0] = 0;
                 for (int v = 0; v < eventsCheckBoxes.length; v++) {
@@ -1133,7 +1161,7 @@ public class Main extends Application {
             }
         });
         registerButton.setOnAction(value -> {
-            if (numOfSelectedMarathons[0] != 0){
+            if (numOfSelectedMarathons[0] != 0) {
                 thank_you_runner(primaryStage);
             }
         });
@@ -1144,12 +1172,12 @@ public class Main extends Application {
     }
 
 
-    public void edit_runner(Stage primaryStage) throws SQLException{
+        public void edit_runner (Stage primaryStage) throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
         Button backButton = new Button("Back");
-        HBox topBox = new HBox(backButton,titleLabel);
+        HBox topBox = new HBox(backButton, titleLabel);
         HBox bottomBox = new HBox(countdownLabel);
         Label headerLabel = new Label("Edit your profile");
         Label emailLabel = new Label("Email : ");
@@ -1164,24 +1192,24 @@ public class Main extends Application {
         ComboBox genderCombo = new ComboBox();
         TextField dobField = new TextField("YYYY-MM-DD");
         ComboBox countryCombo = new ComboBox();
-        VBox leftLabelsBox = new VBox(emailLabel,firstNameLabel,lastNameLabel,genderLabel,dobLabel,countryLabel);
-        VBox leftFieldsBox = new VBox(emailBoldLabel,firstNameField,lastNameField,genderCombo,dobField,countryCombo);
-        HBox leftSide = new HBox(leftLabelsBox,leftFieldsBox);
+        VBox leftLabelsBox = new VBox(emailLabel, firstNameLabel, lastNameLabel, genderLabel, dobLabel, countryLabel);
+        VBox leftFieldsBox = new VBox(emailBoldLabel, firstNameField, lastNameField, genderCombo, dobField, countryCombo);
+        HBox leftSide = new HBox(leftLabelsBox, leftFieldsBox);
         Label changePwLabel = new Label("Change password");
         Label pwDescLabel = new Label("Leave these fields blank if you do not\n want to change the password.");
         Label pwLabel = new Label("Password: ");
         Label pw2Label = new Label("Password Again: ");
         TextField pwField = new TextField();
         TextField pw2Field = new TextField();
-        VBox rightLabelsBox = new VBox(pwLabel,pw2Label);
-        VBox rightFieldsBox = new VBox(pwField,pw2Field);
-        HBox rightElements = new HBox(rightLabelsBox,rightFieldsBox);
-        VBox rightSide = new VBox(changePwLabel,pwDescLabel,rightElements);
+        VBox rightLabelsBox = new VBox(pwLabel, pw2Label);
+        VBox rightFieldsBox = new VBox(pwField, pw2Field);
+        HBox rightElements = new HBox(rightLabelsBox, rightFieldsBox);
+        VBox rightSide = new VBox(changePwLabel, pwDescLabel, rightElements);
         Button saveButton = new Button("Save");
         Button cancelButton = new Button("Cancel");
-        HBox buttonsBox = new HBox(saveButton,cancelButton);
-        HBox midBox = new HBox(leftSide,rightSide);
-        VBox mainBox = new VBox(headerLabel,midBox,buttonsBox);
+        HBox buttonsBox = new HBox(saveButton, cancelButton);
+        HBox midBox = new HBox(leftSide, rightSide);
+        VBox mainBox = new VBox(headerLabel, midBox, buttonsBox);
 
 
         //--------Proprieties--------
@@ -1191,7 +1219,7 @@ public class Main extends Application {
         headerLabel.setFont(Font.font(18));
         changePwLabel.setFont(Font.font(16));
         pwDescLabel.setFont(Font.font(14));
-        emailBoldLabel.setFont(Font.font(null, FontWeight.BOLD,12));
+        emailBoldLabel.setFont(Font.font(null, FontWeight.BOLD, 12));
         bottomBox.setPadding(new Insets(15));
         topBox.setPadding(new Insets(20));
         mainBox.setPadding(new Insets(50));
@@ -1220,56 +1248,55 @@ public class Main extends Application {
         while (genders.next()) genderCombo.getItems().add(genders.getString("Gender"));
 
         ResultSet countries = sqlquery("SELECT CountryName FROM Country;");
-        while (countries.next())countryCombo.getItems().add(countries.getString("CountryName"));
+        while (countries.next()) countryCombo.getItems().add(countries.getString("CountryName"));
 
         saveButton.setOnAction(value -> {
-            String pw =pwField.getText();
+            String pw = pwField.getText();
             Calendar now = Calendar.getInstance();
             Calendar dob = Calendar.getInstance();
             now.setTimeInMillis(System.currentTimeMillis());
 
             String[] dobValues = dobField.getText().split("-");
-            dob.set(Integer.parseInt(dobValues[0])+10, Integer.parseInt(dobValues[1]), Integer.parseInt(dobValues[2]));
-            if(dobValues[1].length() == 1){
-                dobValues[1] = "0"+dobValues[1];
+            //dob.set(Integer.parseInt(dobValues[0]) + 10, Integer.parseInt(dobValues[1]), Integer.parseInt(dobValues[2]));
+            if (dobValues[1].length() == 1) {
+                dobValues[1] = "0" + dobValues[1];
             }
-            if(dobValues[2].length() == 1){
-                dobValues[2] = "0"+dobValues[2];
+            if (dobValues[2].length() == 1) {
+                dobValues[2] = "0" + dobValues[2];
             }
 
             boolean pwRequirements =
-                    (pw.contains("!")||pw.contains("@")||pw.contains("#")||pw.contains("$")||pw.contains("%")||pw.contains("^")) &&
+                    (pw.contains("!") || pw.contains("@") || pw.contains("#") || pw.contains("$") || pw.contains("%") || pw.contains("^")) &&
                             (!pw.toLowerCase().equals(pw) && !pw.toUpperCase().equals(pw)) &&
-                            (pw.contains("1")||pw.contains("2")||pw.contains("3")||pw.contains("4")||pw.contains("5")||pw.contains("6")||pw.contains("7")||pw.contains("8")||pw.contains("9")||pw.contains("0")) &&
-                            (pw.length()>=6);
+                            (pw.contains("1") || pw.contains("2") || pw.contains("3") || pw.contains("4") || pw.contains("5") || pw.contains("6") || pw.contains("7") || pw.contains("8") || pw.contains("9") || pw.contains("0")) &&
+                            (pw.length() >= 6);
             System.out.println(pwRequirements);
-            if(pwField.getText().equals(pw2Field.getText()) &&
+            if (pwField.getText().equals(pw2Field.getText()) &&
                     pwRequirements &&
                     !firstNameField.getText().equals("") &&
                     !lastNameField.getText().equals("") &&
                     !genderCombo.getSelectionModel().isEmpty() &&
                     !countryCombo.getSelectionModel().isEmpty() &&
-                    dob.before(now)){
-                sqlinsert("UPDATE user SET Password = '"+pw+"' , FirstName = '"+firstNameField.getText()+"' , LastName = '"+lastNameField.getText()+"' WHERE Email = '"+currentEmail+"';");
-                sqlinsert("UPDATE runner SET Gender = '"+genderCombo.getSelectionModel().getSelectedItem().toString()+"' , DateOfBirth = '"+dobValues[0]+"-"+dobValues[1]+"-"+dobValues[2]+"', CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '"+countryCombo.getSelectionModel().getSelectedItem().toString()+"') WHERE Email = '"+currentEmail+"'");
-            }
-            else if(pwField.getText().equals(pw2Field.getText()) &&
+                    dob.before(now)) {
+                sqlinsert("UPDATE user SET Password = '" + pw + "' , FirstName = '" + firstNameField.getText() + "' , LastName = '" + lastNameField.getText() + "' WHERE Email = '" + currentEmail + "';");
+                sqlinsert("UPDATE runner SET Gender = '" + genderCombo.getSelectionModel().getSelectedItem().toString() + "' , DateOfBirth = '" + dobValues[0] + "-" + dobValues[1] + "-" + dobValues[2] + "', CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '" + countryCombo.getSelectionModel().getSelectedItem().toString() + "') WHERE Email = '" + currentEmail + "'");
+            } else if (pwField.getText().equals(pw2Field.getText()) &&
                     pwField.getText().equals("") &&
                     !firstNameField.getText().equals("") &&
                     !lastNameField.getText().equals("") &&
                     !genderCombo.getSelectionModel().isEmpty() &&
                     !countryCombo.getSelectionModel().isEmpty() &&
-                    dob.before(now)){
-                sqlinsert("UPDATE user SET FirstName = '"+firstNameField.getText()+"' , LastName = '"+lastNameField.getText()+"' WHERE Email = '"+currentEmail+"';");
-                sqlinsert("UPDATE runner SET Gender = '"+genderCombo.getSelectionModel().getSelectedItem().toString()+"' , DateOfBirth = '"+dobValues[0]+"-"+dobValues[1]+"-"+dobValues[2]+"', CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '"+countryCombo.getSelectionModel().getSelectedItem().toString()+"') WHERE Email = '"+currentEmail+"'");
+                    dob.before(now)) {
+                sqlinsert("UPDATE user SET FirstName = '" + firstNameField.getText() + "' , LastName = '" + lastNameField.getText() + "' WHERE Email = '" + currentEmail + "';");
+                sqlinsert("UPDATE runner SET Gender = '" + genderCombo.getSelectionModel().getSelectedItem().toString() + "' , DateOfBirth = '" + dobValues[0] + "-" + dobValues[1] + "-" + dobValues[2] + "', CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '" + countryCombo.getSelectionModel().getSelectedItem().toString() + "') WHERE Email = '" + currentEmail + "'");
             }
 
         });
 
-        cancelButton.setOnAction(value ->{
+        cancelButton.setOnAction(value -> {
             runner_menu(primaryStage);
         });
-        backButton.setOnAction(value ->{
+        backButton.setOnAction(value -> {
             start(primaryStage);
         });
 
@@ -1280,12 +1307,12 @@ public class Main extends Application {
     }
 
 
-    public void edit_runner_2(Stage primaryStage) throws SQLException{
+        public void edit_runner_2 (Stage primaryStage) throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
         Button backButton = new Button("Back");
-        HBox topBox = new HBox(backButton,titleLabel);
+        HBox topBox = new HBox(backButton, titleLabel);
         HBox bottomBox = new HBox(countdownLabel);
         Label headerLabel = new Label("Edit a profile");
         Label emailLabel = new Label("Email : ");
@@ -1300,24 +1327,24 @@ public class Main extends Application {
         ComboBox genderCombo = new ComboBox();
         TextField dobField = new TextField("YYYY-MM-DD");
         ComboBox countryCombo = new ComboBox();
-        VBox leftLabelsBox = new VBox(emailLabel,firstNameLabel,lastNameLabel,genderLabel,dobLabel,countryLabel);
-        VBox leftFieldsBox = new VBox(emailBoldLabel,firstNameField,lastNameField,genderCombo,dobField,countryCombo);
-        HBox leftSide = new HBox(leftLabelsBox,leftFieldsBox);
+        VBox leftLabelsBox = new VBox(emailLabel, firstNameLabel, lastNameLabel, genderLabel, dobLabel, countryLabel);
+        VBox leftFieldsBox = new VBox(emailBoldLabel, firstNameField, lastNameField, genderCombo, dobField, countryCombo);
+        HBox leftSide = new HBox(leftLabelsBox, leftFieldsBox);
         Label changePwLabel = new Label("Change password");
         Label pwDescLabel = new Label("Leave these fields blank if you do not\n want to change the password.");
         Label pwLabel = new Label("Password: ");
         Label pw2Label = new Label("Password Again: ");
         TextField pwField = new TextField();
         TextField pw2Field = new TextField();
-        VBox rightLabelsBox = new VBox(pwLabel,pw2Label);
-        VBox rightFieldsBox = new VBox(pwField,pw2Field);
-        HBox rightElements = new HBox(rightLabelsBox,rightFieldsBox);
-        VBox rightSide = new VBox(changePwLabel,pwDescLabel,rightElements);
+        VBox rightLabelsBox = new VBox(pwLabel, pw2Label);
+        VBox rightFieldsBox = new VBox(pwField, pw2Field);
+        HBox rightElements = new HBox(rightLabelsBox, rightFieldsBox);
+        VBox rightSide = new VBox(changePwLabel, pwDescLabel, rightElements);
         Button saveButton = new Button("Save");
         Button cancelButton = new Button("Cancel");
-        HBox buttonsBox = new HBox(saveButton,cancelButton);
-        HBox midBox = new HBox(leftSide,rightSide);
-        VBox mainBox = new VBox(headerLabel,midBox,buttonsBox);
+        HBox buttonsBox = new HBox(saveButton, cancelButton);
+        HBox midBox = new HBox(leftSide, rightSide);
+        VBox mainBox = new VBox(headerLabel, midBox, buttonsBox);
 
 
         //--------Proprieties--------
@@ -1327,7 +1354,7 @@ public class Main extends Application {
         headerLabel.setFont(Font.font(18));
         changePwLabel.setFont(Font.font(16));
         pwDescLabel.setFont(Font.font(14));
-        emailBoldLabel.setFont(Font.font(null, FontWeight.BOLD,12));
+        emailBoldLabel.setFont(Font.font(null, FontWeight.BOLD, 12));
         bottomBox.setPadding(new Insets(15));
         topBox.setPadding(new Insets(20));
         mainBox.setPadding(new Insets(50));
@@ -1356,56 +1383,55 @@ public class Main extends Application {
         while (genders.next()) genderCombo.getItems().add(genders.getString("Gender"));
 
         ResultSet countries = sqlquery("SELECT CountryName FROM Country;");
-        while (countries.next())countryCombo.getItems().add(countries.getString("CountryName"));
+        while (countries.next()) countryCombo.getItems().add(countries.getString("CountryName"));
 
         saveButton.setOnAction(value -> {
-            String pw =pwField.getText();
+            String pw = pwField.getText();
             Calendar now = Calendar.getInstance();
             Calendar dob = Calendar.getInstance();
             now.setTimeInMillis(System.currentTimeMillis());
 
             String[] dobValues = dobField.getText().split("-");
-            dob.set(Integer.parseInt(dobValues[0])+10, Integer.parseInt(dobValues[1]), Integer.parseInt(dobValues[2]));
-            if(dobValues[1].length() == 1){
-                dobValues[1] = "0"+dobValues[1];
+            dob.set(Integer.parseInt(dobValues[0]) + 10, Integer.parseInt(dobValues[1]), Integer.parseInt(dobValues[2]));
+            if (dobValues[1].length() == 1) {
+                dobValues[1] = "0" + dobValues[1];
             }
-            if(dobValues[2].length() == 1){
-                dobValues[2] = "0"+dobValues[2];
+            if (dobValues[2].length() == 1) {
+                dobValues[2] = "0" + dobValues[2];
             }
 
             boolean pwRequirements =
-                    (pw.contains("!")||pw.contains("@")||pw.contains("#")||pw.contains("$")||pw.contains("%")||pw.contains("^")) &&
+                    (pw.contains("!") || pw.contains("@") || pw.contains("#") || pw.contains("$") || pw.contains("%") || pw.contains("^")) &&
                             (!pw.toLowerCase().equals(pw) && !pw.toUpperCase().equals(pw)) &&
-                            (pw.contains("1")||pw.contains("2")||pw.contains("3")||pw.contains("4")||pw.contains("5")||pw.contains("6")||pw.contains("7")||pw.contains("8")||pw.contains("9")||pw.contains("0")) &&
-                            (pw.length()>=6);
+                            (pw.contains("1") || pw.contains("2") || pw.contains("3") || pw.contains("4") || pw.contains("5") || pw.contains("6") || pw.contains("7") || pw.contains("8") || pw.contains("9") || pw.contains("0")) &&
+                            (pw.length() >= 6);
             System.out.println(pwRequirements);
-            if(pwField.getText().equals(pw2Field.getText()) &&
+            if (pwField.getText().equals(pw2Field.getText()) &&
                     pwRequirements &&
                     !firstNameField.getText().equals("") &&
                     !lastNameField.getText().equals("") &&
                     !genderCombo.getSelectionModel().isEmpty() &&
                     !countryCombo.getSelectionModel().isEmpty() &&
-                    dob.before(now)){
-                sqlinsert("UPDATE user SET Password = '"+pw+"' , FirstName = '"+firstNameField.getText()+"' , LastName = '"+lastNameField.getText()+"' WHERE Email = '"+emailBoldLabel+"';");
-                sqlinsert("UPDATE runner SET Gender = '"+genderCombo.getSelectionModel().getSelectedItem().toString()+"' , DateOfBirth = '"+dobValues[0]+"-"+dobValues[1]+"-"+dobValues[2]+"', CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '"+countryCombo.getSelectionModel().getSelectedItem().toString()+"') WHERE Email = '"+emailBoldLabel+"'");
-            }
-            else if(pwField.getText().equals(pw2Field.getText()) &&
+                    dob.before(now)) {
+                sqlinsert("UPDATE user SET Password = '" + pw + "' , FirstName = '" + firstNameField.getText() + "' , LastName = '" + lastNameField.getText() + "' WHERE Email = '" + emailBoldLabel + "';");
+                sqlinsert("UPDATE runner SET Gender = '" + genderCombo.getSelectionModel().getSelectedItem().toString() + "' , DateOfBirth = '" + dobValues[0] + "-" + dobValues[1] + "-" + dobValues[2] + "', CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '" + countryCombo.getSelectionModel().getSelectedItem().toString() + "') WHERE Email = '" + emailBoldLabel + "'");
+            } else if (pwField.getText().equals(pw2Field.getText()) &&
                     pwField.getText().equals("") &&
                     !firstNameField.getText().equals("") &&
                     !lastNameField.getText().equals("") &&
                     !genderCombo.getSelectionModel().isEmpty() &&
                     !countryCombo.getSelectionModel().isEmpty() &&
-                    dob.before(now)){
-                sqlinsert("UPDATE user SET FirstName = '"+firstNameField.getText()+"' , LastName = '"+lastNameField.getText()+"' WHERE Email = '"+emailBoldLabel+"';");
-                sqlinsert("UPDATE runner SET Gender = '"+genderCombo.getSelectionModel().getSelectedItem().toString()+"' , DateOfBirth = '"+dobValues[0]+"-"+dobValues[1]+"-"+dobValues[2]+"', CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '"+countryCombo.getSelectionModel().getSelectedItem().toString()+"') WHERE Email = '"+emailBoldLabel+"'");
+                    dob.before(now)) {
+                sqlinsert("UPDATE user SET FirstName = '" + firstNameField.getText() + "' , LastName = '" + lastNameField.getText() + "' WHERE Email = '" + emailBoldLabel + "';");
+                sqlinsert("UPDATE runner SET Gender = '" + genderCombo.getSelectionModel().getSelectedItem().toString() + "' , DateOfBirth = '" + dobValues[0] + "-" + dobValues[1] + "-" + dobValues[2] + "', CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '" + countryCombo.getSelectionModel().getSelectedItem().toString() + "') WHERE Email = '" + emailBoldLabel + "'");
             }
 
         });
 
-        cancelButton.setOnAction(value ->{
+        cancelButton.setOnAction(value -> {
             runner_menu(primaryStage);
         });
-        backButton.setOnAction(value ->{
+        backButton.setOnAction(value -> {
             start(primaryStage);
         });
 
@@ -1416,13 +1442,13 @@ public class Main extends Application {
     }
 
 
-    public void my_race_results(Stage primaryStage) throws SQLException{
+        public void my_race_results (Stage primaryStage) throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
         Button backButton = new Button("Back");
         Button viewAllButton = new Button("View all race results");
-        HBox topBox = new HBox(backButton,titleLabel);
+        HBox topBox = new HBox(backButton, titleLabel);
         HBox bottomBox = new HBox(countdownLabel);
         Label headerLabel = new Label("My race results");
         Text descText = new Text("This is a list of all your past race results");
@@ -1430,7 +1456,7 @@ public class Main extends Application {
         Label runnerGenderLabel = new Label();
         Label ageLabel = new Label("Age category: ");
         Label runnerAgeLabel = new Label();
-        HBox labelsBox = new HBox(genderLabel,runnerGenderLabel,ageLabel,runnerAgeLabel);
+        HBox labelsBox = new HBox(genderLabel, runnerGenderLabel, ageLabel, runnerAgeLabel);
         Label marathonLabel = new Label("Marathon");
         Label eventLabel = new Label("Event");
         Label timeLabel = new Label("Time");
@@ -1441,63 +1467,62 @@ public class Main extends Application {
         VBox timeBox = new VBox(timeLabel);
         VBox overallBox = new VBox(overallRankLabel);
         VBox categoryBox = new VBox(categoryRankLabel);
-        HBox midBox = new HBox(marathonBox,eventBox,timeBox,overallBox,categoryBox);
-        VBox mainBox = new VBox(headerLabel,descText,labelsBox,midBox,viewAllButton);
+        HBox midBox = new HBox(marathonBox, eventBox, timeBox, overallBox, categoryBox);
+        VBox mainBox = new VBox(headerLabel, descText, labelsBox, midBox, viewAllButton);
 
         //--------sql-data-----------
-        ResultSet genderAndAge = sqlquery("SELECT Gender, DateOfBirth FROM runner WHERE Email = '"+currentEmail+"';");
+        ResultSet genderAndAge = sqlquery("SELECT Gender, DateOfBirth FROM runner WHERE Email = '" + currentEmail + "';");
         genderAndAge.next();
-        String[] dobValues = genderAndAge.getString("DateOfBirth").substring(0,10).split("-");
+        String[] dobValues = genderAndAge.getString("DateOfBirth").substring(0, 10).split("-");
         Calendar currentTime = Calendar.getInstance();
         currentTime.setTimeInMillis(System.currentTimeMillis());
         Calendar dob = Calendar.getInstance();
-        dob.set(Integer.parseInt(dobValues[0]),Integer.parseInt(dobValues[1]),Integer.parseInt(dobValues[2]));
+        dob.set(Integer.parseInt(dobValues[0]), Integer.parseInt(dobValues[1]), Integer.parseInt(dobValues[2]));
         int age = currentTime.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
-        runnerGenderLabel.setText(genderAndAge.getString("Gender")+"    ");
+        runnerGenderLabel.setText(genderAndAge.getString("Gender") + "    ");
 
-        if(age<18) runnerAgeLabel.setText("Under 18");
-        else if(age<=29) runnerAgeLabel.setText("18 to 29");
-        else if(age<=39) runnerAgeLabel.setText("30 to 39");
-        else if(age<=55) runnerAgeLabel.setText("40 to 55");
-        else if(age<=70) runnerAgeLabel.setText("55 to 70");
+        if (age < 18) runnerAgeLabel.setText("Under 18");
+        else if (age <= 29) runnerAgeLabel.setText("18 to 29");
+        else if (age <= 39) runnerAgeLabel.setText("30 to 39");
+        else if (age <= 55) runnerAgeLabel.setText("40 to 55");
+        else if (age <= 70) runnerAgeLabel.setText("55 to 70");
         else runnerAgeLabel.setText("Over 70");
 
-        ResultSet raceResults = sqlquery("SELECT RegistrationEvent.bibNumber,Event.EventId,RegistrationEvent.RaceTime,Event.EventName,Marathon.MarathonName FROM ((((runner INNER JOIN registration ON runner.RunnerId = registration.RunnerId) INNER JOIN registrationEvent ON registration.RegistrationId = registrationEvent.RegistrationId) INNER JOIN event ON registrationEvent.EventId = event.EventId) INNER JOIN marathon ON event.MarathonId = marathon.MarathonId) WHERE runner.Email ='"+currentEmail+"';");
+        ResultSet raceResults = sqlquery("SELECT RegistrationEvent.bibNumber,Event.EventId,RegistrationEvent.RaceTime,Event.EventName,Marathon.MarathonName FROM ((((runner INNER JOIN registration ON runner.RunnerId = registration.RunnerId) INNER JOIN registrationEvent ON registration.RegistrationId = registrationEvent.RegistrationId) INNER JOIN event ON registrationEvent.EventId = event.EventId) INNER JOIN marathon ON event.MarathonId = marathon.MarathonId) WHERE runner.Email ='" + currentEmail + "';");
         ArrayList<String> marathons = new ArrayList<>();
         ArrayList<String> events = new ArrayList<>();
         ArrayList<String> bibNums = new ArrayList<>();
         ArrayList<Integer> runnerTimes = new ArrayList<>();
         ArrayList<Integer> runnerRanks = new ArrayList<>();
 
-        while (raceResults.next()){
-            System.out.println(raceResults.getString(1)+"==="+raceResults.getString(2)+"==="+raceResults.getString(3)+"==="+raceResults.getString(4));
+        while (raceResults.next()) {
+            System.out.println(raceResults.getString(1) + "===" + raceResults.getString(2) + "===" + raceResults.getString(3) + "===" + raceResults.getString(4));
             events.add(raceResults.getString("eventid"));
             bibNums.add(raceResults.getString("bibNumber"));
             marathons.add(raceResults.getString("MarathonName"));
         }
         for (String e : events) {
-            ResultSet runners = sqlquery("SELECT bibNumber, RaceTime FROM registrationEvent WHERE eventId = '"+e+"' ORDER BY RaceTime;");
+            ResultSet runners = sqlquery("SELECT bibNumber, RaceTime FROM registrationEvent WHERE eventId = '" + e + "' ORDER BY RaceTime;");
             int exemptRunners = 0;
             int currentRank = 1;
             ArrayList<Integer> allTimes = new ArrayList<>();
-            while (runners.next()){
-                if (runners.getInt("RaceTime")==0) {
-                    exemptRunners+=1;
+            while (runners.next()) {
+                if (runners.getInt("RaceTime") == 0) {
+                    exemptRunners += 1;
                     continue;
-                }
-                else if (runners.getString("bibNumber").equals(bibNums.get(events.indexOf(e)))){
-                    System.out.print((runners.getRow()-exemptRunners)+"==="+runners.getString("bibNumber")+"==="+runners.getString("RaceTime"));
+                } else if (runners.getString("bibNumber").equals(bibNums.get(events.indexOf(e)))) {
+                    System.out.print((runners.getRow() - exemptRunners) + "===" + runners.getString("bibNumber") + "===" + runners.getString("RaceTime"));
                     runnerTimes.add(runners.getInt("RaceTime"));
-                    runnerRanks.add(currentRank-exemptRunners);
+                    runnerRanks.add(currentRank - exemptRunners);
                 }
-                if (!allTimes.contains(Integer.parseInt(runners.getString("RaceTime")))){
-                    currentRank+=1;
+                if (!allTimes.contains(Integer.parseInt(runners.getString("RaceTime")))) {
+                    currentRank += 1;
                 }
                 allTimes.add(runners.getInt("RaceTime"));
             }
         }
 
-        if (events.size()<1){
+        if (events.size() > 1) {
             for (int i = 0; i < events.size(); i++) {
                 int timeInSecs = runnerTimes.get(i);
                 int hours = timeInSecs / 3600;
@@ -1510,8 +1535,8 @@ public class Main extends Application {
                 overallBox.getChildren().add(new Label(runnerRanks.get(i).toString()));
                 //categoryBox.getChildren().add(new Label(marathons.get(i)));
             }
+        } else {
         }
-        else {}
         //--------Proprieties--------
         headerLabel.setFont(Font.font(24));
         bottomBox.setPadding(new Insets(15));
@@ -1539,29 +1564,29 @@ public class Main extends Application {
         bottomBox.setId("header-footer");
         titleLabel.setId("heading-font");
 
-        backButton.setOnAction(value ->{
+        backButton.setOnAction(value -> {
             runner_menu(primaryStage);
         });
     }
 
 
-    public void thank_you_runner(Stage primaryStage){
+        public void thank_you_runner (Stage primaryStage){
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
         Button backButton = new Button("Back");
-        HBox topBox = new HBox(backButton,titleLabel);
+        HBox topBox = new HBox(backButton, titleLabel);
         HBox bottomBox = new HBox(countdownLabel);
         Label tyLabel = new Label("Thank you for registering as a runner!");
         Label smoltyLabel = new Label("Thank you for registering as a runner in Marathon skills 2019!");
         Label moneyContactLabel = new Label("You will be contacted soon about the payment.");
         Button okButton = new Button("OK");
-        VBox mainBox = new VBox(tyLabel,smoltyLabel,moneyContactLabel,okButton);
+        VBox mainBox = new VBox(tyLabel, smoltyLabel, moneyContactLabel, okButton);
 
         //--------Proprieties--------
         topBox.setStyle("-fx-background-color: #336699;");
         bottomBox.setStyle("-fx-background-color: #336699;");
-        titleLabel.setFont(Font.font("Courier New",20));
+        titleLabel.setFont(Font.font("Courier New", 20));
         tyLabel.setFont(Font.font(25));
         smoltyLabel.setFont(Font.font(18));
         moneyContactLabel.setFont(Font.font(15));
@@ -1583,12 +1608,12 @@ public class Main extends Application {
     }
 
 
-    public String signin(String uemail, String upassword) {
+        public String signin (String uemail, String upassword){
         String roleid = new String();
         Connection conn = null;
         Statement stmt = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance ();
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
 
             //connecting to the database
             System.out.println("Connecting to a database");
@@ -1630,7 +1655,7 @@ public class Main extends Application {
                 popup.setAlignment(Pos.CENTER);
                 Scene scene2 = new Scene(popup, 400, 300);
                 Label errorlabel = new Label("email or password is incorrect");
-                errorlabel.setFont(Font.font("Open Sans",30));
+                errorlabel.setFont(Font.font("Open Sans", 30));
                 popup.add(errorlabel, 0, 0);
                 secondarystage.setScene(scene2);
                 secondarystage.setTitle("Error");
@@ -1643,6 +1668,16 @@ public class Main extends Application {
         } catch (SQLException se) {
             //Handles jdbc errors
             se.printStackTrace();
+            Stage secondarystage = new Stage();
+            GridPane popup = new GridPane();
+            popup.setAlignment(Pos.CENTER);
+            Scene scene2 = new Scene(popup, 400, 300);
+            Label errorlabel = new Label(se.toString());
+            errorlabel.setFont(Font.font("Open Sans", 30));
+            popup.add(errorlabel, 0, 0);
+            secondarystage.setScene(scene2);
+            secondarystage.setTitle("Error");
+            secondarystage.show();
         } catch (Exception e) {
             //Handles errors for Class.forname
             e.printStackTrace();
@@ -1659,7 +1694,7 @@ public class Main extends Application {
     }
 
 
-    public ResultSet sqlquery(String query) {
+        public ResultSet sqlquery (String query){
         Connection conn = null;
         Statement stmnt = null;
         try {
@@ -1669,6 +1704,16 @@ public class Main extends Application {
             return stmnt.executeQuery(query);
         } catch (Exception se) {
             se.printStackTrace();
+            Stage secondarystage = new Stage();
+            GridPane popup = new GridPane();
+            popup.setAlignment(Pos.CENTER);
+            Scene scene2 = new Scene(popup, 400, 300);
+            Label errorlabel = new Label(se.toString());
+            errorlabel.setFont(Font.font("Open Sans", 30));
+            popup.add(errorlabel, 0, 0);
+            secondarystage.setScene(scene2);
+            secondarystage.setTitle("Error");
+            secondarystage.show();
             return null;
         } finally {
             //finally block used to close resources
@@ -1676,7 +1721,7 @@ public class Main extends Application {
     }
 
 
-    public void sqlinsert(String query){
+        public void sqlinsert (String query){
         Connection conn = null;
         Statement stmnt = null;
         try {
@@ -1692,13 +1737,37 @@ public class Main extends Application {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            e.printStackTrace();
+            Stage secondarystage = new Stage();
+            GridPane popup = new GridPane();
+            popup.setAlignment(Pos.CENTER);
+            Scene scene2 = new Scene(popup, 400, 300);
+            Label errorlabel = new Label(e.toString());
+            errorlabel.setFont(Font.font("Open Sans", 30));
+            popup.add(errorlabel, 0, 0);
+            secondarystage.setScene(scene2);
+            secondarystage.setTitle("Error");
+            secondarystage.show();
         }
     }
 
 
-    public static void main(String[] args) {
-
-        launch(args);
+        public static void main (String[]args){
+        try {
+            launch(args);
+        }catch (Exception e){
+            e.printStackTrace();
+            Stage secondarystage = new Stage();
+            GridPane popup = new GridPane();
+            popup.setAlignment(Pos.CENTER);
+            Scene scene2 = new Scene(popup, 400, 300);
+            Label errorlabel = new Label(e.toString());
+            errorlabel.setFont(Font.font("Open Sans", 30));
+            popup.add(errorlabel, 0, 0);
+            secondarystage.setScene(scene2);
+            secondarystage.setTitle("Error");
+            secondarystage.show();
+        }
     }
 }
 
