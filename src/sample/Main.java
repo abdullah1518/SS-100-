@@ -29,6 +29,7 @@ import javafx.util.Duration;
 import jdk.internal.dynalink.support.BottomGuardingDynamicLinker;
 
 import java.beans.EventHandler;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.*;
@@ -78,7 +79,7 @@ public class Main extends Application {
         });
 
         btn2.setOnAction(value -> {
-
+            how_long(primaryStage);
         });
 
         btn3.setOnAction(value -> {
@@ -110,6 +111,7 @@ public class Main extends Application {
 
         bpane.add(btn0, 0, 0);
         bpane.add(btn1, 0, 10);
+        bpane.add(btn2,0, 20);
 
         lpane.add(btn3, 20, 0);
         lpane.add(copyRlbl, 0, 0);
@@ -1610,7 +1612,7 @@ public class Main extends Application {
 
         public void how_long(Stage primaryStage){
             Scene scene = null;
-            scene = rootheadfoot(scene);
+            GridPane main =sceneassign(scene, primaryStage);
             //------------------node definitions-----------
             //buttons
 
@@ -1618,15 +1620,30 @@ public class Main extends Application {
             //labels
             Label howlong = new Label("How long is a marathon?");
             Label selected = new Label("selected");
-
+            //images
+            File f = null;
+            File[] images = null;
+            FileInputStream fileInputstream = null;
+            try {
+                f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\how-long-is-a-marathon-images");
+                images = f.listFiles();
+                fileInputstream = new FileInputStream(images[0]);
+                System.out.println(images[0]);
+            }catch (Exception fe){fe.printStackTrace();}
+            Image hlimage = new Image(fileInputstream);
+            ImageView imageview = new ImageView(hlimage);
             //Styling nodes
             //-------------------panes and scene--------------
-            GridPane mtop = new GridPane();
-            VBox mleft = new VBox();
+            VBox mtop = new VBox(howlong);
+            VBox mleft = new VBox(howlong, imageview);
             GridPane mright = new GridPane();
             BorderPane mpane = new BorderPane();
+
+            imageview.setFitWidth(300);
+            imageview.setScaleX(1);
+            imageview.setPreserveRatio(true);
             //------------------------pane properties--------------
-            GridPane[] panelist = {mtop};
+            GridPane[] panelist = {};
             for (GridPane pane : panelist){
                 pane.setPadding(new Insets(10));
                 pane.setVgap(10);
@@ -1636,23 +1653,21 @@ public class Main extends Application {
             mpane.setTop(mtop);
             mpane.setLeft(mleft);
             mpane.setRight(mright);
-            //-----------------------primary stage properties-----------------
-            primaryStage.setMinWidth(500);
-            primaryStage.setMinHeight(500);
-            primaryStage.setTitle("register as a runner");
-            primaryStage.setScene(scene);
-            primaryStage.show();
-            //--------------button actions--------------
+
+            main.add(mpane, 0, 0);
+            //--------------button actions-------------
+
         }
 
 
-        public Scene rootheadfoot(Scene scene){
+        public GridPane sceneassign(Scene scene, Stage primaryStage){
             //-------------------panes and scene--------------
             BorderPane root = new BorderPane();
             GridPane header = new GridPane();
             GridPane footer = new GridPane();
             GridPane main = new GridPane();
-            scene = new Scene(root, 600, 600);
+            scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("styling.css").toString());
             //------------------node definitions-----------
             //buttons
             Button back= new Button("Back");
@@ -1662,6 +1677,7 @@ public class Main extends Application {
             header.setId("header-footer");
             footer.setId("header-footer");
             main.setId("mainpane");
+            titlelabel.setId("heading-font");
             //------------------------pane properties--------------
             GridPane[] panelist = {header, main, footer};
             for (GridPane pane : panelist){
@@ -1670,7 +1686,7 @@ public class Main extends Application {
                 pane.setHgap(10);
                 pane.setAlignment(Pos.CENTER);
             }
-
+            footer.setPrefHeight(30);
             root.setTop(header);
             root.setCenter(main);
             root.setBottom(footer);
@@ -1678,8 +1694,16 @@ public class Main extends Application {
             header.add(back, 0, 0);
             header.add(titlelabel, 1, 0);
             //-----------------------primary stage properties-----------------
-
-            return  scene;
+            primaryStage.setMinWidth(500);
+            primaryStage.setMinHeight(500);
+            primaryStage.setTitle("Marathon skills 2015");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+            //-----------------------button actions-----------------
+            back.setOnAction(value ->{
+                start(primaryStage);
+            });
+            return  main;
         }
 
 
