@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.org.apache.xpath.internal.operations.Variable;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.RotateTransition;
@@ -37,16 +38,16 @@ import java.util.*;
 
 public class Main extends Application {
 
-        static final String JDBC_DRIVER = "com.mysql.jdbc.Driver?allowPublicKeyRetrieval=true&useSSL=False";
-        static final String DB_URL = "jdbc:mysql://localhost/cpt01?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false";
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver?allowPublicKeyRetrieval=true&useSSL=False";
+    static final String DB_URL = "jdbc:mysql://localhost/cpt01?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false";
 
-        static final String USER = "root";
-        static final String PASS = "mypass";
+    static final String USER = "root";
+    static final String PASS = "mypass";
 
-        String currentEmail;
+    String currentEmail;
 
-        @Override
-        public void start (Stage primaryStage){
+    @Override
+    public void start (Stage primaryStage){
 
         BorderPane root0 = new BorderPane();
         GridPane bpane = new GridPane();
@@ -65,6 +66,7 @@ public class Main extends Application {
         Button btn3 = new Button("Login");
         btn0.setPrefSize(300, 50);
         btn1.setPrefSize(300, 50);
+        btn2.setPrefSize(300, 50);
         btn3.setPrefSize(150, 30);
 
         btn0.setOnAction(value -> {
@@ -128,7 +130,7 @@ public class Main extends Application {
     }
 
 
-        public void page1 (Stage primaryStage){
+    public void page1 (Stage primaryStage){
 
         BorderPane root1 = new BorderPane();
         GridPane bpane1 = new GridPane();
@@ -205,7 +207,7 @@ public class Main extends Application {
     }
 
 
-        public void loginpage (Stage primaryStage){
+    public void loginpage (Stage primaryStage){
 
         BorderPane root = new BorderPane();
         GridPane bpane = new GridPane();
@@ -296,7 +298,7 @@ public class Main extends Application {
     }
 
 
-        public void sponsor_a_runner (Stage primaryStage){
+    public void sponsor_a_runner (Stage primaryStage){
         //----------------panes and scene------------------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -482,7 +484,7 @@ public class Main extends Application {
     }
 
 
-        public void sponsor_thank (Stage primaryStage, String amount, String runnerId){
+    public void sponsor_thank (Stage primaryStage, String amount, String runnerId){
         BorderPane rootBorderPane = new BorderPane();
         Label thxLabel = new Label("Thank you for your sponsorship!");
         Label smolThxLabel = new Label("Thank you for sponsoring a runner in Marathon Skills 2019!\nYour donation will help out their chosen charity.");
@@ -514,7 +516,7 @@ public class Main extends Application {
     }
 
 
-        public void runner_menu (Stage primaryStage){
+    public void runner_menu (Stage primaryStage){
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -626,7 +628,7 @@ public class Main extends Application {
     }
 
 
-        public void coordinator_menu (Stage primaryStage){
+    public void coordinator_menu (Stage primaryStage){
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -703,7 +705,7 @@ public class Main extends Application {
     }
 
 
-        public void admin_menu (Stage primaryStage){
+    public void admin_menu (Stage primaryStage){
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -782,7 +784,7 @@ public class Main extends Application {
     }
 
 
-        public void register_runner (Stage primaryStage){
+    public void register_runner (Stage primaryStage){
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -1002,7 +1004,7 @@ public class Main extends Application {
     }
 
 
-        public void register_event (Stage primaryStage) throws SQLException {
+    public void register_event (Stage primaryStage) throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1174,7 +1176,7 @@ public class Main extends Application {
     }
 
 
-        public void edit_runner (Stage primaryStage) throws SQLException {
+    public void edit_runner (Stage primaryStage) throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1309,7 +1311,7 @@ public class Main extends Application {
     }
 
 
-        public void edit_runner_2 (Stage primaryStage) throws SQLException {
+    public void edit_runner_2 (Stage primaryStage) throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1444,7 +1446,7 @@ public class Main extends Application {
     }
 
 
-        public void my_race_results (Stage primaryStage) throws SQLException {
+    public void my_race_results (Stage primaryStage) throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1572,7 +1574,7 @@ public class Main extends Application {
     }
 
 
-        public void thank_you_runner (Stage primaryStage){
+    public void thank_you_runner (Stage primaryStage){
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1610,104 +1612,188 @@ public class Main extends Application {
     }
 
 
-        public void how_long(Stage primaryStage){
-            Scene scene = null;
-            GridPane main =sceneassign(scene, primaryStage);
-            //------------------node definitions-----------
-            //buttons
+    public void how_long(Stage primaryStage){
+        Scene scene = null;
+        GridPane main =sceneassign(scene, primaryStage);
+        //------------------node definitions-----------
+        //buttons
+        //radi0s
+        ToggleGroup spedis = new ToggleGroup();
+        RadioButton speedrad = new RadioButton("Speed");
+        speedrad.setToggleGroup(spedis);
+        RadioButton distancerad = new RadioButton("Distance");
+        distancerad.setToggleGroup(spedis);
 
-            //textfields
-            //labels
-            Label howlong = new Label("How long is a marathon?");
-            Label selected = new Label("selected");
-            //images
-            File f = null;
-            File[] images = null;
-            FileInputStream fileInputstream = null;
-            try {
-                f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\how-long-is-a-marathon-images");
-                images = f.listFiles();
-                fileInputstream = new FileInputStream(images[0]);
-                System.out.println(images[0]);
-            }catch (Exception fe){fe.printStackTrace();}
-            Image hlimage = new Image(fileInputstream);
-            ImageView imageview = new ImageView(hlimage);
-            //Styling nodes
-            //-------------------panes and scene--------------
-            VBox mtop = new VBox(howlong);
-            VBox mleft = new VBox(howlong, imageview);
-            GridPane mright = new GridPane();
-            BorderPane mpane = new BorderPane();
+        speedrad.setOnAction(event -> {
+            System.out.println("speed");
+        });
+        distancerad.setOnAction(event -> {
+            System.out.println("dist");
+        });
+        //textfields
+        //labels
+        Label howlong = new Label("How long is a marathon?");
+        Label selected = new Label("selected");
+        Label selectedinfo = new Label("selected info");
 
-            imageview.setFitWidth(300);
-            imageview.setScaleX(1);
-            imageview.setPreserveRatio(true);
-            //------------------------pane properties--------------
-            GridPane[] panelist = {};
-            for (GridPane pane : panelist){
-                pane.setPadding(new Insets(10));
-                pane.setVgap(10);
-                pane.setHgap(10);
-                pane.setAlignment(Pos.CENTER);
+        ArrayList<Label> imagenames1 = new ArrayList<>();
+        imagenames1.add(new Label("F1 Car"));
+        imagenames1.add(new Label("Slug"));
+        imagenames1.add(new Label("Horse"));
+        imagenames1.add(new Label("Sloth"));
+        imagenames1.add(new Label("Capybara"));
+        imagenames1.add(new Label("Jaguar"));
+        imagenames1.add(new Label("Worm"));
+        ArrayList<Label> imagenames2 = new ArrayList<>();
+        imagenames2.add(new Label("F1Car"));
+        imagenames2.add(new Label("F1Car"));
+        imagenames2.add(new Label("F1Car"));
+        imagenames2.add(new Label("F1Car"));
+        imagenames2.add(new Label("F1Car"));
+
+        //images
+        File f = null;
+        FileInputStream fileInputstream = null;
+        ArrayList<ImageView> allimages = new ArrayList<>();
+        try {
+            f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\how-long-is-a-marathon-images");
+            ArrayList<File> images = new ArrayList<>();
+            for (int i=1;i+1<f.listFiles().length;i++){
+                images.add(new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\how-long-is-a-marathon-images\\"+i+".jpg"));
             }
-            mpane.setTop(mtop);
-            mpane.setLeft(mleft);
-            mpane.setRight(mright);
+            fileInputstream = new FileInputStream(images.get(0));
+            System.out.println(images.get(0));
 
-            main.add(mpane, 0, 0);
-            //--------------button actions-------------
+            for (File image : images){
+                System.out.println(image);
+                ImageView iview = new ImageView(new Image(new FileInputStream(image)));
 
-        }
+                iview.setFitWidth(70);
+                iview.fitWidthProperty().bind((main.widthProperty().subtract(50)).divide(7));
+                iview.setPreserveRatio(true);
 
+                allimages.add(iview);
 
-        public GridPane sceneassign(Scene scene, Stage primaryStage){
-            //-------------------panes and scene--------------
-            BorderPane root = new BorderPane();
-            GridPane header = new GridPane();
-            GridPane footer = new GridPane();
-            GridPane main = new GridPane();
-            scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("styling.css").toString());
-            //------------------node definitions-----------
-            //buttons
-            Button back= new Button("Back");
-            //labels
-            Label titlelabel = new Label("Marathon Skills 2019");
-            //Styling nodes
-            header.setId("header-footer");
-            footer.setId("header-footer");
-            main.setId("mainpane");
-            titlelabel.setId("heading-font");
-            //------------------------pane properties--------------
-            GridPane[] panelist = {header, main, footer};
-            for (GridPane pane : panelist){
-                pane.setPadding(new Insets(10));
-                pane.setVgap(10);
-                pane.setHgap(10);
-                pane.setAlignment(Pos.CENTER);
             }
-            footer.setPrefHeight(30);
-            root.setTop(header);
-            root.setCenter(main);
-            root.setBottom(footer);
+        }catch (Exception fe){fe.printStackTrace();}
 
-            header.add(back, 0, 0);
-            header.add(titlelabel, 1, 0);
-            //-----------------------primary stage properties-----------------
-            primaryStage.setMinWidth(500);
-            primaryStage.setMinHeight(500);
-            primaryStage.setTitle("Marathon skills 2015");
-            primaryStage.setScene(scene);
-            primaryStage.show();
-            //-----------------------button actions-----------------
-            back.setOnAction(value ->{
-                start(primaryStage);
-            });
-            return  main;
+
+        Image hlimage = new Image(fileInputstream);
+        ImageView imageview = new ImageView(hlimage);
+        //Styling nodes
+        howlong.setId("body-font");
+        selected.setStyle("-fx-font:  lighter 15px 'Open Sans'");
+        selectedinfo.setStyle("-fx-font:  lighter 15px 'Open Sans'");
+
+        //-------------------panes and scene--------------
+        VBox mtop = new VBox(howlong);
+        VBox mleft = new VBox(selected, imageview, selectedinfo);
+        GridPane mright = new GridPane();
+        HBox mrighttop = new HBox(speedrad, distancerad);
+        GridPane imagebox1 = new GridPane();
+        GridPane imagebox2 = new GridPane();
+        ScrollPane imagecroll = new ScrollPane();
+        BorderPane mpane = new BorderPane();
+
+        imageview.setFitWidth(275);
+        imageview.fitWidthProperty().bind(main.widthProperty().divide(500).multiply(275));
+        imageview.setPreserveRatio(true);
+
+        selectedinfo.setWrapText(true);
+        selectedinfo.prefHeightProperty().bind(mleft.heightProperty());
+        //------------------------pane properties--------------
+        GridPane[] panelist = {mright, main, imagebox1};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
         }
+        mright.setAlignment(Pos.TOP_CENTER);
+        mrighttop.setSpacing(10);
+        mrighttop.setId("mainpane");
+
+        imagebox1.add(imagenames1.get(0), 1, 0);
+        imagebox1.add(imagenames1.get(1), 1, 1);
+        imagebox1.add(imagenames1.get(2), 1, 2);
+        imagebox1.add(imagenames1.get(3), 1, 3);
+        imagebox1.add(imagenames1.get(4), 1, 4);
+        imagebox1.add(imagenames1.get(5), 1, 5);
+        imagebox1.add(imagenames1.get(6), 1, 6);
+
+        imagebox1.add(allimages.get(0), 0, 0);
+        imagebox1.add(allimages.get(1), 0, 1);
+        imagebox1.add(allimages.get(2), 0, 2);
+        imagebox1.add(allimages.get(3), 0, 3);
+        imagebox1.add(allimages.get(4), 0, 4);
+        imagebox1.add(allimages.get(5), 0, 5);
+        imagebox1.add(allimages.get(6), 0, 6);
+
+        mright.add(mrighttop,0, 0);
+        mright.add(imagecroll, 0, 1);
+
+        imagecroll.setContent(imagebox1);
+        imagecroll.setFitToWidth(true);
+        mpane.setTop(mtop);
+        mpane.setLeft(mleft);
+        mpane.setRight(mright);
+
+        main.add(mpane, 0, 0);
+        //--------------button actions-------------
+        allimages.get(0).setOnMouseClicked(event -> {
+            selectedinfo.setText("It would take an F1 car travelling at 345km/h  7.3 minutes!");
+        });
+    }
 
 
-        public String signin (String uemail, String upassword){
+    public GridPane sceneassign(Scene scene, Stage primaryStage){
+        //-------------------panes and scene--------------
+        BorderPane root = new BorderPane();
+        GridPane header = new GridPane();
+        GridPane footer = new GridPane();
+        GridPane main = new GridPane();
+        scene = new Scene(root, 500, 500);
+        scene.getStylesheets().add(getClass().getResource("styling.css").toString());
+        //------------------node definitions-----------
+        //buttons
+        Button back= new Button("Back");
+        //labels
+        Label titlelabel = new Label("Marathon Skills 2019");
+        //Styling nodes
+        header.setId("header-footer");
+        footer.setId("header-footer");
+        main.setId("mainpane");
+        titlelabel.setId("heading-font");
+        //------------------------pane properties--------------
+        GridPane[] panelist = {header, main, footer};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+        footer.setPrefHeight(30);
+        root.setTop(header);
+        root.setCenter(main);
+        root.setBottom(footer);
+
+        header.add(back, 0, 0);
+        header.add(titlelabel, 1, 0);
+        //-----------------------primary stage properties-----------------
+        primaryStage.setMinWidth(500);
+        primaryStage.setMinHeight(500);
+        primaryStage.setTitle("Marathon skills 2015");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        //-----------------------button actions-----------------
+        back.setOnAction(value ->{
+            start(primaryStage);
+        });
+        return  main;
+    }
+
+
+    public String signin (String uemail, String upassword){
         String roleid = new String();
         Connection conn = null;
         Statement stmt = null;
@@ -1793,7 +1879,7 @@ public class Main extends Application {
     }
 
 
-        public ResultSet sqlquery (String query){
+    public ResultSet sqlquery (String query){
         Connection conn = null;
         Statement stmnt = null;
         try {
@@ -1820,7 +1906,7 @@ public class Main extends Application {
     }
 
 
-        public void sqlinsert (String query){
+    public void sqlinsert (String query){
         Connection conn = null;
         Statement stmnt = null;
         try {
@@ -1851,7 +1937,7 @@ public class Main extends Application {
     }
 
 
-        public static void main (String[]args){
+    public static void main (String[]args){
         try {
             launch(args);
         }catch (Exception e){

@@ -14,6 +14,9 @@
 #header-footer{
     -fx-background-color: rgb(20, 163, 248)
 }
+#body-font{
+    -fx-font:  lighter 18px 'Open Sans';
+}
 
 #mainpane{
     -fx-background-color : rgb(255, 255, 255)
