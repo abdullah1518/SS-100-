@@ -45,9 +45,10 @@ public class Main extends Application {
     static final String PASS = "mypass";
 
     String currentEmail;
-
+    Stage primaryStage;
     @Override
-    public void start (Stage primaryStage){
+    public void start (Stage baaalb){
+        primaryStage = baaalb;
 
         BorderPane root0 = new BorderPane();
         GridPane bpane = new GridPane();
@@ -71,21 +72,21 @@ public class Main extends Application {
 
         btn0.setOnAction(value -> {
             try {
-                page1(primaryStage);
+                page1();
             } catch (Exception e) {
             }
         });
 
         btn1.setOnAction(value -> {
-            sponsor_a_runner(primaryStage);
+            sponsor_a_runner();
         });
 
         btn2.setOnAction(value -> {
-            how_long(primaryStage);
+            how_long();
         });
 
         btn3.setOnAction(value -> {
-            loginpage(primaryStage);
+            loginpage();
         });
 
 
@@ -126,11 +127,11 @@ public class Main extends Application {
         primaryStage.setScene(scene0);
         primaryStage.setTitle("Marathon Skills");
         primaryStage.show();
-
     }
 
 
-    public void page1 (Stage primaryStage){
+
+    public void page1 (){
 
         BorderPane root1 = new BorderPane();
         GridPane bpane1 = new GridPane();
@@ -157,13 +158,13 @@ public class Main extends Application {
         bbtn.setPrefSize(50, 30);
 
         btn0.setOnAction(value -> {
-            loginpage(primaryStage);
+            loginpage();
         });
         btn1.setOnAction(value -> {
-            register_runner(primaryStage);
+            register_runner();
         });
         lbtn.setOnAction(value -> {
-            loginpage(primaryStage);
+            loginpage();
         });
         bbtn.setOnAction(value -> {
             try {
@@ -207,7 +208,7 @@ public class Main extends Application {
     }
 
 
-    public void loginpage (Stage primaryStage){
+    public void loginpage (){
 
         BorderPane root = new BorderPane();
         GridPane bpane = new GridPane();
@@ -236,13 +237,13 @@ public class Main extends Application {
         btn1.setOnAction(value -> {
             String token = signin(txtfield1.getText(), txtfield2.getText());
             if (token.equals("R")) {
-                runner_menu(primaryStage);
+                runner_menu();
             }
             if (token.equals("C")) {
-                coordinator_menu(primaryStage);
+                coordinator_menu();
             }
             if (token.equals("A")) {
-                admin_menu(primaryStage);
+                admin_menu();
             }
 
         });
@@ -298,7 +299,7 @@ public class Main extends Application {
     }
 
 
-    public void sponsor_a_runner (Stage primaryStage){
+    public void sponsor_a_runner (){
         //----------------panes and scene------------------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -516,7 +517,7 @@ public class Main extends Application {
     }
 
 
-    public void runner_menu (Stage primaryStage){
+    public void runner_menu (){
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -597,7 +598,7 @@ public class Main extends Application {
             start(primaryStage);
         });
         logout.setOnAction(value -> {
-            loginpage(primaryStage);
+            loginpage();
         });
         contact_information.setOnAction(value -> {
             secondarystage.setTitle("Contact info");
@@ -606,21 +607,21 @@ public class Main extends Application {
         });
         edit.setOnAction(value -> {
             try {
-                edit_runner(primaryStage);
+                edit_runner();
             } catch (SQLException se) {
                 se.printStackTrace();
             }
         });
         myrace.setOnAction(value -> {
             try {
-                my_race_results(primaryStage);
+                my_race_results();
             } catch (SQLException se) {
                 se.printStackTrace();
             }
         });
         regis.setOnAction(value -> {
             try {
-                register_event(primaryStage);
+                register_event();
             } catch (SQLException se) {
                 se.printStackTrace();
             }
@@ -628,7 +629,7 @@ public class Main extends Application {
     }
 
 
-    public void coordinator_menu (Stage primaryStage){
+    public void coordinator_menu (){
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -693,11 +694,11 @@ public class Main extends Application {
             start(primaryStage);
         });
         logout.setOnAction(value -> {
-            loginpage(primaryStage);
+            loginpage();
         });
         runners.setOnAction(value -> {
             try {
-                edit_runner_2(primaryStage);
+                edit_runner_2();
             } catch (SQLException se) {
                 se.printStackTrace();
             }
@@ -705,7 +706,7 @@ public class Main extends Application {
     }
 
 
-    public void admin_menu (Stage primaryStage){
+    public void admin_menu (){
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -772,11 +773,11 @@ public class Main extends Application {
             start(primaryStage);
         });
         logout.setOnAction(value -> {
-            loginpage(primaryStage);
+            loginpage();
         });
         users.setOnAction(value -> {
             try {
-                edit_runner_2(primaryStage);
+                edit_runner_2();
             } catch (SQLException se) {
                 se.printStackTrace();
             }
@@ -784,7 +785,7 @@ public class Main extends Application {
     }
 
 
-    public void register_runner (Stage primaryStage){
+    public void register_runner (){
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -976,7 +977,7 @@ public class Main extends Application {
                 sqlinsert("INSERT INTO User VALUES ('" + email.getText() + "','" + password.getText() + "','" + firstname.getText() + "','" + lastname.getText() + "','R');");
                 sqlinsert("INSERT INTO Runner (Email,Gender,DateOfBirth,CountryCode) VALUES ('" + email.getText() + "','" + gender.getSelectionModel().getSelectedItem().toString() + "','" + dobValues[0] + "-" + dobValues[1] + "-" + dobValues[2] + "', (SELECT CountryCode FROM Country WHERE CountryName = '" + country.getSelectionModel().getSelectedItem().toString() + "'));");
                 try {
-                    register_event(primaryStage);
+                    register_event();
                 } catch (SQLException se) {
                     se.printStackTrace();
                     Stage secondarystage = new Stage();
@@ -1004,7 +1005,7 @@ public class Main extends Application {
     }
 
 
-    public void register_event (Stage primaryStage) throws SQLException {
+    public void register_event () throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1126,7 +1127,7 @@ public class Main extends Application {
 //        }
 
         backButton.setOnAction(value -> {
-            runner_menu(primaryStage);
+            runner_menu();
         });
         cancelButton.setOnAction(value -> {
             start(primaryStage);
@@ -1166,7 +1167,7 @@ public class Main extends Application {
         });
         registerButton.setOnAction(value -> {
             if (numOfSelectedMarathons[0] != 0) {
-                thank_you_runner(primaryStage);
+                thank_you_runner();
             }
         });
         Scene scene = new Scene(rootBorderPane, 600, 600);
@@ -1176,7 +1177,7 @@ public class Main extends Application {
     }
 
 
-    public void edit_runner (Stage primaryStage) throws SQLException {
+    public void edit_runner () throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1298,7 +1299,7 @@ public class Main extends Application {
         });
 
         cancelButton.setOnAction(value -> {
-            runner_menu(primaryStage);
+            runner_menu();
         });
         backButton.setOnAction(value -> {
             start(primaryStage);
@@ -1311,7 +1312,7 @@ public class Main extends Application {
     }
 
 
-    public void edit_runner_2 (Stage primaryStage) throws SQLException {
+    public void edit_runner_2 () throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1433,7 +1434,7 @@ public class Main extends Application {
         });
 
         cancelButton.setOnAction(value -> {
-            runner_menu(primaryStage);
+            runner_menu();
         });
         backButton.setOnAction(value -> {
             start(primaryStage);
@@ -1446,7 +1447,7 @@ public class Main extends Application {
     }
 
 
-    public void my_race_results (Stage primaryStage) throws SQLException {
+    public void my_race_results () throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1569,12 +1570,12 @@ public class Main extends Application {
         titleLabel.setId("heading-font");
 
         backButton.setOnAction(value -> {
-            runner_menu(primaryStage);
+            runner_menu();
         });
     }
 
 
-    public void thank_you_runner (Stage primaryStage){
+    public void thank_you_runner (){
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1606,15 +1607,16 @@ public class Main extends Application {
         rootBorderPane.setCenter(mainBox);
 
         okButton.setOnAction(value -> {
-            runner_menu(primaryStage);
+            runner_menu();
         });
 
     }
 
 
-    public void how_long(Stage primaryStage){
-        Scene scene = null;
-        GridPane main =sceneassign(scene, primaryStage);
+    public void how_long(){
+        Object[] oarr = sceneassign();
+        GridPane main =  (GridPane) oarr[1];
+        Scene scene = (Scene)oarr[0];
         //------------------node definitions-----------
         //buttons
         //radi0s
@@ -1700,7 +1702,7 @@ public class Main extends Application {
         imageview.setPreserveRatio(true);
 
         selectedinfo.setWrapText(true);
-        selectedinfo.prefHeightProperty().bind(mleft.heightProperty());
+
         //------------------------pane properties--------------
         GridPane[] panelist = {mright, main, imagebox1};
         for (GridPane pane : panelist){
@@ -1741,18 +1743,18 @@ public class Main extends Application {
         main.add(mpane, 0, 0);
         //--------------button actions-------------
         allimages.get(0).setOnMouseClicked(event -> {
-            selectedinfo.setText("It would take an F1 car travelling at 345km/h  7.3 minutes!");
+            selectedinfo.setText("It would take an F1 car travelling at \n 345km/h  7.3 minutes!");
         });
     }
 
 
-    public GridPane sceneassign(Scene scene, Stage primaryStage){
+    public Object[] sceneassign() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
         GridPane footer = new GridPane();
         GridPane main = new GridPane();
-        scene = new Scene(root, 500, 500);
+        Scene scene = new Scene(root, 500, 500);
         scene.getStylesheets().add(getClass().getResource("styling.css").toString());
         //------------------node definitions-----------
         //buttons
@@ -1789,7 +1791,10 @@ public class Main extends Application {
         back.setOnAction(value ->{
             start(primaryStage);
         });
-        return  main;
+        Object[]outs = new Object[2];
+        outs[0] = scene;
+        outs[1]= main;
+        return outs;
     }
 
 
