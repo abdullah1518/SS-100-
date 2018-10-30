@@ -71,6 +71,7 @@ public class Main extends Application {
         btn3.setPrefSize(150, 30);
 
         btn0.setOnAction(value -> {
+            scene0.
             try {
                 page1();
             } catch (Exception e) {
@@ -82,7 +83,7 @@ public class Main extends Application {
         });
 
         btn2.setOnAction(value -> {
-            how_long();
+            find_out_more();
         });
 
         btn3.setOnAction(value -> {
@@ -128,7 +129,6 @@ public class Main extends Application {
         primaryStage.setTitle("Marathon Skills");
         primaryStage.show();
     }
-
 
 
     public void page1 (){
@@ -1613,6 +1613,49 @@ public class Main extends Application {
     }
 
 
+    public void find_out_more(){
+        //------------------node definitions-----------
+        //buttons
+        Button ms2015button = new Button("Marathon Skills 2015");
+        Button howlongbutton = new Button("How long is a marathon?");
+        Button prevracebutton = new Button("Previous race results");
+        Button charitiesbutton = new Button("List of charities");
+        Button bmibutton = new Button("BMI calculator");
+        Button bmrbutton = new Button("BMR calculator");
+        //textfields
+        //labels
+        Label findoutmoreLabel = new Label("Find out more information");
+        //Styling nodes
+        //-------------------panes and scene--------------
+        Object[] oarr = sceneassign();
+        Scene scene = (Scene) oarr[0];
+        GridPane main = (GridPane)oarr[1];
+        VBox maintop = new VBox(findoutmoreLabel);
+        GridPane mainbott = new GridPane();
+        //------------------------pane properties--------------
+        GridPane[] panelist = {mainbott, main};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+        mainbott.add(ms2015button, 0, 0);
+        mainbott.add(howlongbutton, 1, 0);
+        mainbott.add(prevracebutton, 0, 1);
+        mainbott.add(charitiesbutton, 1, 1);
+        mainbott.add(bmibutton, 0, 2);
+        mainbott.add(bmrbutton, 1, 2);
+
+        main.add(maintop, 0, 0);
+        main.add(mainbott, 0, 1);
+        //--------------button actions--------------
+        howlongbutton.setOnAction(event -> {
+            how_long();
+        });
+    }
+
+
     public void how_long(){
         Object[] oarr = sceneassign();
         GridPane main =  (GridPane) oarr[1];
@@ -1625,13 +1668,6 @@ public class Main extends Application {
         speedrad.setToggleGroup(spedis);
         RadioButton distancerad = new RadioButton("Distance");
         distancerad.setToggleGroup(spedis);
-
-        speedrad.setOnAction(event -> {
-            System.out.println("speed");
-        });
-        distancerad.setOnAction(event -> {
-            System.out.println("dist");
-        });
         //textfields
         //labels
         Label howlong = new Label("How long is a marathon?");
@@ -1647,20 +1683,22 @@ public class Main extends Application {
         imagenames1.add(new Label("Jaguar"));
         imagenames1.add(new Label("Worm"));
         ArrayList<Label> imagenames2 = new ArrayList<>();
-        imagenames2.add(new Label("F1Car"));
-        imagenames2.add(new Label("F1Car"));
-        imagenames2.add(new Label("F1Car"));
-        imagenames2.add(new Label("F1Car"));
-        imagenames2.add(new Label("F1Car"));
+        imagenames2.add(new Label("bus"));
+        imagenames2.add(new Label("Pair of Havaianas"));
+        imagenames2.add(new Label("Airbus A380"));
+        imagenames2.add(new Label("Football Field"));
+        imagenames2.add(new Label("Ronaldinho"));
 
         //images
         File f = null;
         FileInputStream fileInputstream = null;
-        ArrayList<ImageView> allimages = new ArrayList<>();
+        ArrayList<Image> allimages = new ArrayList<>();
+        ArrayList<ImageView> allimageviews = new ArrayList<>();
         try {
             f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\how-long-is-a-marathon-images");
             ArrayList<File> images = new ArrayList<>();
-            for (int i=1;i+1<f.listFiles().length;i++){
+            System.out.println(f.listFiles().length);
+            for (int i=1;i-1<f.listFiles().length;i++){
                 images.add(new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\how-long-is-a-marathon-images\\"+i+".jpg"));
             }
             fileInputstream = new FileInputStream(images.get(0));
@@ -1668,17 +1706,21 @@ public class Main extends Application {
 
             for (File image : images){
                 System.out.println(image);
+                Image imageit = new Image(new FileInputStream(image));
+                allimages.add(imageit);
+
                 ImageView iview = new ImageView(new Image(new FileInputStream(image)));
 
                 iview.setFitWidth(70);
                 iview.fitWidthProperty().bind((main.widthProperty().subtract(50)).divide(7));
                 iview.setPreserveRatio(true);
 
-                allimages.add(iview);
+                allimageviews.add(iview);
 
             }
         }catch (Exception fe){fe.printStackTrace();}
-
+        selectedinfo.setText("a 42km marathon would \n take an "+imagenames1.get(0).getText()+" travelling at \n "+345.0+"km/h "+Double.toString(42/345.0*60.0).substring(0, Double.toString(42/345.0*60).indexOf(".")+2)+" minutes!");
+        selected.setText(imagenames1.get(0).getText());
 
         Image hlimage = new Image(fileInputstream);
         ImageView imageview = new ImageView(hlimage);
@@ -1704,11 +1746,18 @@ public class Main extends Application {
         selectedinfo.setWrapText(true);
 
         //------------------------pane properties--------------
-        GridPane[] panelist = {mright, main, imagebox1};
+        GridPane[] panelist = {mright, main};
         for (GridPane pane : panelist){
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
             pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+        GridPane[] panelist2 ={imagebox1, imagebox2};
+        for (GridPane pane : panelist2){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(5);
+            pane.setHgap(5);
             pane.setAlignment(Pos.CENTER);
         }
         mright.setAlignment(Pos.TOP_CENTER);
@@ -1723,13 +1772,25 @@ public class Main extends Application {
         imagebox1.add(imagenames1.get(5), 1, 5);
         imagebox1.add(imagenames1.get(6), 1, 6);
 
-        imagebox1.add(allimages.get(0), 0, 0);
-        imagebox1.add(allimages.get(1), 0, 1);
-        imagebox1.add(allimages.get(2), 0, 2);
-        imagebox1.add(allimages.get(3), 0, 3);
-        imagebox1.add(allimages.get(4), 0, 4);
-        imagebox1.add(allimages.get(5), 0, 5);
-        imagebox1.add(allimages.get(6), 0, 6);
+        imagebox1.add(allimageviews.get(0), 0, 0);
+        imagebox1.add(allimageviews.get(1), 0, 1);
+        imagebox1.add(allimageviews.get(2), 0, 2);
+        imagebox1.add(allimageviews.get(3), 0, 3);
+        imagebox1.add(allimageviews.get(4), 0, 4);
+        imagebox1.add(allimageviews.get(5), 0, 5);
+        imagebox1.add(allimageviews.get(6), 0, 6);
+
+        imagebox2.add(imagenames2.get(0), 1, 0);
+        imagebox2.add(imagenames2.get(1), 1, 1);
+        imagebox2.add(imagenames2.get(2), 1, 2);
+        imagebox2.add(imagenames2.get(3), 1, 3);
+        imagebox2.add(imagenames2.get(4), 1, 4);
+
+        imagebox2.add(allimageviews.get(7), 0, 0);
+        imagebox2.add(allimageviews.get(8), 0, 1);
+        imagebox2.add(allimageviews.get(9), 0, 2);
+        imagebox2.add(allimageviews.get(10), 0, 3);
+        imagebox2.add(allimageviews.get(11), 0, 4);
 
         mright.add(mrighttop,0, 0);
         mright.add(imagecroll, 0, 1);
@@ -1742,9 +1803,37 @@ public class Main extends Application {
 
         main.add(mpane, 0, 0);
         //--------------button actions-------------
-        allimages.get(0).setOnMouseClicked(event -> {
-            selectedinfo.setText("It would take an F1 car travelling at \n 345km/h  7.3 minutes!");
+        speedrad.setOnAction(event -> {
+            imagecroll.setContent(imagebox1);
+            imageview.setImage(allimages.get(0));
         });
+        distancerad.setOnAction(event -> {
+            imagecroll.setContent(imagebox2);
+            imageview.setImage(allimages.get(7));
+        });
+
+        double[] speeds = {345, 0.01, 15, 0.12, 35, 80, 0.03};
+        for(int i=0;i<speeds.length;i++) {
+            final int fi = i;
+            allimageviews.get(fi).setOnMouseClicked(event -> {
+                double speed = speeds[fi];
+                double time = 42.0 / speed * 60.0;
+                selectedinfo.setText("a 42km marathon would \n take an " + imagenames1.get(fi).getText() + " travelling at \n " + speed + "km/h " + Double.toString(time).substring(0, Double.toString(time).indexOf(".") + 2) + " minutes!");
+                selected.setText(imagenames1.get(fi).getText());
+                imageview.setImage(allimages.get(fi));
+            });
+        }
+        final double[] lengths = {10, 0.245, 73, 105, 1.81};
+        for(int i=0;i<lengths.length;i++){
+            final int fi = i;
+            final int fx = i+7;
+            allimageviews.get(fx).setOnMouseClicked(event -> {
+                imageview.setImage(allimages.get(fx));
+                selected.setText(imagenames2.get(fi).getText());
+                selectedinfo.setText("It would take "+Double.toString(42000/lengths[fi]).substring(0, Double.toString(42000/lengths[fi]).indexOf(".")+2)+" "+imagenames2.get(fi).getText()+"\n to make up a 42km marathon!");
+            });
+        }
+
     }
 
 
@@ -1775,6 +1864,7 @@ public class Main extends Application {
             pane.setAlignment(Pos.CENTER);
         }
         footer.setPrefHeight(30);
+        header.setPrefHeight(60);
         root.setTop(header);
         root.setCenter(main);
         root.setBottom(footer);
