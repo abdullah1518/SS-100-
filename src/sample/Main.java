@@ -71,7 +71,6 @@ public class Main extends Application {
         btn3.setPrefSize(150, 30);
 
         btn0.setOnAction(value -> {
-            scene0.
             try {
                 page1();
             } catch (Exception e) {
@@ -1653,6 +1652,9 @@ public class Main extends Application {
         howlongbutton.setOnAction(event -> {
             how_long();
         });
+        ms2015button.setOnAction(event -> {
+            marathon_info();
+        });
     }
 
 
@@ -1833,6 +1835,96 @@ public class Main extends Application {
                 selectedinfo.setText("It would take "+Double.toString(42000/lengths[fi]).substring(0, Double.toString(42000/lengths[fi]).indexOf(".")+2)+" "+imagenames2.get(fi).getText()+"\n to make up a 42km marathon!");
             });
         }
+
+    }
+
+
+    public void marathon_info(){
+        Object[] oarr = sceneassign();
+        GridPane main =  (GridPane) oarr[1];
+        Scene scene = (Scene)oarr[0];
+        //------------------node definitions-----------
+        //buttons
+        //textfields
+        //labels
+        Label aboutlabel = new Label("About Marathon Skills 2015");
+        Label infolabel1 = new Label("Marathon Skills is a running festival held every year in a different part of the world. There can be three events: a Full Marathon, Half Marathon and a Fun Run - so the festival caters to all abilities and experience.In past years, marathons have been held in Osaka, Japan (2014); Leipzig, Germany (2013); Hanoi, Vietnam (2012) and York, England (2011).");
+        Label infolabel2 = new Label("This year, Marathon Skills is very excited to be partnering with São Paulo, Brazil to put on the biggest running festival yet. Brazil's financial centre and the biggest city in South America, São Paulo will be on display to the thousands of runners who will weave their way past skyscrapers, green parks and magnificent architecture.");
+        Label infolabel3 = new Label("This festival has attracted a record number of runners from all over the world. Attention will be on the contingents from Kenya and Jamaica as we hope to see Dawit Admasu's 2014 São Silvestre time broken. (The Ethiopian completed the race in 45 minutes 4 seconds.)The carnival atmosphere promises entertainment for all spectators as well as a party to round off the festivities in Ibirapuera Park.");
+        Label infolabel4 = new Label("The events:");
+        Label infolabel5 = new Label(
+                "- The \"Samba\" Full Marathon will start at Rua dos Americanos at 6am on 5 September 2015." +
+                "\n" +
+                "- The \"Jongo\" Half Marathon will start at 7am on 6 September 2015. Runners will depart from near the intersection of Rua Ciniciata Braga and Avenida Brigadeiro Luís Antõnio." +
+                "\n" +
+                "- The \"Capoeira\" 5km Fun Run will start at 3 pm on 6 September 2015. Our fun runners will start from the UNINOVE Memorial." +
+                "\n" +
+                "Thank you to all the volunteers who will be helping!");
+
+
+        //images
+        ArrayList<ImageView> allImageViews = new ArrayList<>();
+        ArrayList<Image> allImages = new ArrayList<>();
+        ArrayList<File> allFiles = new ArrayList<>();
+        Image marathonImage = null;
+        ImageView marathonIV = null;
+        try {
+            File file = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\Marathon-images");
+            for (File i: file.listFiles()){
+                allImages.add(new Image(new FileInputStream(i)));
+                allImageViews.add(new ImageView(new Image(new FileInputStream(i))));
+            }
+            File file2 = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\marathon-skills-2015-marathon-map.jpg");
+            marathonImage = new Image(new FileInputStream(file2));
+            marathonIV = new ImageView(marathonImage);
+        }catch (FileNotFoundException fe){fe.printStackTrace();}
+        //Styling nodes
+        //-------------------panes and scene--------------
+        BorderPane mbpane = new BorderPane();
+        V mtop = new HBox(aboutlabel);
+        VBox mright = new VBox(infolabel1, infolabel2, infolabel3, infolabel4, infolabel5);
+        GridPane mlefttop = new GridPane();
+        GridPane mleftbott = new GridPane();
+        VBox mleft = new VBox(mlefttop, mleftbott);
+
+        for (Label i : new Label[]{infolabel1, infolabel2, infolabel3, infolabel4, infolabel5}) {
+            i.setWrapText(true);
+            i.prefHeightProperty().bind(scene.heightProperty().subtract(mlefttop.heightProperty()));
+            i.prefWidthProperty().bind(scene.widthProperty().subtract(mleftbott.widthProperty()));
+        }
+
+        marathonIV.setFitWidth(100);
+        marathonIV.fitWidthProperty().bind(main.widthProperty().divide(500).multiply(100));
+        marathonIV.fitHeightProperty().bind(main.heightProperty().divide(500).multiply(100));
+        marathonIV.setPreserveRatio(true);
+
+        for (ImageView iv : allImageViews){
+            iv.setFitWidth(50);
+            iv.fitWidthProperty().bind(main.widthProperty().divide(500).multiply(50));
+            iv.fitHeightProperty().bind(main.heightProperty().divide(500).multiply(50));
+            iv.setPreserveRatio(true);
+        }
+        //------------------------pane properties--------------
+        GridPane[] panelist = {mlefttop, mleftbott};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+        main.add(mbpane, 0, 0);
+
+        mbpane.setRight(mright);
+        mbpane.setLeft(mleft);
+        mbpane.setTop(mtop);
+
+        mlefttop.add(marathonIV, 0, 0);
+        mleftbott.add(allImageViews.get(0), 0, 0);
+        mleftbott.add(allImageViews.get(1), 1, 0);
+        mleftbott.add(allImageViews.get(2), 0, 1);
+        mleftbott.add(allImageViews.get(3), 1, 1);
+
+        //--------------button actions--------------
 
     }
 
@@ -2052,14 +2144,13 @@ public class Main extends Application {
 }
 
 
-//    //-------------------panes and scene--------------
-//    BorderPane root = new BorderPane();
-//    Scene scene = new Scene(root, 500, 500);
 //    //------------------node definitions-----------
 //    //buttons
 //    //textfields
 //    //labels
 //    //Styling nodes
+//    //-------------------panes and scene--------------
+
 //    //------------------------pane properties--------------
 //    GridPane[] panelist = {};
 //    for (GridPane pane : panelist){
@@ -2068,10 +2159,4 @@ public class Main extends Application {
 //        pane.setHgap(10);
 //        pane.setAlignment(Pos.CENTER);
 //    }
-//    //-----------------------primary stage properties-----------------
-//    primaryStage.setMinWidth(500);
-//    primaryStage.setMinHeight(500);
-//    primaryStage.setTitle("register as a runner");
-//    primaryStage.setScene(scene);
-//    primaryStage.show();
 //    //--------------button actions--------------
