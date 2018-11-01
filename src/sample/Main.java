@@ -1626,7 +1626,10 @@ public class Main extends Application {
         Label findoutmoreLabel = new Label("Find out more information");
         //Styling nodes
         //-------------------panes and scene--------------
-        Object[] oarr = sceneassign();
+        Object[] oarr = gridpane_preset();
+
+
+        oarr = gridpane_preset();
         Scene scene = (Scene) oarr[0];
         GridPane main = (GridPane)oarr[1];
         VBox maintop = new VBox(findoutmoreLabel);
@@ -1659,7 +1662,10 @@ public class Main extends Application {
 
 
     public void how_long(){
-        Object[] oarr = sceneassign();
+        Object[] oarr = gridpane_preset();
+
+
+        oarr = gridpane_preset();
         GridPane main =  (GridPane) oarr[1];
         Scene scene = (Scene)oarr[0];
         //------------------node definitions-----------
@@ -1808,10 +1814,16 @@ public class Main extends Application {
         speedrad.setOnAction(event -> {
             imagecroll.setContent(imagebox1);
             imageview.setImage(allimages.get(0));
+            double speed = 345;
+            double time = 42.0 / speed * 60.0;
+            selectedinfo.setText("a 42km marathon would \n take an " + imagenames1.get(0).getText() + " travelling at \n " + speed + "km/h " + Double.toString(time).substring(0, Double.toString(time).indexOf(".") + 2) + " minutes!");
+            selected.setText(imagenames1.get(0).getText());
         });
         distancerad.setOnAction(event -> {
             imagecroll.setContent(imagebox2);
             imageview.setImage(allimages.get(7));
+            selected.setText(imagenames2.get(0).getText());
+            selectedinfo.setText("It would take "+Double.toString(42000/10).substring(0, Double.toString(42000/10).indexOf(".")+2)+" "+imagenames2.get(0).getText()+"\n to make up a 42km marathon!");
         });
 
         double[] speeds = {345, 0.01, 15, 0.12, 35, 80, 0.03};
@@ -1840,8 +1852,9 @@ public class Main extends Application {
 
 
     public void marathon_info(){
-        Object[] oarr = sceneassign();
-        GridPane main =  (GridPane) oarr[1];
+        Object[] oarr = scrollpane_preset();
+
+        ScrollPane main =  (ScrollPane) oarr[1];
         Scene scene = (Scene)oarr[0];
         //------------------node definitions-----------
         //buttons
@@ -1879,29 +1892,32 @@ public class Main extends Application {
             marathonIV = new ImageView(marathonImage);
         }catch (FileNotFoundException fe){fe.printStackTrace();}
         //Styling nodes
+        aboutlabel.setId("body-font");
         //-------------------panes and scene--------------
+        ScrollPane scrollPane = new ScrollPane();
         BorderPane mbpane = new BorderPane();
-        V mtop = new HBox(aboutlabel);
+        HBox mtop = new HBox(aboutlabel);
         VBox mright = new VBox(infolabel1, infolabel2, infolabel3, infolabel4, infolabel5);
         GridPane mlefttop = new GridPane();
         GridPane mleftbott = new GridPane();
-        VBox mleft = new VBox(mlefttop, mleftbott);
+        GridPane mleft = new GridPane();
 
         for (Label i : new Label[]{infolabel1, infolabel2, infolabel3, infolabel4, infolabel5}) {
             i.setWrapText(true);
-            i.prefHeightProperty().bind(scene.heightProperty().subtract(mlefttop.heightProperty()));
-            i.prefWidthProperty().bind(scene.widthProperty().subtract(mleftbott.widthProperty()));
+            i.prefWidthProperty().bind(main.widthProperty().subtract(mlefttop.widthProperty()));
+            //i.prefHeightProperty().bind(main.heightProperty().subtract(mlefttop.heightProperty()));
+            i.setStyle("-fx-font: normal 14px 'open sans';");
         }
 
-        marathonIV.setFitWidth(100);
-        marathonIV.fitWidthProperty().bind(main.widthProperty().divide(500).multiply(100));
-        marathonIV.fitHeightProperty().bind(main.heightProperty().divide(500).multiply(100));
+        marathonIV.setFitWidth(200);
+        marathonIV.fitWidthProperty().bind(main.widthProperty().divide(500).multiply(200));
+        marathonIV.fitHeightProperty().bind(main.heightProperty().divide(500).multiply(200));
         marathonIV.setPreserveRatio(true);
 
         for (ImageView iv : allImageViews){
-            iv.setFitWidth(50);
-            iv.fitWidthProperty().bind(main.widthProperty().divide(500).multiply(50));
-            iv.fitHeightProperty().bind(main.heightProperty().divide(500).multiply(50));
+            iv.setFitWidth(70);
+            iv.fitWidthProperty().bind(main.widthProperty().divide(500).multiply(70));
+            iv.fitHeightProperty().bind(main.heightProperty().divide(500).multiply(70));
             iv.setPreserveRatio(true);
         }
         //------------------------pane properties--------------
@@ -1912,11 +1928,17 @@ public class Main extends Application {
             pane.setHgap(10);
             pane.setAlignment(Pos.CENTER);
         }
-        main.add(mbpane, 0, 0);
+        mtop.setAlignment(Pos.CENTER);
+        mright.setSpacing(10);
+
+        main.setContent(mbpane);
 
         mbpane.setRight(mright);
         mbpane.setLeft(mleft);
         mbpane.setTop(mtop);
+
+        mleft.add(mlefttop, 0, 0);
+        mleft.add(mleftbott, 0, 1);
 
         mlefttop.add(marathonIV, 0, 0);
         mleftbott.add(allImageViews.get(0), 0, 0);
@@ -1925,11 +1947,68 @@ public class Main extends Application {
         mleftbott.add(allImageViews.get(3), 1, 1);
 
         //--------------button actions--------------
-
+        marathonIV.setOnMouseClicked(event -> {
+            interactive_map();
+        });
     }
 
 
-    public Object[] sceneassign() {
+    public void interactive_map(){
+        Object[] oarr = gridpane_preset();
+
+
+        oarr = gridpane_preset();
+        GridPane main =  (GridPane) oarr[1];
+        Scene scene = (Scene)oarr[0];
+        //------------------node definitions-----------
+        //buttons
+        //textfields
+        //labels
+        Label cpnumber = new Label("Checkpoint 1");
+        Label cpname = new Label("Avenida Rudge");
+        Label cpserv = new Label("Services Provided:");
+        //images
+        ImageView map = null;
+        try{
+            File f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\marathon-skills-2015-marathon-map.jpg");
+            map = new ImageView(new Image(new FileInputStream(f)));
+        }catch (FileNotFoundException fe){fe.printStackTrace();}
+
+
+        //Styling nodes
+        //-------------------panes and scene--------------
+        BorderPane mbpane = new BorderPane();
+        VBox cpbox = new VBox(cpnumber, cpname, cpserv);
+        HBox mappane = new HBox(map);
+
+        map.setFitWidth(300);
+        map.fitWidthProperty().bind(main.widthProperty().divide(500).multiply(300));
+        map.fitHeightProperty().bind(main.heightProperty().divide(500).multiply(300));
+        map.setPreserveRatio(true);
+
+        //------------------------pane properties--------------
+        GridPane[] panelist = {};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+        main.add(mbpane, 0, 0);
+
+        mbpane.setPadding(new Insets(20));
+
+        mbpane.setLeft(mappane);
+        mbpane.setRight(cpbox);
+        //Styling
+        cpbox.setStyle("-fx-border-style: solid; -fx-border-width: 5px; -fx-border-color: rgb(20, 163, 248);");
+        cpnumber.setStyle("-fx-font: normal 16px 'open sans';");
+        cpname.setStyle("-fx-font: lighter 14px 'open sans';");
+        //--------------button actions--------------
+    }
+
+
+    public Object[] gridpane_preset() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -1949,6 +2028,57 @@ public class Main extends Application {
         titlelabel.setId("heading-font");
         //------------------------pane properties--------------
         GridPane[] panelist = {header, main, footer};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+        footer.setPrefHeight(30);
+        header.setPrefHeight(60);
+        root.setTop(header);
+        root.setCenter(main);
+        root.setBottom(footer);
+
+        header.add(back, 0, 0);
+        header.add(titlelabel, 1, 0);
+        //-----------------------primary stage properties-----------------
+        primaryStage.setMinWidth(500);
+        primaryStage.setMinHeight(500);
+        primaryStage.setTitle("Marathon skills 2015");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        //-----------------------button actions-----------------
+        back.setOnAction(value ->{
+            start(primaryStage);
+        });
+        Object[]outs = new Object[2];
+        outs[0] = scene;
+        outs[1]= main;
+        return outs;
+    }
+
+
+    public Object[] scrollpane_preset() {
+        //-------------------panes and scene--------------
+        BorderPane root = new BorderPane();
+        GridPane header = new GridPane();
+        GridPane footer = new GridPane();
+        ScrollPane main = new ScrollPane();
+        Scene scene = new Scene(root, 500, 500);
+        scene.getStylesheets().add(getClass().getResource("styling.css").toString());
+        //------------------node definitions-----------
+        //buttons
+        Button back= new Button("Back");
+        //labels
+        Label titlelabel = new Label("Marathon Skills 2019");
+        //Styling nodes
+        header.setId("header-footer");
+        footer.setId("header-footer");
+        main.setId("mainpane");
+        titlelabel.setId("heading-font");
+        //------------------------pane properties--------------
+        GridPane[] panelist = {header,  footer};
         for (GridPane pane : panelist){
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
