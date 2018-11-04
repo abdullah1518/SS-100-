@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.image.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -1961,7 +1962,19 @@ public class Main extends Application {
         GridPane main =  (GridPane) oarr[1];
         Scene scene = (Scene)oarr[0];
         //------------------node definitions-----------
+        //colors
         //buttons
+        Circle cp1 = new Circle(42, 22, 12);
+        Circle cp2 = new Circle(150, 22, 12);
+        Circle cp3 = new Circle(42, 22, 12);
+        Circle cp4 = new Circle(42, 22, 12);
+        Circle cp5 = new Circle(42, 22, 12);
+        Circle cp6 = new Circle(42, 22, 12);
+        for(Circle cp : new Circle[]{cp1, cp2, cp3, cp4, cp5, cp6}){
+            cp.setFill(Color.RED);
+            cp.setStroke(Color.LIGHTGRAY);
+        }
+        cp1.setStrokeWidth(2.5);
         //textfields
         //labels
         Label cpnumber = new Label("Checkpoint 1");
@@ -1980,10 +1993,10 @@ public class Main extends Application {
         BorderPane mbpane = new BorderPane();
         VBox cpbox = new VBox(cpnumber, cpname, cpserv);
         HBox mappane = new HBox(map);
+        StackPane stackPane = new StackPane();
+        Pane buttonpane = new Pane();
 
-        map.setFitWidth(300);
-        map.fitWidthProperty().bind(main.widthProperty().divide(500).multiply(300));
-        map.fitHeightProperty().bind(main.heightProperty().divide(500).multiply(300));
+        map.setFitWidth(350);
         map.setPreserveRatio(true);
 
         //------------------------pane properties--------------
@@ -1998,7 +2011,11 @@ public class Main extends Application {
 
         mbpane.setPadding(new Insets(20));
 
-        mbpane.setLeft(mappane);
+        stackPane.getChildren().addAll(mappane, buttonpane);
+
+        buttonpane.getChildren().addAll(cp1);
+
+        mbpane.setLeft(stackPane);
         mbpane.setRight(cpbox);
         //Styling
         cpbox.setStyle("-fx-border-style: solid; -fx-border-width: 5px; -fx-border-color: rgb(20, 163, 248);");
