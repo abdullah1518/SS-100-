@@ -1982,7 +1982,7 @@ public class Main extends Application {
             cp.setStrokeWidth(2.5);
         }
 
-        String[] cpnames = {"Avenida Rudge", "Theatro Municipal", "Parque do Ibirapuera\n", };
+        String[] cpnames = {"Avenida Rudge", "Theatro Municipal", "Parque do Ibirapuera","Jardim Luzitania", "Iguatemi", "Rua Lisboa", "Cemitério da Consolação", "Cemitério da Consolação"};
         Circle event1 = new Circle(202.0,19.0,12);
         Circle event2 = new Circle(202.0,329.0,12);
         Circle event3 = new Circle(51.0,89.0,12);
@@ -1996,19 +1996,49 @@ public class Main extends Application {
         //images
         ImageView map = null;
         try{
-            File f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\WSC2015_TP09_resources\\WSC2015_TP09_resources_session-3\\marathon-skills-2015-marathon-map");
+            File f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\WSC2015_TP09_resources\\WSC2015_TP09_resources_session-3\\marathon-skills-2015-marathon-map.jpg");
             map = new ImageView(new Image(new FileInputStream(f)));
         }catch (FileNotFoundException fe){fe.printStackTrace();}
+
+        ImageView drinksicon = new ImageView();
+        ImageView energyicon = new ImageView();
+        ImageView infoicon = new ImageView();
+        ImageView medicicon = new ImageView();
+        ImageView toileticon = new ImageView();
+        for (ImageView iconview: new ImageView[]{drinksicon, energyicon, toileticon, infoicon, medicicon}) {
+            iconview.setFitWidth(30);
+            iconview.setPreserveRatio(true);
+        }
+        Image[] allicons = new Image[5];
+        try{
+            File f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\WSC2015_TP09_resources\\WSC2015_TP09_resources_session-3\\map-icons");
+            File[] files = f.listFiles();
+            for (int i=0;i<allicons.length;i++){
+                System.out.println(i+""+files[i]);
+                allicons[i] = new Image(new FileInputStream(files[i]));
+                System.out.println(i+""+allicons[i]);
+            }
+        }catch (FileNotFoundException fe){fe.printStackTrace();}
+        drinksicon.setImage(allicons[0]);
+        energyicon.setImage(allicons[1]);
+        infoicon.setImage(allicons[2]);
+        medicicon.setImage(allicons[3]);
+        toileticon.setImage(allicons[4]);
         //labels
         Label cpnumber = new Label("Checkpoint 1");
         Label cpname = new Label("Avenida Rudge");
         Label cpserv = new Label("Services Provided:");
 
-
+        Label iconlabel1 = new Label("Drinks", drinksicon);
+        Label iconlabel2 = new Label("Energy bars", drinksicon);
+        Label iconlabel3 = new Label("Information", drinksicon);
+        Label iconlabel4 = new Label("Medical", drinksicon);
+        Label iconlabel5 = new Label("Toilets", drinksicon);
         //Styling nodes
         //-------------------panes and scene--------------
         BorderPane mbpane = new BorderPane();
-        VBox cpbox = new VBox(cpnumber, cpname, cpserv);
+        GridPane servicebox = new GridPane();
+        VBox cpbox = new VBox(cpnumber, cpname, cpserv, servicebox, iconlabel1);
         HBox mappane = new HBox(map);
         StackPane stackPane = new StackPane();
         Pane buttonpane = new Pane();
@@ -2044,9 +2074,12 @@ public class Main extends Application {
         buttonpane.setOnMouseClicked(event -> {
             System.out.println(event.getX()+","+event.getY()+",12");
         });
-        for(Circle cp : new Circle[]{cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8, event1, event2, event3}){
-            cp.setOnMouseClicked(event -> {
-
+        Circle[] allcpcircles = new Circle[]{cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8};
+        for(int i=0;i<allcpcircles.length;i++){
+            final int x = i;
+            allcpcircles[x].setOnMouseClicked(event -> {
+            cpnumber.setText("Checkpoint "+ (x+1));
+            cpname.setText(cpnames[x]);
             });
         }
     }
