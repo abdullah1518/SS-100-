@@ -9,12 +9,14 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.image.*;
 import javafx.scene.paint.Color;
@@ -30,6 +32,7 @@ import javafx.geometry.Pos;
 import javafx.util.Duration;
 import jdk.internal.dynalink.support.BottomGuardingDynamicLinker;
 
+import java.awt.*;
 import java.beans.EventHandler;
 import java.io.File;
 import java.io.FileInputStream;
@@ -1964,28 +1967,42 @@ public class Main extends Application {
         //------------------node definitions-----------
         //colors
         //buttons
-        Circle cp1 = new Circle(42, 22, 12);
-        Circle cp2 = new Circle(150, 22, 12);
-        Circle cp3 = new Circle(42, 22, 12);
-        Circle cp4 = new Circle(42, 22, 12);
-        Circle cp5 = new Circle(42, 22, 12);
-        Circle cp6 = new Circle(42, 22, 12);
-        for(Circle cp : new Circle[]{cp1, cp2, cp3, cp4, cp5, cp6}){
+        Circle cp1 = new Circle(228.0,21.0, 12);
+        Circle cp2 = new Circle(322.0,92.0, 12);
+        Circle cp3 = new Circle(262.0,177.0, 12);
+        Circle cp4 = new Circle(217.0,259.0, 12);
+        Circle cp5 = new Circle(143.0,327.0, 12);
+        Circle cp6 = new Circle(77.0,260.0, 12);
+        Circle cp7 = new Circle(74.0,131.0, 12);
+        Circle cp8 = new Circle(116.0,94.0, 12);
+
+        for(Circle cp : new Circle[]{cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8}){
             cp.setFill(Color.RED);
             cp.setStroke(Color.LIGHTGRAY);
+            cp.setStrokeWidth(2.5);
         }
-        cp1.setStrokeWidth(2.5);
+
+        String[] cpnames = {"Avenida Rudge", "Theatro Municipal", "Parque do Ibirapuera\n", };
+        Circle event1 = new Circle(202.0,19.0,12);
+        Circle event2 = new Circle(202.0,329.0,12);
+        Circle event3 = new Circle(51.0,89.0,12);
+
+        for(Circle event : new Circle[]{event1, event2, event3}){
+            event.setFill(Color.GOLD);
+            event.setStroke(Color.LIGHTGRAY);
+            event.setStrokeWidth(2.5);
+        }
         //textfields
+        //images
+        ImageView map = null;
+        try{
+            File f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\WSC2015_TP09_resources\\WSC2015_TP09_resources_session-3\\marathon-skills-2015-marathon-map");
+            map = new ImageView(new Image(new FileInputStream(f)));
+        }catch (FileNotFoundException fe){fe.printStackTrace();}
         //labels
         Label cpnumber = new Label("Checkpoint 1");
         Label cpname = new Label("Avenida Rudge");
         Label cpserv = new Label("Services Provided:");
-        //images
-        ImageView map = null;
-        try{
-            File f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\marathon-skills-2015-marathon-map.jpg");
-            map = new ImageView(new Image(new FileInputStream(f)));
-        }catch (FileNotFoundException fe){fe.printStackTrace();}
 
 
         //Styling nodes
@@ -2013,7 +2030,9 @@ public class Main extends Application {
 
         stackPane.getChildren().addAll(mappane, buttonpane);
 
-        buttonpane.getChildren().addAll(cp1);
+        for(Circle cp : new Circle[]{cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8, event1, event2, event3}){
+            buttonpane.getChildren().addAll(cp);
+        }
 
         mbpane.setLeft(stackPane);
         mbpane.setRight(cpbox);
@@ -2022,6 +2041,14 @@ public class Main extends Application {
         cpnumber.setStyle("-fx-font: normal 16px 'open sans';");
         cpname.setStyle("-fx-font: lighter 14px 'open sans';");
         //--------------button actions--------------
+        buttonpane.setOnMouseClicked(event -> {
+            System.out.println(event.getX()+","+event.getY()+",12");
+        });
+        for(Circle cp : new Circle[]{cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8, event1, event2, event3}){
+            cp.setOnMouseClicked(event -> {
+
+            });
+        }
     }
 
 
