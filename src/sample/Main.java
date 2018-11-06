@@ -1871,12 +1871,12 @@ public class Main extends Application {
         Label infolabel4 = new Label("The events:");
         Label infolabel5 = new Label(
                 "- The \"Samba\" Full Marathon will start at Rua dos Americanos at 6am on 5 September 2015." +
-                "\n" +
-                "- The \"Jongo\" Half Marathon will start at 7am on 6 September 2015. Runners will depart from near the intersection of Rua Ciniciata Braga and Avenida Brigadeiro Luís Antõnio." +
-                "\n" +
-                "- The \"Capoeira\" 5km Fun Run will start at 3 pm on 6 September 2015. Our fun runners will start from the UNINOVE Memorial." +
-                "\n" +
-                "Thank you to all the volunteers who will be helping!");
+                        "\n" +
+                        "- The \"Jongo\" Half Marathon will start at 7am on 6 September 2015. Runners will depart from near the intersection of Rua Ciniciata Braga and Avenida Brigadeiro Luís Antõnio." +
+                        "\n" +
+                        "- The \"Capoeira\" 5km Fun Run will start at 3 pm on 6 September 2015. Our fun runners will start from the UNINOVE Memorial." +
+                        "\n" +
+                        "Thank you to all the volunteers who will be helping!");
 
 
         //images
@@ -2025,20 +2025,21 @@ public class Main extends Application {
         medicicon.setImage(allicons[3]);
         toileticon.setImage(allicons[4]);
         //labels
-        Label cpnumber = new Label("Checkpoint 1");
-        Label cpname = new Label("Avenida Rudge");
+        Label cpnumber = new Label("Marathon start");
+        Label cpname = new Label("42km Full marathon");
         Label cpserv = new Label("Services Provided:");
 
         Label iconlabel1 = new Label("Drinks", drinksicon);
-        Label iconlabel2 = new Label("Energy bars", drinksicon);
-        Label iconlabel3 = new Label("Information", drinksicon);
-        Label iconlabel4 = new Label("Medical", drinksicon);
-        Label iconlabel5 = new Label("Toilets", drinksicon);
+        Label iconlabel2 = new Label("Energy bars", energyicon);
+        Label iconlabel3 = new Label("Information", infoicon);
+        Label iconlabel4 = new Label("Medical", medicicon);
+        Label iconlabel5 = new Label("Toilets", toileticon);
+
         //Styling nodes
         //-------------------panes and scene--------------
         BorderPane mbpane = new BorderPane();
         GridPane servicebox = new GridPane();
-        VBox cpbox = new VBox(cpnumber, cpname, cpserv, servicebox, iconlabel1);
+        VBox cpbox = new VBox(cpnumber, cpname, cpserv, servicebox, iconlabel1, iconlabel2, iconlabel3, iconlabel4, iconlabel5);
         HBox mappane = new HBox(map);
         StackPane stackPane = new StackPane();
         Pane buttonpane = new Pane();
@@ -2054,6 +2055,8 @@ public class Main extends Application {
             pane.setHgap(10);
             pane.setAlignment(Pos.CENTER);
         }
+        cpbox.setSpacing(5);
+
         main.add(mbpane, 0, 0);
 
         mbpane.setPadding(new Insets(20));
@@ -2075,13 +2078,90 @@ public class Main extends Application {
             System.out.println(event.getX()+","+event.getY()+",12");
         });
         Circle[] allcpcircles = new Circle[]{cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8};
+        String[][] cpinfo = {
+                {"Drinks", "Energy Bars", "", "", ""},
+                {"Drinks", "Energy Bars", "Information", "Medical", "Toilets"},
+                {"Drinks", "Energy Bars", "", "", "Toilets"},
+                {"Drinks", "Energy Bars", "", "Medical", "Toilets"},
+                {"Drinks", "Energy Bars", "Information", "", "Toilets"},
+                {"Drinks", "Energy Bars", "", "", "Toilets"},
+                {"Drinks", "Energy Bars", "Information", "Medical", "Toilets"},
+                {"Drinks", "Energy Bars", "Information", "Medical", "Toilets"}
+        };
+        ImageView[][] cpimages = {
+                {drinksicon, energyicon, null, null, null},
+                {drinksicon, energyicon, infoicon, medicicon,toileticon},
+                {drinksicon, energyicon, null, null,toileticon},
+                {drinksicon, energyicon, null, medicicon,toileticon},
+                {drinksicon, energyicon, infoicon, null,toileticon},
+                {drinksicon, energyicon, null, null,toileticon},
+                {drinksicon, energyicon, infoicon, medicicon,toileticon},
+                {drinksicon, energyicon, infoicon, medicicon,toileticon}
+        };
         for(int i=0;i<allcpcircles.length;i++){
             final int x = i;
             allcpcircles[x].setOnMouseClicked(event -> {
-            cpnumber.setText("Checkpoint "+ (x+1));
-            cpname.setText(cpnames[x]);
+                cpnumber.setText("Checkpoint "+ (x+1));
+                cpname.setText(cpnames[x]);
+                iconlabel1.setText(cpinfo[x][0]);
+                iconlabel2.setText(cpinfo[x][1]);
+                iconlabel3.setText(cpinfo[x][2]);
+                iconlabel4.setText(cpinfo[x][3]);
+                iconlabel5.setText(cpinfo[x][4]);
+
+                iconlabel1.setGraphic(cpimages[x][0]);
+                iconlabel2.setGraphic(cpimages[x][1]);
+                iconlabel3.setGraphic(cpimages[x][2]);
+                iconlabel4.setGraphic(cpimages[x][3]);
+                iconlabel5.setGraphic(cpimages[x][4]);
             });
         }
+
+        event1.setOnMouseClicked(event -> {
+            cpnumber.setText("Marathon start");
+            cpname.setText("42km Full marathon");
+            iconlabel1.setText(cpinfo[1][0]);
+            iconlabel2.setText(cpinfo[1][1]);
+            iconlabel3.setText(cpinfo[1][2]);
+            iconlabel4.setText(cpinfo[1][3]);
+            iconlabel5.setText(cpinfo[1][4]);
+
+            iconlabel1.setGraphic(drinksicon);
+            iconlabel2.setGraphic(energyicon);
+            iconlabel3.setGraphic(infoicon);
+            iconlabel4.setGraphic(medicicon);
+            iconlabel5.setGraphic(toileticon);
+        });
+        event2.setOnMouseClicked(event -> {
+            cpnumber.setText("Marathon start");
+            cpname.setText("21km Half marathon");
+            iconlabel1.setText(cpinfo[1][0]);
+            iconlabel2.setText(cpinfo[1][1]);
+            iconlabel3.setText(cpinfo[1][2]);
+            iconlabel4.setText(cpinfo[1][3]);
+            iconlabel5.setText(cpinfo[1][4]);
+
+            iconlabel1.setGraphic(drinksicon);
+            iconlabel2.setGraphic(energyicon);
+            iconlabel3.setGraphic(infoicon);
+            iconlabel4.setGraphic(medicicon);
+            iconlabel5.setGraphic(toileticon);
+        });
+        event3.setOnMouseClicked(event -> {
+            cpnumber.setText("Marathon start");
+            cpname.setText("5km Fun run");
+            iconlabel1.setText(cpinfo[1][0]);
+            iconlabel2.setText(cpinfo[1][1]);
+            iconlabel3.setText(cpinfo[1][2]);
+            iconlabel4.setText(cpinfo[1][3]);
+            iconlabel5.setText(cpinfo[1][4]);
+
+            iconlabel1.setGraphic(drinksicon);
+            iconlabel2.setGraphic(energyicon);
+            iconlabel3.setGraphic(infoicon);
+            iconlabel4.setGraphic(medicicon);
+            iconlabel5.setGraphic(toileticon);
+        });
     }
 
 
@@ -2367,3 +2447,9 @@ public class Main extends Application {
 //        pane.setAlignment(Pos.CENTER);
 //    }
 //    //--------------button actions--------------
+/*
+use cpt01;
+    SELECT user.FirstName , registrationevent.RaceTime
+        from
+        user inner join runner inner join registration inner join registrationevent
+        on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId;*/
