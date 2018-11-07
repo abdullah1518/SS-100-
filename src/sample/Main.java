@@ -7,6 +7,7 @@ import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.Cursor;
@@ -1625,15 +1626,11 @@ public class Main extends Application {
         Button charitiesbutton = new Button("List of charities");
         Button bmibutton = new Button("BMI calculator");
         Button bmrbutton = new Button("BMR calculator");
-        //textfields
         //labels
         Label findoutmoreLabel = new Label("Find out more information");
-        //Styling nodes
         //-------------------panes and scene--------------
         Object[] oarr = gridpane_preset();
 
-
-        oarr = gridpane_preset();
         Scene scene = (Scene) oarr[0];
         GridPane main = (GridPane)oarr[1];
         VBox maintop = new VBox(findoutmoreLabel);
@@ -1661,6 +1658,9 @@ public class Main extends Application {
         });
         ms2015button.setOnAction(event -> {
             marathon_info();
+        });
+        prevracebutton.setOnAction(event -> {
+            previous_race_results();
         });
     }
 
@@ -2165,6 +2165,102 @@ public class Main extends Application {
     }
 
 
+    public void previous_race_results(){
+        Object[] oarr = gridpane_preset();
+        GridPane main =  (GridPane) oarr[1];
+        Scene scene = (Scene)oarr[0];
+        //------------------node definitions-----------
+        //buttons
+        Button searchButton = new Button("Search");
+        //dropdown lists
+        ComboBox marathonCbox = new ComboBox();
+        ComboBox raceeventCbox = new ComboBox();
+        ComboBox genderCbox = new ComboBox();
+        ComboBox AgeCbox = new ComboBox();
+
+        //fetching and inserting data intp comboboxes
+        ResultSet marathonRs = sqlquery("select marathonname from marathon") ;
+        try {
+            while (marathonRs.next()) {
+                marathonCbox.getItems().addAll(marathonRs.getString("marathonname"));
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+        ResultSet raceeventRs = sqlquery("select eventtypename from eventtype") ;
+        try {
+            while (raceeventRs.next()) {
+                raceeventCbox.getItems().addAll(raceeventRs.getString("eventtypename"));
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+        ResultSet genderRs = sqlquery("select gender from gender") ;
+        try {
+            while (genderRs.next()) {
+                genderCbox.getItems().addAll(genderRs.getString("gender"));
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+
+        AgeCbox.getItems().addAll("Under 18", "30 to 39", "40 to 55", "55 to 70");
+        //labels
+        //-------------------panes and scene--------------
+        ScrollPane resutsScrollPane = new ScrollPane();
+        TilePane resultsTilePane = new TilePane();
+        HBox statsHbox = new HBox();
+        GridPane filterGpane = new GridPane();
+        HBox headerHbox = new HBox();
+        //------------------------pane properties--------------
+        GridPane[] panelist = {filterGpane};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+        main.add(headerHbox, 0, 0);
+        main.add(filterGpane, 0, 1);
+        main.add(statsHbox, 0, 2);
+        main.add(resutsScrollPane, 0, 3);
+
+        filterGpane.add(marathonCbox, 1, 0);
+        filterGpane.add(raceeventCbox, 1, 1);
+
+        filterGpane.add(genderCbox, 3, 0);
+        filterGpane.add(AgeCbox, 3, 1);
+        filterGpane.add(searchButton, 4, 1);
+
+        resultsTilePane.setPrefColumns(6);
+        ObservableList resultlist = resultsTilePane.getChildren();
+        //resultlist.addAll(new Label("1111111"),new Label("444444"),new Label("55555"),new Label("666666"),new Label("777777"),new Label("888888"),new Label("9999"));
+        try{
+            ResultSet defaultRs = sqlquery(
+                    "SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
+                    "from \n" +
+                    "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
+                    "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId ;");
+            int x=0;
+            while (defaultRs.next()) {
+                ArrayList<String> resultcolumns = new ArrayList<>();
+                resultcolumns.add("firstname");
+                resultcolumns.add("lastname");
+                resultcolumns.add("countrycode");
+                resultcolumns.add("eventtypename");
+                resultcolumns.add("marathonname");
+                resultcolumns.add("racetime");
+                resultlist.addAll(new Label(defaultRs.getString(resultcolumns.get(x%6))));
+                x++;
+            }
+        }catch (SQLException se){se.printStackTrace();}
+
+        resutsScrollPane.setContent(resultsTilePane);
+        //Styling nodes
+        resutsScrollPane.setStyle("-fx-background-color: black; -fx-color: white");
+        //--------------button actions--------------
+    }
+
     public Object[] gridpane_preset() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
@@ -2265,6 +2361,7 @@ public class Main extends Application {
         outs[1]= main;
         return outs;
     }
+
 
 
     public String signin (String uemail, String upassword){
