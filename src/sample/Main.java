@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -2176,7 +2177,7 @@ public class Main extends Application {
         ComboBox marathonCbox = new ComboBox();
         ComboBox raceeventCbox = new ComboBox();
         ComboBox genderCbox = new ComboBox();
-        ComboBox AgeCbox = new ComboBox();
+        ComboBox ageCbox = new ComboBox();
 
         //fetching and inserting data intp comboboxes
         ResultSet marathonRs = sqlquery("select marathonname from marathon") ;
@@ -2204,7 +2205,7 @@ public class Main extends Application {
             se.printStackTrace();
         }
 
-        AgeCbox.getItems().addAll("Under 18", "30 to 39", "40 to 55", "55 to 70");
+        ageCbox.getItems().addAll("Under 18", "30 to 39", "40 to 55", "55 to 70");
         //labels
         //-------------------panes and scene--------------
         ScrollPane resutsScrollPane = new ScrollPane();
@@ -2229,29 +2230,44 @@ public class Main extends Application {
         filterGpane.add(raceeventCbox, 1, 1);
 
         filterGpane.add(genderCbox, 3, 0);
-        filterGpane.add(AgeCbox, 3, 1);
+        filterGpane.add(ageCbox, 3, 1);
         filterGpane.add(searchButton, 4, 1);
-
-        resultsTilePane.setPrefColumns(6);
-        ObservableList resultlist = resultsTilePane.getChildren();
-        //resultlist.addAll(new Label("1111111"),new Label("444444"),new Label("55555"),new Label("666666"),new Label("777777"),new Label("888888"),new Label("9999"));
+        //results fetching and rank setting
+        resultsTilePane.setPrefColumns(7);
+        ObservableList<Node> resultlist = resultsTilePane.getChildren();
+        ArrayList<Integer> rankArray = new ArrayList<Integer>();
         try{
+            ResultSet defaultrankRs = sqlquery("SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
+                    "from \n" +
+                    "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
+                    "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
+                    " ORDER BY racetime ASC;");
+            while (defaultrankRs.next()) {
+                if (defaultrankRs.getInt("racetime") <= 0) {
+                } else if (rankArray.size() == 0) {
+                    rankArray.add(defaultrankRs.getInt("racetime"));
+                } else if (defaultrankRs.getInt("racetime") == rankArray.get(rankArray.size() - 1)) {
+                } else {
+                    rankArray.add(defaultrankRs.getInt("racetime"));
+                }
+            }
+            for (int racetime: rankArray) {
+                System.out.println("Rank: "+rankArray.indexOf(racetime)+" Time: "+racetime);
+            }
             ResultSet defaultRs = sqlquery(
                     "SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
                     "from \n" +
                     "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
-                    "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId ;");
-            int x=0;
+                    "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
+                            " where racetime>1550 ORDER BY racetime ASC;");
             while (defaultRs.next()) {
-                ArrayList<String> resultcolumns = new ArrayList<>();
-                resultcolumns.add("firstname");
-                resultcolumns.add("lastname");
-                resultcolumns.add("countrycode");
-                resultcolumns.add("eventtypename");
-                resultcolumns.add("marathonname");
-                resultcolumns.add("racetime");
-                resultlist.addAll(new Label(defaultRs.getString(resultcolumns.get(x%6))));
-                x++;
+                resultlist.add(new Label(Integer.toString(rankArray.indexOf(defaultRs.getInt("racetime")))));
+                resultlist.add(new Label(defaultRs.getString("firstname")));
+                resultlist.add(new Label(defaultRs.getString("lastname")));
+                resultlist.add(new Label(defaultRs.getString("countrycode")));
+                resultlist.add(new Label(defaultRs.getString("eventtypename")));
+                resultlist.add(new Label(defaultRs.getString("marathonname")));
+                resultlist.add(new Label(defaultRs.getString("racetime")));
             }
         }catch (SQLException se){se.printStackTrace();}
 
@@ -2259,6 +2275,30 @@ public class Main extends Application {
         //Styling nodes
         resutsScrollPane.setStyle("-fx-background-color: black; -fx-color: white");
         //--------------button actions--------------
+        searchButton.setOnAction(event -> {
+            resultlist.remove(0, resultlist.size());
+            String marathonstmnt = " WHERE MarathonName = "+marathonCbox.getSelectionModel().getSelectedItem().toString()+" ";
+            String eventstmnt = " WHERE EventTypeName = "+raceeventCbox.getSelectionModel().getSelectedItem().toString()+" ";
+            String genderstmnt = " WHERE Gender = "+genderCbox.getSelectionModel().getSelectedItem().toString()+" ";
+            String agestmnt = " WHERE Age = "+ageCbox.getSelectionModel().getSelectedItem().toString()+" ";
+            try{
+                ResultSet defaultRs = sqlquery(
+                        "SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
+                                "from \n" +
+                                "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
+                                "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
+                                " "+marathonstmnt+eventstmnt+genderstmnt+agestmnt+" ORDER BY racetime ASC;");
+                while (defaultRs.next()) {
+                    resultlist.add(new Label(Integer.toString(rankArray.indexOf(defaultRs.getInt("racetime")))));
+                    resultlist.add(new Label(defaultRs.getString("firstname")));
+                    resultlist.add(new Label(defaultRs.getString("lastname")));
+                    resultlist.add(new Label(defaultRs.getString("countrycode")));
+                    resultlist.add(new Label(defaultRs.getString("eventtypename")));
+                    resultlist.add(new Label(defaultRs.getString("marathonname")));
+                    resultlist.add(new Label(defaultRs.getString("racetime")));
+                }
+            }catch (SQLException se){se.printStackTrace();}
+        });
     }
 
     public Object[] gridpane_preset() {
