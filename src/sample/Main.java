@@ -52,8 +52,9 @@ public class Main extends Application {
 
     String currentEmail;
     Stage primaryStage;
+
     @Override
-    public void start (Stage baaalb){
+    public void start(Stage baaalb) {
         primaryStage = baaalb;
 
         BorderPane root0 = new BorderPane();
@@ -120,7 +121,7 @@ public class Main extends Application {
 
         bpane.add(btn0, 0, 0);
         bpane.add(btn1, 0, 10);
-        bpane.add(btn2,0, 20);
+        bpane.add(btn2, 0, 20);
 
         lpane.add(btn3, 20, 0);
         lpane.add(copyRlbl, 0, 0);
@@ -136,7 +137,7 @@ public class Main extends Application {
     }
 
 
-    public void page1 (){
+    public void page1() {
 
         BorderPane root1 = new BorderPane();
         GridPane bpane1 = new GridPane();
@@ -213,7 +214,7 @@ public class Main extends Application {
     }
 
 
-    public void loginpage (){
+    public void loginpage() {
 
         BorderPane root = new BorderPane();
         GridPane bpane = new GridPane();
@@ -304,7 +305,7 @@ public class Main extends Application {
     }
 
 
-    public void sponsor_a_runner (){
+    public void sponsor_a_runner() {
         //----------------panes and scene------------------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -392,7 +393,7 @@ public class Main extends Application {
         titletxt.setId("heading-font");
         main.setId("mainpane");
         //------------------------pane properties--------------------------------
-        GridPane[] panelist = { header, footer, main, mainbott, maintop, mainbottleft, mainbottright};
+        GridPane[] panelist = {header, footer, main, mainbott, maintop, mainbottleft, mainbottright};
         for (GridPane pane : panelist) {
             pane.setPadding(new Insets(3));
             pane.setVgap(5);
@@ -490,7 +491,7 @@ public class Main extends Application {
     }
 
 
-    public void sponsor_thank (Stage primaryStage, String amount, String runnerId){
+    public void sponsor_thank(Stage primaryStage, String amount, String runnerId) {
         BorderPane rootBorderPane = new BorderPane();
         Label thxLabel = new Label("Thank you for your sponsorship!");
         Label smolThxLabel = new Label("Thank you for sponsoring a runner in Marathon Skills 2019!\nYour donation will help out their chosen charity.");
@@ -522,7 +523,7 @@ public class Main extends Application {
     }
 
 
-    public void runner_menu (){
+    public void runner_menu() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -634,7 +635,7 @@ public class Main extends Application {
     }
 
 
-    public void coordinator_menu (){
+    public void coordinator_menu() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -711,7 +712,7 @@ public class Main extends Application {
     }
 
 
-    public void admin_menu (){
+    public void admin_menu() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -790,7 +791,7 @@ public class Main extends Application {
     }
 
 
-    public void register_runner (){
+    public void register_runner() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -1010,7 +1011,7 @@ public class Main extends Application {
     }
 
 
-    public void register_event () throws SQLException {
+    public void register_event() throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1182,7 +1183,7 @@ public class Main extends Application {
     }
 
 
-    public void edit_runner () throws SQLException {
+    public void edit_runner() throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1317,7 +1318,7 @@ public class Main extends Application {
     }
 
 
-    public void edit_runner_2 () throws SQLException {
+    public void edit_runner_2() throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1452,7 +1453,7 @@ public class Main extends Application {
     }
 
 
-    public void my_race_results () throws SQLException {
+    public void my_race_results() throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1580,7 +1581,7 @@ public class Main extends Application {
     }
 
 
-    public void thank_you_runner (){
+    public void thank_you_runner() {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label();
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1618,7 +1619,7 @@ public class Main extends Application {
     }
 
 
-    public void find_out_more(){
+    public void find_out_more() {
         //------------------node definitions-----------
         //buttons
         Button ms2015button = new Button("Marathon Skills 2015");
@@ -1633,12 +1634,12 @@ public class Main extends Application {
         Object[] oarr = gridpane_preset();
 
         Scene scene = (Scene) oarr[0];
-        GridPane main = (GridPane)oarr[1];
+        GridPane main = (GridPane) oarr[1];
         VBox maintop = new VBox(findoutmoreLabel);
         GridPane mainbott = new GridPane();
         //------------------------pane properties--------------
         GridPane[] panelist = {mainbott, main};
-        for (GridPane pane : panelist){
+        for (GridPane pane : panelist) {
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
             pane.setHgap(10);
@@ -1666,13 +1667,13 @@ public class Main extends Application {
     }
 
 
-    public void how_long(){
+    public void how_long() {
         Object[] oarr = gridpane_preset();
 
 
         oarr = gridpane_preset();
-        GridPane main =  (GridPane) oarr[1];
-        Scene scene = (Scene)oarr[0];
+        GridPane main = (GridPane) oarr[1];
+        Scene scene = (Scene) oarr[0];
         //------------------node definitions-----------
         //buttons
         //radi0s
@@ -1711,13 +1712,13 @@ public class Main extends Application {
             f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\how-long-is-a-marathon-images");
             ArrayList<File> images = new ArrayList<>();
             System.out.println(f.listFiles().length);
-            for (int i=1;i-1<f.listFiles().length;i++){
-                images.add(new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\how-long-is-a-marathon-images\\"+i+".jpg"));
+            for (int i = 1; i - 1 < f.listFiles().length; i++) {
+                images.add(new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\how-long-is-a-marathon-images\\" + i + ".jpg"));
             }
             fileInputstream = new FileInputStream(images.get(0));
             System.out.println(images.get(0));
 
-            for (File image : images){
+            for (File image : images) {
                 System.out.println(image);
                 Image imageit = new Image(new FileInputStream(image));
                 allimages.add(imageit);
@@ -1731,8 +1732,10 @@ public class Main extends Application {
                 allimageviews.add(iview);
 
             }
-        }catch (Exception fe){fe.printStackTrace();}
-        selectedinfo.setText("a 42km marathon would \n take an "+imagenames1.get(0).getText()+" travelling at \n "+345.0+"km/h "+Double.toString(42/345.0*60.0).substring(0, Double.toString(42/345.0*60).indexOf(".")+2)+" minutes!");
+        } catch (Exception fe) {
+            fe.printStackTrace();
+        }
+        selectedinfo.setText("a 42km marathon would \n take an " + imagenames1.get(0).getText() + " travelling at \n " + 345.0 + "km/h " + Double.toString(42 / 345.0 * 60.0).substring(0, Double.toString(42 / 345.0 * 60).indexOf(".") + 2) + " minutes!");
         selected.setText(imagenames1.get(0).getText());
 
         Image hlimage = new Image(fileInputstream);
@@ -1760,14 +1763,14 @@ public class Main extends Application {
 
         //------------------------pane properties--------------
         GridPane[] panelist = {mright, main};
-        for (GridPane pane : panelist){
+        for (GridPane pane : panelist) {
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
             pane.setHgap(10);
             pane.setAlignment(Pos.CENTER);
         }
-        GridPane[] panelist2 ={imagebox1, imagebox2};
-        for (GridPane pane : panelist2){
+        GridPane[] panelist2 = {imagebox1, imagebox2};
+        for (GridPane pane : panelist2) {
             pane.setPadding(new Insets(10));
             pane.setVgap(5);
             pane.setHgap(5);
@@ -1805,7 +1808,7 @@ public class Main extends Application {
         imagebox2.add(allimageviews.get(10), 0, 3);
         imagebox2.add(allimageviews.get(11), 0, 4);
 
-        mright.add(mrighttop,0, 0);
+        mright.add(mrighttop, 0, 0);
         mright.add(imagecroll, 0, 1);
 
         imagecroll.setContent(imagebox1);
@@ -1828,11 +1831,11 @@ public class Main extends Application {
             imagecroll.setContent(imagebox2);
             imageview.setImage(allimages.get(7));
             selected.setText(imagenames2.get(0).getText());
-            selectedinfo.setText("It would take "+Double.toString(42000/10).substring(0, Double.toString(42000/10).indexOf(".")+2)+" "+imagenames2.get(0).getText()+"\n to make up a 42km marathon!");
+            selectedinfo.setText("It would take " + Double.toString(42000 / 10).substring(0, Double.toString(42000 / 10).indexOf(".") + 2) + " " + imagenames2.get(0).getText() + "\n to make up a 42km marathon!");
         });
 
         double[] speeds = {345, 0.01, 15, 0.12, 35, 80, 0.03};
-        for(int i=0;i<speeds.length;i++) {
+        for (int i = 0; i < speeds.length; i++) {
             final int fi = i;
             allimageviews.get(fi).setOnMouseClicked(event -> {
                 double speed = speeds[fi];
@@ -1843,24 +1846,24 @@ public class Main extends Application {
             });
         }
         final double[] lengths = {10, 0.245, 73, 105, 1.81};
-        for(int i=0;i<lengths.length;i++){
+        for (int i = 0; i < lengths.length; i++) {
             final int fi = i;
-            final int fx = i+7;
+            final int fx = i + 7;
             allimageviews.get(fx).setOnMouseClicked(event -> {
                 imageview.setImage(allimages.get(fx));
                 selected.setText(imagenames2.get(fi).getText());
-                selectedinfo.setText("It would take "+Double.toString(42000/lengths[fi]).substring(0, Double.toString(42000/lengths[fi]).indexOf(".")+2)+" "+imagenames2.get(fi).getText()+"\n to make up a 42km marathon!");
+                selectedinfo.setText("It would take " + Double.toString(42000 / lengths[fi]).substring(0, Double.toString(42000 / lengths[fi]).indexOf(".") + 2) + " " + imagenames2.get(fi).getText() + "\n to make up a 42km marathon!");
             });
         }
 
     }
 
 
-    public void marathon_info(){
+    public void marathon_info() {
         Object[] oarr = scrollpane_preset();
 
-        ScrollPane main =  (ScrollPane) oarr[1];
-        Scene scene = (Scene)oarr[0];
+        ScrollPane main = (ScrollPane) oarr[1];
+        Scene scene = (Scene) oarr[0];
         //------------------node definitions-----------
         //buttons
         //textfields
@@ -1888,14 +1891,16 @@ public class Main extends Application {
         ImageView marathonIV = null;
         try {
             File file = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\Marathon-images");
-            for (File i: file.listFiles()){
+            for (File i : file.listFiles()) {
                 allImages.add(new Image(new FileInputStream(i)));
                 allImageViews.add(new ImageView(new Image(new FileInputStream(i))));
             }
             File file2 = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\marathon-skills-2015-marathon-map.jpg");
             marathonImage = new Image(new FileInputStream(file2));
             marathonIV = new ImageView(marathonImage);
-        }catch (FileNotFoundException fe){fe.printStackTrace();}
+        } catch (FileNotFoundException fe) {
+            fe.printStackTrace();
+        }
         //Styling nodes
         aboutlabel.setId("body-font");
         //-------------------panes and scene--------------
@@ -1919,7 +1924,7 @@ public class Main extends Application {
         marathonIV.fitHeightProperty().bind(main.heightProperty().divide(500).multiply(200));
         marathonIV.setPreserveRatio(true);
 
-        for (ImageView iv : allImageViews){
+        for (ImageView iv : allImageViews) {
             iv.setFitWidth(70);
             iv.fitWidthProperty().bind(main.widthProperty().divide(500).multiply(70));
             iv.fitHeightProperty().bind(main.heightProperty().divide(500).multiply(70));
@@ -1927,7 +1932,7 @@ public class Main extends Application {
         }
         //------------------------pane properties--------------
         GridPane[] panelist = {mlefttop, mleftbott};
-        for (GridPane pane : panelist){
+        for (GridPane pane : panelist) {
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
             pane.setHgap(10);
@@ -1958,37 +1963,37 @@ public class Main extends Application {
     }
 
 
-    public void interactive_map(){
+    public void interactive_map() {
         Object[] oarr = gridpane_preset();
 
 
         oarr = gridpane_preset();
-        GridPane main =  (GridPane) oarr[1];
-        Scene scene = (Scene)oarr[0];
+        GridPane main = (GridPane) oarr[1];
+        Scene scene = (Scene) oarr[0];
         //------------------node definitions-----------
         //colors
         //buttons
-        Circle cp1 = new Circle(228.0,21.0, 12);
-        Circle cp2 = new Circle(322.0,92.0, 12);
-        Circle cp3 = new Circle(262.0,177.0, 12);
-        Circle cp4 = new Circle(217.0,259.0, 12);
-        Circle cp5 = new Circle(143.0,327.0, 12);
-        Circle cp6 = new Circle(77.0,260.0, 12);
-        Circle cp7 = new Circle(74.0,131.0, 12);
-        Circle cp8 = new Circle(116.0,94.0, 12);
+        Circle cp1 = new Circle(228.0, 21.0, 12);
+        Circle cp2 = new Circle(322.0, 92.0, 12);
+        Circle cp3 = new Circle(262.0, 177.0, 12);
+        Circle cp4 = new Circle(217.0, 259.0, 12);
+        Circle cp5 = new Circle(143.0, 327.0, 12);
+        Circle cp6 = new Circle(77.0, 260.0, 12);
+        Circle cp7 = new Circle(74.0, 131.0, 12);
+        Circle cp8 = new Circle(116.0, 94.0, 12);
 
-        for(Circle cp : new Circle[]{cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8}){
+        for (Circle cp : new Circle[]{cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8}) {
             cp.setFill(Color.RED);
             cp.setStroke(Color.LIGHTGRAY);
             cp.setStrokeWidth(2.5);
         }
 
-        String[] cpnames = {"Avenida Rudge", "Theatro Municipal", "Parque do Ibirapuera","Jardim Luzitania", "Iguatemi", "Rua Lisboa", "Cemitério da Consolação", "Cemitério da Consolação"};
-        Circle event1 = new Circle(202.0,19.0,12);
-        Circle event2 = new Circle(202.0,329.0,12);
-        Circle event3 = new Circle(51.0,89.0,12);
+        String[] cpnames = {"Avenida Rudge", "Theatro Municipal", "Parque do Ibirapuera", "Jardim Luzitania", "Iguatemi", "Rua Lisboa", "Cemitério da Consolação", "Cemitério da Consolação"};
+        Circle event1 = new Circle(202.0, 19.0, 12);
+        Circle event2 = new Circle(202.0, 329.0, 12);
+        Circle event3 = new Circle(51.0, 89.0, 12);
 
-        for(Circle event : new Circle[]{event1, event2, event3}){
+        for (Circle event : new Circle[]{event1, event2, event3}) {
             event.setFill(Color.GOLD);
             event.setStroke(Color.LIGHTGRAY);
             event.setStrokeWidth(2.5);
@@ -1996,30 +2001,34 @@ public class Main extends Application {
         //textfields
         //images
         ImageView map = null;
-        try{
+        try {
             File f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\WSC2015_TP09_resources\\WSC2015_TP09_resources_session-3\\marathon-skills-2015-marathon-map.jpg");
             map = new ImageView(new Image(new FileInputStream(f)));
-        }catch (FileNotFoundException fe){fe.printStackTrace();}
+        } catch (FileNotFoundException fe) {
+            fe.printStackTrace();
+        }
 
         ImageView drinksicon = new ImageView();
         ImageView energyicon = new ImageView();
         ImageView infoicon = new ImageView();
         ImageView medicicon = new ImageView();
         ImageView toileticon = new ImageView();
-        for (ImageView iconview: new ImageView[]{drinksicon, energyicon, toileticon, infoicon, medicicon}) {
+        for (ImageView iconview : new ImageView[]{drinksicon, energyicon, toileticon, infoicon, medicicon}) {
             iconview.setFitWidth(30);
             iconview.setPreserveRatio(true);
         }
         Image[] allicons = new Image[5];
-        try{
+        try {
             File f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\WSC2015_TP09_resources\\WSC2015_TP09_resources_session-3\\map-icons");
             File[] files = f.listFiles();
-            for (int i=0;i<allicons.length;i++){
-                System.out.println(i+""+files[i]);
+            for (int i = 0; i < allicons.length; i++) {
+                System.out.println(i + "" + files[i]);
                 allicons[i] = new Image(new FileInputStream(files[i]));
-                System.out.println(i+""+allicons[i]);
+                System.out.println(i + "" + allicons[i]);
             }
-        }catch (FileNotFoundException fe){fe.printStackTrace();}
+        } catch (FileNotFoundException fe) {
+            fe.printStackTrace();
+        }
         drinksicon.setImage(allicons[0]);
         energyicon.setImage(allicons[1]);
         infoicon.setImage(allicons[2]);
@@ -2050,7 +2059,7 @@ public class Main extends Application {
 
         //------------------------pane properties--------------
         GridPane[] panelist = {};
-        for (GridPane pane : panelist){
+        for (GridPane pane : panelist) {
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
             pane.setHgap(10);
@@ -2064,7 +2073,7 @@ public class Main extends Application {
 
         stackPane.getChildren().addAll(mappane, buttonpane);
 
-        for(Circle cp : new Circle[]{cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8, event1, event2, event3}){
+        for (Circle cp : new Circle[]{cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8, event1, event2, event3}) {
             buttonpane.getChildren().addAll(cp);
         }
 
@@ -2076,7 +2085,7 @@ public class Main extends Application {
         cpname.setStyle("-fx-font: lighter 14px 'open sans';");
         //--------------button actions--------------
         buttonpane.setOnMouseClicked(event -> {
-            System.out.println(event.getX()+","+event.getY()+",12");
+            System.out.println(event.getX() + "," + event.getY() + ",12");
         });
         Circle[] allcpcircles = new Circle[]{cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8};
         String[][] cpinfo = {
@@ -2091,18 +2100,18 @@ public class Main extends Application {
         };
         ImageView[][] cpimages = {
                 {drinksicon, energyicon, null, null, null},
-                {drinksicon, energyicon, infoicon, medicicon,toileticon},
-                {drinksicon, energyicon, null, null,toileticon},
-                {drinksicon, energyicon, null, medicicon,toileticon},
-                {drinksicon, energyicon, infoicon, null,toileticon},
-                {drinksicon, energyicon, null, null,toileticon},
-                {drinksicon, energyicon, infoicon, medicicon,toileticon},
-                {drinksicon, energyicon, infoicon, medicicon,toileticon}
+                {drinksicon, energyicon, infoicon, medicicon, toileticon},
+                {drinksicon, energyicon, null, null, toileticon},
+                {drinksicon, energyicon, null, medicicon, toileticon},
+                {drinksicon, energyicon, infoicon, null, toileticon},
+                {drinksicon, energyicon, null, null, toileticon},
+                {drinksicon, energyicon, infoicon, medicicon, toileticon},
+                {drinksicon, energyicon, infoicon, medicicon, toileticon}
         };
-        for(int i=0;i<allcpcircles.length;i++){
+        for (int i = 0; i < allcpcircles.length; i++) {
             final int x = i;
             allcpcircles[x].setOnMouseClicked(event -> {
-                cpnumber.setText("Checkpoint "+ (x+1));
+                cpnumber.setText("Checkpoint " + (x + 1));
                 cpname.setText(cpnames[x]);
                 iconlabel1.setText(cpinfo[x][0]);
                 iconlabel2.setText(cpinfo[x][1]);
@@ -2166,10 +2175,10 @@ public class Main extends Application {
     }
 
 
-    public void previous_race_results(){
+    public void previous_race_results() {
         Object[] oarr = gridpane_preset();
-        GridPane main =  (GridPane) oarr[1];
-        Scene scene = (Scene)oarr[0];
+        GridPane main = (GridPane) oarr[1];
+        Scene scene = (Scene) oarr[0];
         //------------------node definitions-----------
         //buttons
         Button searchButton = new Button("Search");
@@ -2180,7 +2189,7 @@ public class Main extends Application {
         ComboBox ageCbox = new ComboBox();
 
         //fetching and inserting data intp comboboxes
-        ResultSet marathonRs = sqlquery("select marathonname from marathon") ;
+        ResultSet marathonRs = sqlquery("select marathonname from marathon");
         try {
             while (marathonRs.next()) {
                 marathonCbox.getItems().addAll(marathonRs.getString("marathonname"));
@@ -2188,7 +2197,7 @@ public class Main extends Application {
         } catch (SQLException se) {
             se.printStackTrace();
         }
-        ResultSet raceeventRs = sqlquery("select eventtypename from eventtype") ;
+        ResultSet raceeventRs = sqlquery("select eventtypename from eventtype");
         try {
             while (raceeventRs.next()) {
                 raceeventCbox.getItems().addAll(raceeventRs.getString("eventtypename"));
@@ -2196,7 +2205,7 @@ public class Main extends Application {
         } catch (SQLException se) {
             se.printStackTrace();
         }
-        ResultSet genderRs = sqlquery("select gender from gender") ;
+        ResultSet genderRs = sqlquery("select gender from gender");
         try {
             while (genderRs.next()) {
                 genderCbox.getItems().addAll(genderRs.getString("gender"));
@@ -2215,7 +2224,7 @@ public class Main extends Application {
         HBox headerHbox = new HBox();
         //------------------------pane properties--------------
         GridPane[] panelist = {filterGpane};
-        for (GridPane pane : panelist){
+        for (GridPane pane : panelist) {
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
             pane.setHgap(10);
@@ -2236,7 +2245,7 @@ public class Main extends Application {
         resultsTilePane.setPrefColumns(7);
         ObservableList<Node> resultlist = resultsTilePane.getChildren();
         ArrayList<Integer> rankArray = new ArrayList<Integer>();
-        try{
+        try {
             ResultSet defaultrankRs = sqlquery("SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
                     "from \n" +
                     "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
@@ -2251,17 +2260,17 @@ public class Main extends Application {
                     rankArray.add(defaultrankRs.getInt("racetime"));
                 }
             }
-            for (int racetime: rankArray) {
-                System.out.println("Rank: "+rankArray.indexOf(racetime)+" Time: "+racetime);
+            for (int racetime : rankArray) {
+                System.out.println("Rank: " + rankArray.indexOf(racetime) + " Time: " + racetime);
             }
             ResultSet defaultRs = sqlquery(
                     "SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
-                    "from \n" +
-                    "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
-                    "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
-                            " where racetime>1550 ORDER BY racetime ASC;");
+                            "from \n" +
+                            "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
+                            "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
+                            " where racetime<1550 ORDER BY racetime ASC;");
             while (defaultRs.next()) {
-                resultlist.add(new Label(Integer.toString(rankArray.indexOf(defaultRs.getInt("racetime")))));
+                resultlist.add(new Label(Integer.toString(rankArray.indexOf(defaultRs.getInt("racetime"))+1)));
                 resultlist.add(new Label(defaultRs.getString("firstname")));
                 resultlist.add(new Label(defaultRs.getString("lastname")));
                 resultlist.add(new Label(defaultRs.getString("countrycode")));
@@ -2269,7 +2278,9 @@ public class Main extends Application {
                 resultlist.add(new Label(defaultRs.getString("marathonname")));
                 resultlist.add(new Label(defaultRs.getString("racetime")));
             }
-        }catch (SQLException se){se.printStackTrace();}
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
 
         resutsScrollPane.setContent(resultsTilePane);
         //Styling nodes
@@ -2277,29 +2288,39 @@ public class Main extends Application {
         //--------------button actions--------------
         searchButton.setOnAction(event -> {
             resultlist.remove(0, resultlist.size());
-            String marathonstmnt = " WHERE MarathonName = "+marathonCbox.getSelectionModel().getSelectedItem().toString()+" ";
-            String eventstmnt = " WHERE EventTypeName = "+raceeventCbox.getSelectionModel().getSelectedItem().toString()+" ";
-            String genderstmnt = " WHERE Gender = "+genderCbox.getSelectionModel().getSelectedItem().toString()+" ";
-            String agestmnt = " WHERE Age = "+ageCbox.getSelectionModel().getSelectedItem().toString()+" ";
-            try{
+             String marathonstmnt = "  MarathonName = '" + marathonCbox.getSelectionModel().getSelectedItem().toString() + "' ";
+            String eventstmnt = " and EventTypeName = '" + raceeventCbox.getSelectionModel().getSelectedItem().toString() + "' ";
+            String genderstmnt = " and Gender = '" + genderCbox.getSelectionModel().getSelectedItem().toString() + "' ";
+            int age;
+            String[] dobaselectedrray = new String[2];
+            if (ageCbox.getSelectionModel().getSelectedItem().toString().matches("\\D*\\d+\\D*\\d+\\D*")){
+                dobaselectedrray = ageCbox.getSelectionModel().getSelectedItem().toString().split("\\D*");
+            }
+            System.out.println(dobaselectedrray[1]);
+            try {
                 ResultSet defaultRs = sqlquery(
-                        "SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
+                        "SELECT user.FirstName , user.lastname, runner.CountryCode, runner.gender, runner.dateofbirth, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
                                 "from \n" +
                                 "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
                                 "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
-                                " "+marathonstmnt+eventstmnt+genderstmnt+agestmnt+" ORDER BY racetime ASC;");
+                                " where racetime>0 and" + marathonstmnt + eventstmnt + genderstmnt + " ORDER BY racetime ASC;");
                 while (defaultRs.next()) {
-                    resultlist.add(new Label(Integer.toString(rankArray.indexOf(defaultRs.getInt("racetime")))));
-                    resultlist.add(new Label(defaultRs.getString("firstname")));
-                    resultlist.add(new Label(defaultRs.getString("lastname")));
-                    resultlist.add(new Label(defaultRs.getString("countrycode")));
-                    resultlist.add(new Label(defaultRs.getString("eventtypename")));
-                    resultlist.add(new Label(defaultRs.getString("marathonname")));
-                    resultlist.add(new Label(defaultRs.getString("racetime")));
+                    /*if (age>){*/
+                        resultlist.add(new Label(Integer.toString(rankArray.indexOf(defaultRs.getInt("racetime"))) + 1));
+                        resultlist.add(new Label(defaultRs.getString("firstname")));
+                        resultlist.add(new Label(defaultRs.getString("lastname")));
+                        resultlist.add(new Label(defaultRs.getString("countrycode")));
+                        resultlist.add(new Label(defaultRs.getString("eventtypename")));
+                        resultlist.add(new Label(defaultRs.getString("marathonname")));
+                        resultlist.add(new Label(defaultRs.getString("racetime")));
+                    /*}*/
                 }
-            }catch (SQLException se){se.printStackTrace();}
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         });
     }
+
 
     public Object[] gridpane_preset() {
         //-------------------panes and scene--------------
@@ -2311,7 +2332,7 @@ public class Main extends Application {
         scene.getStylesheets().add(getClass().getResource("styling.css").toString());
         //------------------node definitions-----------
         //buttons
-        Button back= new Button("Back");
+        Button back = new Button("Back");
         //labels
         Label titlelabel = new Label("Marathon Skills 2019");
         //Styling nodes
@@ -2321,7 +2342,7 @@ public class Main extends Application {
         titlelabel.setId("heading-font");
         //------------------------pane properties--------------
         GridPane[] panelist = {header, main, footer};
-        for (GridPane pane : panelist){
+        for (GridPane pane : panelist) {
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
             pane.setHgap(10);
@@ -2342,12 +2363,12 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         //-----------------------button actions-----------------
-        back.setOnAction(value ->{
+        back.setOnAction(value -> {
             start(primaryStage);
         });
-        Object[]outs = new Object[2];
+        Object[] outs = new Object[2];
         outs[0] = scene;
-        outs[1]= main;
+        outs[1] = main;
         return outs;
     }
 
@@ -2362,7 +2383,7 @@ public class Main extends Application {
         scene.getStylesheets().add(getClass().getResource("styling.css").toString());
         //------------------node definitions-----------
         //buttons
-        Button back= new Button("Back");
+        Button back = new Button("Back");
         //labels
         Label titlelabel = new Label("Marathon Skills 2019");
         //Styling nodes
@@ -2371,8 +2392,8 @@ public class Main extends Application {
         main.setId("mainpane");
         titlelabel.setId("heading-font");
         //------------------------pane properties--------------
-        GridPane[] panelist = {header,  footer};
-        for (GridPane pane : panelist){
+        GridPane[] panelist = {header, footer};
+        for (GridPane pane : panelist) {
             pane.setPadding(new Insets(10));
             pane.setVgap(10);
             pane.setHgap(10);
@@ -2393,18 +2414,17 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         //-----------------------button actions-----------------
-        back.setOnAction(value ->{
+        back.setOnAction(value -> {
             start(primaryStage);
         });
-        Object[]outs = new Object[2];
+        Object[] outs = new Object[2];
         outs[0] = scene;
-        outs[1]= main;
+        outs[1] = main;
         return outs;
     }
 
 
-
-    public String signin (String uemail, String upassword){
+    public String signin(String uemail, String upassword) {
         String roleid = new String();
         Connection conn = null;
         Statement stmt = null;
@@ -2490,7 +2510,7 @@ public class Main extends Application {
     }
 
 
-    public ResultSet sqlquery (String query){
+    public ResultSet sqlquery(String query) {
         Connection conn = null;
         Statement stmnt = null;
         try {
@@ -2517,7 +2537,7 @@ public class Main extends Application {
     }
 
 
-    public void sqlinsert (String query){
+    public void sqlinsert(String query) {
         Connection conn = null;
         Statement stmnt = null;
         try {
@@ -2548,10 +2568,10 @@ public class Main extends Application {
     }
 
 
-    public static void main (String[]args){
+    public static void main(String[] args) {
         try {
             launch(args);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             Stage secondarystage = new Stage();
             GridPane popup = new GridPane();
