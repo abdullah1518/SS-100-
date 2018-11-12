@@ -41,6 +41,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.*;
+import java.util.Date;
+import java.util.Calendar.*;
 
 public class Main extends Application {
 
@@ -2244,6 +2246,7 @@ public class Main extends Application {
         //results fetching and rank setting
         resultsTilePane.setPrefColumns(7);
         ObservableList<Node> resultlist = resultsTilePane.getChildren();
+        resultlist.addAll(new Label("Rank"),new Label("First name"),new Label("last name"),new Label("Country code"),new Label("Event type"),new Label("Marathon"), new Label("racetime"));
         ArrayList<Integer> rankArray = new ArrayList<Integer>();
         try {
             ResultSet defaultrankRs = sqlquery("SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
@@ -2288,32 +2291,47 @@ public class Main extends Application {
         //--------------button actions--------------
         searchButton.setOnAction(event -> {
             resultlist.remove(0, resultlist.size());
-             String marathonstmnt = "  MarathonName = '" + marathonCbox.getSelectionModel().getSelectedItem().toString() + "' ";
+            resultlist.addAll(new Label("Rank"),new Label("First name"),new Label("last name"),new Label("Country code"),new Label("Event type"),new Label("Marathon"), new Label("racetime"));
+
+            String marathonstmnt = "  MarathonName = '" + marathonCbox.getSelectionModel().getSelectedItem().toString() + "' ";
             String eventstmnt = " and EventTypeName = '" + raceeventCbox.getSelectionModel().getSelectedItem().toString() + "' ";
             String genderstmnt = " and Gender = '" + genderCbox.getSelectionModel().getSelectedItem().toString() + "' ";
-            int age;
-            String[] dobaselectedrray = new String[2];
-            if (ageCbox.getSelectionModel().getSelectedItem().toString().matches("\\D*\\d+\\D*\\d+\\D*")){
-                dobaselectedrray = ageCbox.getSelectionModel().getSelectedItem().toString().split("\\D*");
+
+            long minage, maxage;
+            String[] dobaselectedrray = ageCbox.getSelectionModel().getSelectedItem().toString().split("\\D+");
+            if (dobaselectedrray[1].equals("18")){
+                minage=0;
+                maxage=Long.valueOf(dobaselectedrray[1])*31556952000L;
             }
-            System.out.println(dobaselectedrray[1]);
+            else {
+                minage=Long.valueOf(dobaselectedrray[0])*31556952000L;
+                maxage=Long.valueOf(dobaselectedrray[1])*31556952000L;
+            }
+
             try {
-                ResultSet defaultRs = sqlquery(
+                ResultSet searchRs = sqlquery(
                         "SELECT user.FirstName , user.lastname, runner.CountryCode, runner.gender, runner.dateofbirth, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
                                 "from \n" +
                                 "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
                                 "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
                                 " where racetime>0 and" + marathonstmnt + eventstmnt + genderstmnt + " ORDER BY racetime ASC;");
-                while (defaultRs.next()) {
-                    /*if (age>){*/
-                        resultlist.add(new Label(Integer.toString(rankArray.indexOf(defaultRs.getInt("racetime"))) + 1));
-                        resultlist.add(new Label(defaultRs.getString("firstname")));
-                        resultlist.add(new Label(defaultRs.getString("lastname")));
-                        resultlist.add(new Label(defaultRs.getString("countrycode")));
-                        resultlist.add(new Label(defaultRs.getString("eventtypename")));
-                        resultlist.add(new Label(defaultRs.getString("marathonname")));
-                        resultlist.add(new Label(defaultRs.getString("racetime")));
-                    /*}*/
+                while (searchRs.next()) {
+                    String[] dobStr = searchRs.getString("dateofbirth").split(" ");
+                    String[] dobArray = dobStr[0].split("-");
+                    System.out.println(dobArray[0]+""+dobArray[1]+""+dobArray[2]);
+                    Calendar dobCal = new GregorianCalendar(Integer.valueOf(dobArray[0]), Integer.valueOf(dobArray[1]), Integer.valueOf(dobArray[2]));
+                    Calendar now = GregorianCalendar.getInstance();
+                    long age = now.getTimeInMillis()-dobCal.getTimeInMillis();
+                    System.out.println(searchRs.getString("dateofbirth")+" age: "+age);
+                    if (age>minage&&age<maxage){
+                        resultlist.add(new Label(Integer.toString(rankArray.indexOf(searchRs.getInt("racetime"))) + 1));
+                        resultlist.add(new Label(searchRs.getString("firstname")));
+                        resultlist.add(new Label(searchRs.getString("lastname")));
+                        resultlist.add(new Label(searchRs.getString("countrycode")));
+                        resultlist.add(new Label(searchRs.getString("eventtypename")));
+                        resultlist.add(new Label(searchRs.getString("marathonname")));
+                        resultlist.add(new Label(searchRs.getString("racetime")));
+                    }
                 }
             } catch (SQLException se) {
                 se.printStackTrace();
