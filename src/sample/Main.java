@@ -2249,11 +2249,11 @@ public class Main extends Application {
         resultlist.addAll(new Label("Rank"),new Label("First name"),new Label("last name"),new Label("Country code"),new Label("Event type"),new Label("Marathon"), new Label("racetime"));
         ArrayList<Integer> rankArray = new ArrayList<Integer>();
         try {
-            ResultSet defaultrankRs = sqlquery("SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
+            ResultSet defaultrankRs = sqlquery("registrationevent.RaceTime\n" +
                     "from \n" +
                     "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
                     "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
-                    " ORDER BY racetime ASC;");
+                    " WHERE ORDER BY racetime ASC;");
             while (defaultrankRs.next()) {
                 if (defaultrankRs.getInt("racetime") <= 0) {
                 } else if (rankArray.size() == 0) {
