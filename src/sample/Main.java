@@ -2249,11 +2249,12 @@ public class Main extends Application {
         resultlist.addAll(new Label("Rank"),new Label("First name"),new Label("last name"),new Label("Country code"),new Label("Event type"),new Label("Marathon"), new Label("racetime"));
         ArrayList<Integer> rankArray = new ArrayList<Integer>();
         try {
-            ResultSet defaultrankRs = sqlquery("registrationevent.RaceTime\n" +
-                    "from \n" +
-                    "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
-                    "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
-                    " WHERE ORDER BY racetime ASC;");
+            ResultSet defaultrankRs = sqlquery(
+                    "SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
+                            "from \n" +
+                            "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
+                            "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
+                            "  ORDER BY racetime ASC;");
             while (defaultrankRs.next()) {
                 if (defaultrankRs.getInt("racetime") <= 0) {
                 } else if (rankArray.size() == 0) {
@@ -2271,7 +2272,7 @@ public class Main extends Application {
                             "from \n" +
                             "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
                             "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
-                            " where racetime<1550 ORDER BY racetime ASC;");
+                            " where racetime<2500 ORDER BY racetime ASC;");
             while (defaultRs.next()) {
                 resultlist.add(new Label(Integer.toString(rankArray.indexOf(defaultRs.getInt("racetime"))+1)));
                 resultlist.add(new Label(defaultRs.getString("firstname")));
@@ -2335,6 +2336,18 @@ public class Main extends Application {
                 }
             } catch (SQLException se) {
                 se.printStackTrace();
+            }
+        });
+        marathonCbox.setOnAction(event -> {
+            raceeventCbox.getItems().remove(0, raceeventCbox.getItems().size());
+            ResultSet eventRs = sqlquery(
+                    "SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
+                            "from \n" +
+                            "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
+                            "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
+                            " where racetime<2500 ORDER BY racetime ASC;");
+            while (eventRs.next()){
+
             }
         });
     }
