@@ -2340,14 +2340,19 @@ public class Main extends Application {
         });
         marathonCbox.setOnAction(event -> {
             raceeventCbox.getItems().remove(0, raceeventCbox.getItems().size());
+            String selectedmarathon = marathonCbox.getSelectionModel().getSelectedItem().toString();
             ResultSet eventRs = sqlquery(
-                    "SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
+                    "SELECT event.EventName\n" +
                             "from \n" +
-                            "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
-                            "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
-                            " where racetime<2500 ORDER BY racetime ASC;");
-            while (eventRs.next()){
-
+                            "\t marathon inner join event\n" +
+                            "   on marathon.marathonid= event.marathonid " +
+                            " where marathonname = "+selectedmarathon+";");
+            try {
+                while (eventRs.next()){
+                    raceeventCbox.getItems().add(eventRs.getString("eventname"));
+                }
+            }catch (SQLException se){
+                se.printStackTrace();
             }
         });
     }
