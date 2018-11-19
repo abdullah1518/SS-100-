@@ -2233,6 +2233,8 @@ public class Main extends Application {
             pane.setHgap(10);
             pane.setAlignment(Pos.CENTER);
         }
+        resutsScrollPane.setMinHeight(200);
+
         main.add(headerHbox, 0, 0);
         main.add(filterGpane, 0, 1);
         main.add(statsHbox, 0, 2);
@@ -2248,44 +2250,6 @@ public class Main extends Application {
         resultsTilePane.setPrefColumns(7);
         ObservableList<Node> resultlist = resultsTilePane.getChildren();
         resultlist.addAll(new Label("Rank"), new Label("First name"), new Label("last name"), new Label("Country code"), new Label("Event type"), new Label("Marathon"), new Label("racetime"));
-        ArrayList<Integer> rankArray = new ArrayList<Integer>();
-        try {
-            ResultSet defaultrankRs = sqlquery(
-                    "SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
-                            "from \n" +
-                            "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
-                            "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
-                            "  ORDER BY racetime ASC;");
-            while (defaultrankRs.next()) {
-                if (defaultrankRs.getInt("racetime") <= 0) {
-                } else if (rankArray.size() == 0) {
-                    rankArray.add(defaultrankRs.getInt("racetime"));
-                } else if (defaultrankRs.getInt("racetime") == rankArray.get(rankArray.size() - 1)) {
-                } else {
-                    rankArray.add(defaultrankRs.getInt("racetime"));
-                }
-            }
-            for (int racetime : rankArray) {
-                System.out.println("Rank: " + rankArray.indexOf(racetime) + " Time: " + racetime);
-            }
-            ResultSet defaultRs = sqlquery(
-                    "SELECT user.FirstName , user.lastname,runner.CountryCode, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
-                            "from \n" +
-                            "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
-                            "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
-                            " where racetime<2500 ORDER BY racetime ASC;");
-            while (defaultRs.next()) {
-                resultlist.add(new Label(Integer.toString(rankArray.indexOf(defaultRs.getInt("racetime")) + 1)));
-                resultlist.add(new Label(defaultRs.getString("firstname")));
-                resultlist.add(new Label(defaultRs.getString("lastname")));
-                resultlist.add(new Label(defaultRs.getString("countrycode")));
-                resultlist.add(new Label(defaultRs.getString("eventtypename")));
-                resultlist.add(new Label(defaultRs.getString("marathonname")));
-                resultlist.add(new Label(defaultRs.getString("racetime")));
-            }
-        } catch (SQLException se) {
-            se.printStackTrace();
-        }
 
         resutsScrollPane.setContent(resultsTilePane);
         //Styling nodes
@@ -2296,7 +2260,7 @@ public class Main extends Application {
             resultlist.remove(0, resultlist.size());
             resultlist.addAll(new Label("Rank"), new Label("First name"), new Label("last name"), new Label("Country code"), new Label("Event type"), new Label("Marathon"), new Label("racetime"));
 
-            //query inserting
+            //query creation
             String marathonstmnt = "  MarathonName = '" + marathonCbox.getSelectionModel().getSelectedItem().toString() + "' ";
             String eventstmnt = " and EventName = '" + raceeventCbox.getSelectionModel().getSelectedItem().toString() + "' ";
             String genderstmnt = " and Gender = '" + genderCbox.getSelectionModel().getSelectedItem().toString() + "' ";
@@ -2312,8 +2276,25 @@ public class Main extends Application {
                 maxage = Long.valueOf(dobaselectedrray[1]) * 31556952000L;
             }
 
-            //big455 query
             try {
+                //ranks
+                ArrayList<Integer> rankArray = new ArrayList<>();
+                ResultSet rankRs = sqlquery(
+                        "SELECT user.FirstName , user.lastname, runner.CountryCode, runner.gender, runner.dateofbirth,event.EventName, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
+                                "from \n" +
+                                "\tuser inner join runner inner join registration inner join registrationevent inner join event inner join eventtype inner join marathon\n" +
+                                "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
+                                " where racetime>0 and" + marathonstmnt + eventstmnt + " ORDER BY racetime ASC;");
+                while (rankRs.next()) {
+                    if (rankRs.getInt("racetime") <= 0) {
+                    } else if (rankArray.size() == 0) {
+                        rankArray.add(rankRs.getInt("racetime"));
+                    } else if (rankRs.getInt("racetime") == rankArray.get(rankArray.size() - 1)) {
+                    } else {
+                        rankArray.add(rankRs.getInt("racetime"));
+                    }
+                }
+                //big455 query
                 ResultSet searchRs = sqlquery(
                         "SELECT user.FirstName , user.lastname, runner.CountryCode, runner.gender, runner.dateofbirth,event.EventName, eventtype.EventTypeName, marathon.MarathonName,registrationevent.RaceTime\n" +
                                 "from \n" +
@@ -2321,7 +2302,7 @@ public class Main extends Application {
                                 "    on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId=event.EventId and event.EventTypeId= eventtype.EventTypeId and event.MarathonId=marathon.MarathonId" +
                                 " where racetime>0 and" + marathonstmnt + eventstmnt + genderstmnt + " ORDER BY racetime ASC;");
                 while (searchRs.next()) {
-                    //racetime magic
+
 
                     //age magic
                     String[] dobStr = searchRs.getString("dateofbirth").split(" ");
@@ -2332,14 +2313,13 @@ public class Main extends Application {
                     //adding results if user matches age requirements
                     if (age > minage && age < maxage) {
                         BigDecimal racetime = searchRs.getBigDecimal("racetime");
-                        System.out.println(racetime.divide(new BigDecimal(3600), BigDecimal.ROUND_FLOOR));
                         resultlist.add(new Label(Integer.toString(rankArray.indexOf(searchRs.getInt("racetime"))) + 1));
                         resultlist.add(new Label(searchRs.getString("firstname")));
                         resultlist.add(new Label(searchRs.getString("lastname")));
                         resultlist.add(new Label(searchRs.getString("countrycode")));
                         resultlist.add(new Label(searchRs.getString("eventName")));
                         resultlist.add(new Label(searchRs.getString("marathonname")));
-                        resultlist.add(new Label(searchRs.getString("racetime")));
+                        resultlist.add(new Label(racetime.divide(new BigDecimal(3600), BigDecimal.ROUND_FLOOR)+"h "+(racetime.remainder(new BigDecimal(3600)).divide(new BigDecimal(60), BigDecimal.ROUND_FLOOR))+"m "+racetime.remainder(new BigDecimal(60))+"s "));
                     }
                 }
             } catch (SQLException se) {
