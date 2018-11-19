@@ -39,6 +39,7 @@ import java.beans.EventHandler;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
@@ -2321,8 +2322,6 @@ public class Main extends Application {
                                 " where racetime>0 and" + marathonstmnt + eventstmnt + genderstmnt + " ORDER BY racetime ASC;");
                 while (searchRs.next()) {
                     //racetime magic
-                    double racetime = searchRs.getInt("racetime");
-                    System.out.println(((racetime/3600)-(racetime%3600))+" "+(((racetime%3600)/60) - (racetime%60))+" "+(racetime%60));
 
                     //age magic
                     String[] dobStr = searchRs.getString("dateofbirth").split(" ");
@@ -2332,6 +2331,8 @@ public class Main extends Application {
                     long age = now.getTimeInMillis() - dobCal.getTimeInMillis();
                     //adding results if user matches age requirements
                     if (age > minage && age < maxage) {
+                        BigDecimal racetime = searchRs.getBigDecimal("racetime");
+                        System.out.println(racetime.divide(new BigDecimal(3600), BigDecimal.ROUND_FLOOR));
                         resultlist.add(new Label(Integer.toString(rankArray.indexOf(searchRs.getInt("racetime"))) + 1));
                         resultlist.add(new Label(searchRs.getString("firstname")));
                         resultlist.add(new Label(searchRs.getString("lastname")));
