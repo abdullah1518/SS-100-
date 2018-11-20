@@ -81,6 +81,7 @@ public class Main extends Application {
         btn3.setPrefSize(150, 30);
 
         btn0.setOnAction(value -> {
+
             try {
                 page1();
             } catch (Exception e) {
@@ -137,6 +138,8 @@ public class Main extends Application {
         primaryStage.setScene(scene0);
         primaryStage.setTitle("Marathon Skills");
         primaryStage.show();
+
+        manage_a_runner("aa");
     }
 
 
@@ -345,7 +348,7 @@ public class Main extends Application {
         //labels
         Label titletxt = new Label("Marathon Skill 2019");
         Label headertxt = new Label("Sponsor a runner");
-        Label countdowntxt = new Label();
+        Label countdowntxt = new Label("");
         Label body1txt = new Label("Please choose the runner you would like to sponsor and the amount you would like to sponsor them for. Thank you for your support of the runners and their charities");
         Label sponsdetailslabel = new Label("Sponsorship details");
         Label charitylabel = new Label("charity");
@@ -498,8 +501,8 @@ public class Main extends Application {
         BorderPane rootBorderPane = new BorderPane();
         Label thxLabel = new Label("Thank you for your sponsorship!");
         Label smolThxLabel = new Label("Thank you for sponsoring a runner in Marathon Skills 2019!\nYour donation will help out their chosen charity.");
-        Label runnerInfoLabel = new Label();
-        Label charityNameLabel = new Label();
+        Label runnerInfoLabel = new Label("");
+        Label charityNameLabel = new Label("");
         Label amountLabel = new Label(amount);
         Button backButton = new Button("Back");
         VBox centerBox = new VBox(thxLabel, smolThxLabel, runnerInfoLabel, charityNameLabel, amountLabel, backButton);
@@ -1016,7 +1019,7 @@ public class Main extends Application {
 
     public void register_event() throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
-        Label countdownLabel = new Label();
+        Label countdownLabel = new Label("");
         Label titleLabel = new Label("Marathon Skills 2019");
         Button backButton = new Button("Back");
         HBox topBox = new HBox(backButton, titleLabel);
@@ -1188,7 +1191,7 @@ public class Main extends Application {
 
     public void edit_runner() throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
-        Label countdownLabel = new Label();
+        Label countdownLabel = new Label("");
         Label titleLabel = new Label("Marathon Skills 2019");
         Button backButton = new Button("Back");
         HBox topBox = new HBox(backButton, titleLabel);
@@ -1323,7 +1326,7 @@ public class Main extends Application {
 
     public void edit_runner_2() throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
-        Label countdownLabel = new Label();
+        Label countdownLabel = new Label("");
         Label titleLabel = new Label("Marathon Skills 2019");
         Button backButton = new Button("Back");
         HBox topBox = new HBox(backButton, titleLabel);
@@ -1458,7 +1461,7 @@ public class Main extends Application {
 
     public void my_race_results() throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
-        Label countdownLabel = new Label();
+        Label countdownLabel = new Label("");
         Label titleLabel = new Label("Marathon Skills 2019");
         Button backButton = new Button("Back");
         Button viewAllButton = new Button("View all race results");
@@ -1467,9 +1470,9 @@ public class Main extends Application {
         Label headerLabel = new Label("My race results");
         Text descText = new Text("This is a list of all your past race results");
         Label genderLabel = new Label("Gender: ");
-        Label runnerGenderLabel = new Label();
+        Label runnerGenderLabel = new Label("");
         Label ageLabel = new Label("Age category: ");
-        Label runnerAgeLabel = new Label();
+        Label runnerAgeLabel = new Label("");
         HBox labelsBox = new HBox(genderLabel, runnerGenderLabel, ageLabel, runnerAgeLabel);
         Label marathonLabel = new Label("Marathon");
         Label eventLabel = new Label("Event");
@@ -1586,7 +1589,7 @@ public class Main extends Application {
 
     public void thank_you_runner() {
         BorderPane rootBorderPane = new BorderPane();
-        Label countdownLabel = new Label();
+        Label countdownLabel = new Label("");
         Label titleLabel = new Label("Marathon Skills 2019");
         Button backButton = new Button("Back");
         HBox topBox = new HBox(backButton, titleLabel);
@@ -2346,6 +2349,69 @@ public class Main extends Application {
     }
 
 
+    public void manage_a_runner(String useremail){
+        Object[] oarr = gridpane_preset();
+        GridPane main = (GridPane) oarr[1];
+        Scene scene = (Scene) oarr[0];
+        //------------------node definitions-----------
+        //buttons
+        Button editButton = new Button("Edit profile");
+        Button certifButton = new Button("Preview certificate");
+        //textfields
+        //labels
+        Label topLabel = new Label("Manage a runner");
+
+        Label leftemailLabel = new Label("Email: ");
+        Label leftfirstnameLabel = new Label("First Name: ");
+        Label leftlastnameLabel = new Label("Last Name: ");
+        Label leftgenderLabel = new Label("Gender: ");
+        Label leftdobLabel = new Label("Date of Birth: ");
+        Label leftcoutryLabel = new Label("Country: ");
+        Label leftcharityLabel = new Label("Charity: ");
+        Label lefttargetLabel = new Label("Target to raise: ");
+        Label leftracekitLabel = new Label("Race Kit Option");
+        Label lefteventLabel = new Label("Race Event");
+
+        Label rightemailLabel = new Label("");
+        Label rightfirstnameLabel = new Label("");
+        Label rightlastnameLabel = new Label("");
+        Label rightgenderLabel = new Label("");
+        Label rightdobLabel = new Label("");
+        Label rightcoutryLabel = new Label("");
+        Label rightcharityLabel = new Label("");
+        Label righttargetLabel = new Label("");
+        Label rightracekitLabel = new Label("");
+        Label righteventLabel = new Label("");
+
+        //Styling nodes
+        //-------------------panes and scene--------------
+        HBox topHbox = new HBox(topLabel);
+        GridPane leftGridpane = new GridPane();
+        GridPane rightGridpane = new GridPane();
+
+        //------------------------pane properties--------------
+        GridPane[] panelist = {leftGridpane, rightGridpane};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+        Label[] labels1 = {leftemailLabel  ,leftfirstnameLabel ,leftlastnameLabel  ,leftgenderLabel ,leftdobLabel  ,leftcoutryLabel ,leftcharityLabel  ,lefttargetLabel ,leftracekitLabel  ,lefteventLabel};
+        for (int i=0;i<labels1.length;i++){
+            leftGridpane.add(labels1[i], 0, i);
+        }
+        Label[] labels2 = {rightemailLabel ,rightfirstnameLabel ,rightlastnameLabel ,rightgenderLabel ,rightdobLabel ,rightcoutryLabel ,rightcharityLabel ,righttargetLabel ,rightracekitLabel ,righteventLabel};
+        for (int i=0;i<labels2.length;i++){
+            leftGridpane.add(labels2[i], 1, i);
+        }
+
+        main.add(topHbox, 0, 0);
+        main.add(leftGridpane, 0, 1);
+        //--------------button actions--------------
+    }
+
+
     public Object[] gridpane_preset() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
@@ -2612,7 +2678,10 @@ public class Main extends Application {
 }
 
 
-//    //------------------node definitions-----------
+//          Object[] oarr = gridpane_preset();
+//        GridPane main = (GridPane) oarr[1];
+//        Scene scene = (Scene) oarr[0];
+// ------------------node definitions-----------
 //    //buttons
 //    //textfields
 //    //labels
@@ -2628,9 +2697,4 @@ public class Main extends Application {
 //        pane.setAlignment(Pos.CENTER);
 //    }
 //    //--------------button actions--------------
-/*
-use cpt01;
-    SELECT user.FirstName , registrationevent.RaceTime
-        from
-        user inner join runner inner join registration inner join registrationevent
-        on user.email= runner.email and runner.runnerid = registration.RunnerId and registration.RegistrationId = registrationevent.RegistrationId;*/
+
