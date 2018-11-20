@@ -2408,6 +2408,13 @@ public class Main extends Application {
 
         main.add(topHbox, 0, 0);
         main.add(leftGridpane, 0, 1);
+        //-----------------sql-------------
+        ResultSet infoRs = sqlquery("select user.email, user.FirstName, User.LastName, Runner.Gender, Runner.DateOfBirth, Country.CountryName, charity.CharityName, registration.sponsorshipTarget, racekitoption.RaceKitOptionid, registrationevent.RegistrationEventId \n" +
+                "\tfrom user inner join runner inner join country inner join charity inner join registration inner join racekitoption inner join registrationevent\n" +
+                "    on user.email = runner.email and runner.CountryCode = country.CountryCode and runner.runnerid = registration.runnerid and registration.racekitoptionid = racekitoption.racekitoptionid and  registration.runnerid = registrationevent.RegistrationId and registration.CharityId = charity.CharityId\n" +
+                "    where user.email = \""+useremail+"\" ");
+
+
         //--------------button actions--------------
     }
 
