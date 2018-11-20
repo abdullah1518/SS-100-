@@ -139,7 +139,7 @@ public class Main extends Application {
         primaryStage.setTitle("Marathon Skills");
         primaryStage.show();
 
-        manage_a_runner("aa");
+        manage_a_runner("e.liukko@hotmail.com");
     }
 
 
@@ -2383,6 +2383,10 @@ public class Main extends Application {
         Label rightracekitLabel = new Label("");
         Label righteventLabel = new Label("");
 
+        Label registeredstatusLabel = new Label("Registered");
+        Label paymentstatusLabel = new Label("Payment Confirmed");
+        Label racekitstatusLabel = new Label("");
+        Label attendedstatusLabel = new Label("");
         //Styling nodes
         //-------------------panes and scene--------------
         HBox topHbox = new HBox(topLabel);
@@ -2409,12 +2413,27 @@ public class Main extends Application {
         main.add(topHbox, 0, 0);
         main.add(leftGridpane, 0, 1);
         //-----------------sql-------------
-        ResultSet infoRs = sqlquery("select user.email, user.FirstName, User.LastName, Runner.Gender, Runner.DateOfBirth, Country.CountryName, charity.CharityName, registration.sponsorshipTarget, racekitoption.RaceKitOptionid, registrationevent.RegistrationEventId \n" +
-                "\tfrom user inner join runner inner join country inner join charity inner join registration inner join racekitoption inner join registrationevent\n" +
-                "    on user.email = runner.email and runner.CountryCode = country.CountryCode and runner.runnerid = registration.runnerid and registration.racekitoptionid = racekitoption.racekitoptionid and  registration.runnerid = registrationevent.RegistrationId and registration.CharityId = charity.CharityId\n" +
+        ResultSet infoRs = sqlquery("select user.email, user.FirstName, User.LastName, Runner.Gender, Runner.DateOfBirth, Country.CountryName, charity.CharityName, registration.sponsorshipTarget, racekitoption.RaceKitOptionid, event.EventName , registrationstatus.RegistrationStatus\n" +
+                "\tfrom user inner join runner inner join country inner join charity inner join registration inner join racekitoption inner join registrationevent inner join event inner join registrationstatus\n" +
+                "    on user.email = runner.email and runner.CountryCode = country.CountryCode and runner.runnerid = registration.runnerid and registration.RegistrationStatusId = registrationstatus.RegistrationStatusId and registration.racekitoptionid = racekitoption.racekitoptionid and  registration.runnerid = registrationevent.RegistrationId and registrationevent.EventId= event.EventId and registration.CharityId = charity.CharityId\n" +
                 "    where user.email = \""+useremail+"\" ");
-
-
+        String[] infocolumns = {"Email","FirstName","LastName","Gender","DateOfBirth","CountryName","CharityName","SponsorshipTarget","RaceKitOptionID","EventName"};
+        try {
+            while (infoRs.next()){
+                rightemailLabel.setText(infoRs.getString(infocolumns[0]));
+                rightfirstnameLabel.setText(infoRs.getString(infocolumns[1]));
+                rightlastnameLabel.setText(infoRs.getString(infocolumns[2]));
+                rightgenderLabel.setText(infoRs.getString(infocolumns[3]));
+                rightdobLabel.setText(infoRs.getString(infocolumns[4]));
+                rightcoutryLabel.setText(infoRs.getString(infocolumns[5]));
+                rightcharityLabel.setText(infoRs.getString(infocolumns[6]));
+                righttargetLabel.setText(infoRs.getString(infocolumns[7]));
+                rightracekitLabel.setText(infoRs.getString(infocolumns[8]));
+                righteventLabel.setText(infoRs.getString(infocolumns[9]));
+            }
+        }catch (SQLException se){se.printStackTrace();}
+        String[] statuses = {"registered", "payment confirmed", "race kit sent" ,"race attended"};
+        for
         //--------------button actions--------------
     }
 
