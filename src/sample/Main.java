@@ -45,6 +45,7 @@ import java.util.*;
 import java.util.Date;
 import java.util.Calendar.*;
 
+
 public class Main extends Application {
 
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver?allowPublicKeyRetrieval=true&useSSL=False";
@@ -2391,6 +2392,25 @@ public class Main extends Application {
         //Styling nodes
         topLabel.setId("body-font");
         registrationLabel.setId("body-font");
+        //imagesssssss
+        ArrayList<ImageView> allImageViews = new ArrayList<>(4);
+        ArrayList<Image> allImages = new ArrayList<>();
+        Image marathonImage = null;
+        try {
+            File file = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\status-icons");
+            for (File i : file.listFiles()) {
+                allImages.add(new Image(new FileInputStream(i)));
+            }
+            for (int i=0;i<=4;i++){
+                allImageViews.add(new ImageView());
+            }
+            for (int i=0;i<allImageViews.size();i++){
+                allImageViews.get(i).setFitWidth(35);
+                allImageViews.get(i).setPreserveRatio(true);
+            }
+        } catch (FileNotFoundException fe) {
+            fe.printStackTrace();
+        }
         //-------------------panes and scene--------------
         HBox topHbox = new HBox(topLabel);
         GridPane leftGridpane = new GridPane();
@@ -2445,13 +2465,63 @@ public class Main extends Application {
                 rightracekitLabel.setText(infoRs.getString(infocolumns[8]));
                 righteventLabel.setText(infoRs.getString(infocolumns[9]));
 
-                /*String[] statuses = {"registered", "payment confirmed", "race kit sent" ,"race attended"};
-                for (String status : statuses){
-                    if (infoRs.getString("RegistrationStatus").equals(statuses[0])){}
-                    if (infoRs.getString("RegistrationStatus").equals(statuses[2])){}
-                    if (infoRs.getString("RegistrationStatus").equals(statuses[3])){}
-                    if (infoRs.getString("RegistrationStatus").equals(statuses[4])){}
-                }*/
+                String[] statuses = {"registered", "payment confirmed", "race kit sent" ,"race attended"};
+                System.out.println(infoRs.getString("RegistrationStatus").toLowerCase());
+                boolean statusfound = false;
+                if (infoRs.getString("RegistrationStatus").toLowerCase().equals(statuses[0])){
+                    allImageViews.get(0).setImage(allImages.get(1));
+                    allImageViews.get(1).setImage(allImages.get(0));
+                    allImageViews.get(2).setImage(allImages.get(0));
+                    allImageViews.get(3).setImage(allImages.get(0));
+                    registeredstatusLabel.setGraphic(allImageViews.get(0));
+                    paymentstatusLabel.setGraphic(allImageViews.get(1));
+                    racekitstatusLabel.setGraphic(allImageViews.get(2));
+                    attendedstatusLabel.setGraphic(allImageViews.get(3));
+                    statusfound = true;
+                }
+                if (infoRs.getString("RegistrationStatus").toLowerCase().equals(statuses[1])){
+                    allImageViews.get(0).setImage(allImages.get(1));
+                    allImageViews.get(1).setImage(allImages.get(1));
+                    allImageViews.get(2).setImage(allImages.get(0));
+                    allImageViews.get(3).setImage(allImages.get(0));
+                    registeredstatusLabel.setGraphic(allImageViews.get(0));
+                    paymentstatusLabel.setGraphic(allImageViews.get(1));
+                    racekitstatusLabel.setGraphic(allImageViews.get(2));
+                    attendedstatusLabel.setGraphic(allImageViews.get(3));
+                    statusfound = true;
+                }
+                if (infoRs.getString("RegistrationStatus").toLowerCase().equals(statuses[2])){
+                    allImageViews.get(0).setImage(allImages.get(1));
+                    allImageViews.get(1).setImage(allImages.get(1));
+                    allImageViews.get(2).setImage(allImages.get(1));
+                    allImageViews.get(3).setImage(allImages.get(0));
+                    registeredstatusLabel.setGraphic(allImageViews.get(0));
+                    paymentstatusLabel.setGraphic(allImageViews.get(1));
+                    racekitstatusLabel.setGraphic(allImageViews.get(2));
+                    attendedstatusLabel.setGraphic(allImageViews.get(3));
+                    statusfound = true;
+                }
+                if (infoRs.getString("RegistrationStatus").toLowerCase().equals(statuses[3])){
+                    allImageViews.get(0).setImage(allImages.get(1));
+                    allImageViews.get(1).setImage(allImages.get(1));
+                    allImageViews.get(2).setImage(allImages.get(1));
+                    allImageViews.get(3).setImage(allImages.get(1));
+                    registeredstatusLabel.setGraphic(allImageViews.get(0));
+                    paymentstatusLabel.setGraphic(allImageViews.get(1));
+                    racekitstatusLabel.setGraphic(allImageViews.get(2));
+                    attendedstatusLabel.setGraphic(allImageViews.get(3));
+                    statusfound = true;
+                }
+                if (!statusfound){
+                    allImageViews.get(0).setImage(allImages.get(0));
+                    allImageViews.get(1).setImage(allImages.get(0));
+                    allImageViews.get(2).setImage(allImages.get(0));
+                    allImageViews.get(3).setImage(allImages.get(0));
+                    registeredstatusLabel.setGraphic(allImageViews.get(0));
+                    paymentstatusLabel.setGraphic(allImageViews.get(1));
+                    racekitstatusLabel.setGraphic(allImageViews.get(2));
+                    attendedstatusLabel.setGraphic(allImageViews.get(3));
+                }
             }
         }catch (SQLException se){se.printStackTrace();}
         //--------------button actions--------------
