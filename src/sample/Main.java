@@ -48,8 +48,8 @@ import java.util.Calendar.*;
 
 public class Main extends Application {
 
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver?allowPublicKeyRetrieval=true&useSSL=False";
-    static final String DB_URL = "jdbc:mysql://localhost/cpt01?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false";
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver?allowprivateKeyRetrieval=true&useSSL=False";
+    static final String DB_URL = "jdbc:mysql://localhost/cpt01?allowprivateKeyRetrieval=true&autoReconnect=true&useSSL=false";
 
     static final String USER = "root";
     static final String PASS = "mypass";
@@ -140,11 +140,11 @@ public class Main extends Application {
         primaryStage.setTitle("Marathon Skills");
         primaryStage.show();
 
-        manage_a_runner("e.liukko@hotmail.com");
+        edit_a_runner("l.strassner@ramoz.com");
     }
 
 
-    public void page1() {
+    private void page1() {
 
         BorderPane root1 = new BorderPane();
         GridPane bpane1 = new GridPane();
@@ -221,7 +221,7 @@ public class Main extends Application {
     }
 
 
-    public void loginpage() {
+    private void loginpage() {
 
         BorderPane root = new BorderPane();
         GridPane bpane = new GridPane();
@@ -312,7 +312,7 @@ public class Main extends Application {
     }
 
 
-    public void sponsor_a_runner() {
+    private void sponsor_a_runner() {
         //----------------panes and scene------------------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -498,7 +498,7 @@ public class Main extends Application {
     }
 
 
-    public void sponsor_thank(Stage primaryStage, String amount, String runnerId) {
+    private void sponsor_thank(Stage primaryStage, String amount, String runnerId) {
         BorderPane rootBorderPane = new BorderPane();
         Label thxLabel = new Label("Thank you for your sponsorship!");
         Label smolThxLabel = new Label("Thank you for sponsoring a runner in Marathon Skills 2019!\nYour donation will help out their chosen charity.");
@@ -530,7 +530,7 @@ public class Main extends Application {
     }
 
 
-    public void runner_menu() {
+    private void runner_menu() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -642,7 +642,7 @@ public class Main extends Application {
     }
 
 
-    public void coordinator_menu() {
+    private void coordinator_menu() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -719,7 +719,7 @@ public class Main extends Application {
     }
 
 
-    public void admin_menu() {
+    private void admin_menu() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -798,7 +798,7 @@ public class Main extends Application {
     }
 
 
-    public void register_runner() {
+    private void register_runner() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -860,7 +860,7 @@ public class Main extends Application {
         Label genderlbl = new Label("Gender");
         Label countrylbl = new Label("Country");
         Label dateofbirthlbl = new Label("Date of Birth");
-        String[] dobValues = dateofbirth.getText().split("-");
+
         //Styling nodes
         header.setId("header-footer");
         footer.setId("header-footer");
@@ -921,6 +921,7 @@ public class Main extends Application {
         primaryStage.show();
         //--------------button actions--------------
         register.setOnAction(value -> {
+            String[] dobValues = dateofbirth.getText().split("-");
             boolean emailbool = false;
             boolean passwordbool = false;
             boolean birthbool = false;
@@ -1018,7 +1019,7 @@ public class Main extends Application {
     }
 
 
-    public void register_event() throws SQLException {
+    private void register_event() throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label("");
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1190,7 +1191,7 @@ public class Main extends Application {
     }
 
 
-    public void edit_runner() throws SQLException {
+    private void edit_runner() throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label("");
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1325,7 +1326,7 @@ public class Main extends Application {
     }
 
 
-    public void edit_runner_2() throws SQLException {
+    private void edit_runner_2() throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label("");
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1460,7 +1461,7 @@ public class Main extends Application {
     }
 
 
-    public void my_race_results() throws SQLException {
+    private void my_race_results() throws SQLException {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label("");
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1588,7 +1589,7 @@ public class Main extends Application {
     }
 
 
-    public void thank_you_runner() {
+    private void thank_you_runner() {
         BorderPane rootBorderPane = new BorderPane();
         Label countdownLabel = new Label("");
         Label titleLabel = new Label("Marathon Skills 2019");
@@ -1626,7 +1627,7 @@ public class Main extends Application {
     }
 
 
-    public void find_out_more() {
+    private void find_out_more() {
         //------------------node definitions-----------
         //buttons
         Button ms2015button = new Button("Marathon Skills 2015");
@@ -1674,7 +1675,7 @@ public class Main extends Application {
     }
 
 
-    public void how_long() {
+    private void how_long() {
         Object[] oarr = gridpane_preset();
 
 
@@ -1866,7 +1867,7 @@ public class Main extends Application {
     }
 
 
-    public void marathon_info() {
+    private void marathon_info() {
         Object[] oarr = scrollpane_preset();
 
         ScrollPane main = (ScrollPane) oarr[1];
@@ -1970,7 +1971,7 @@ public class Main extends Application {
     }
 
 
-    public void interactive_map() {
+    private void interactive_map() {
         Object[] oarr = gridpane_preset();
 
 
@@ -2182,7 +2183,7 @@ public class Main extends Application {
     }
 
 
-    public void previous_race_results() {
+    private void previous_race_results() {
         Object[] oarr = gridpane_preset();
         GridPane main = (GridPane) oarr[1];
         Scene scene = (Scene) oarr[0];
@@ -2350,7 +2351,7 @@ public class Main extends Application {
     }
 
 
-    public void manage_a_runner(String useremail){
+    private void manage_a_runner(String useremail){
         Object[] oarr = gridpane_preset();
         GridPane main = (GridPane) oarr[1];
         Scene scene = (Scene) oarr[0];
@@ -2528,7 +2529,152 @@ public class Main extends Application {
     }
 
 
-    public Object[] gridpane_preset() {
+    private void edit_a_runner(String useremail){
+        Object[] oarr = gridpane_preset();
+        GridPane main = (GridPane) oarr[1];
+        Scene scene = (Scene) oarr[0];
+        //------------------node definitions-----------
+        //buttons
+        Button saveButton = new Button("Save");
+        Button cancelButton = new Button("Cancel");
+        //textfields
+        TextField firstnameTextField = new TextField("");
+        TextField lastnameTextField = new TextField("");
+        TextField dobTextField = new TextField("yyyy-mm-dd");
+        TextField passwdTextField = new TextField("");
+        TextField passwdcheckTextField = new TextField("");
+
+
+        //combos
+        ComboBox countryComboBox = new ComboBox();
+        ComboBox genderComboBox = new ComboBox();
+        ComboBox regisstatusComboBox = new ComboBox();
+        //labels
+        Label headerLabel = new Label("Edit a Runner");
+        Label useremailLabel = new Label(useremail);
+        Label changepassLabel = new Label("Change password");
+        Label changepassinfoLabel = new Label("Leave these fields blank if you \n do not want to change the password");
+
+        Label emailLabel = new Label("Email: ");
+        Label firstnameLabel = new Label("First Name: ");
+        Label lastnameLabel = new Label("Last Name: ");
+        Label genderLabel = new Label("Gender: ");
+        Label dobLabel = new Label("Date of Birth: ");
+        Label countryLabel = new Label("Country: ");
+        Label passwdLabel = new Label("Password: ");
+        Label passwdcheckLabel = new Label("Password Again: ");
+        Label regisstatusLabel = new Label("Registraion Status");
+        //Styling nodes
+        headerLabel.setId("body-font");
+        changepassLabel.setId("body-font");
+        //-------------------panes and scene--------------
+        HBox topHbox = new HBox(headerLabel);
+        HBox botHbox = new HBox(saveButton, cancelButton);
+        GridPane leftGridPane = new GridPane();
+        GridPane rightGridPane = new GridPane();
+        VBox rightVbox = new VBox(changepassLabel, changepassinfoLabel, rightGridPane, regisstatusLabel, regisstatusComboBox);
+        HBox mainHbox = new HBox(leftGridPane, rightVbox);
+        //------------------------pane properties--------------
+        GridPane[] panelist = {leftGridPane, rightGridPane};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+        topHbox.setAlignment(Pos.CENTER);
+        botHbox.setAlignment(Pos.CENTER);
+        rightVbox.setPadding(new Insets(5));
+        rightVbox.setSpacing(5);
+        rightVbox.setAlignment(Pos.CENTER);
+
+        Label[] labels1 = {emailLabel,firstnameLabel ,lastnameLabel ,genderLabel ,dobLabel ,countryLabel};
+        for (int i=0;i<labels1.length;i++){
+            leftGridPane.add(labels1[i], 0, i);
+        }
+        TextField[] textFields = {firstnameTextField ,lastnameTextField ,dobTextField };
+        for (int i=0;i<textFields.length;i++){
+            if (i<2) {
+                leftGridPane.add(textFields[i], 1, i + 1);
+            }
+            else {
+                leftGridPane.add(textFields[i], 1, i + 2);
+            }
+        }
+        leftGridPane.add(useremailLabel, 1, 0);
+        leftGridPane.add(genderComboBox, 1, 3);
+        leftGridPane.add(countryComboBox, 1, 5);
+
+        rightGridPane.add(passwdLabel, 0, 0);
+        rightGridPane.add(passwdTextField, 1, 0);
+        rightGridPane.add(passwdcheckLabel, 0, 1);
+        rightGridPane.add(passwdcheckTextField, 1, 1);
+
+        main.add(topHbox, 0, 0);
+        main.add(mainHbox, 0, 1);
+        main.add(botHbox, 0, 2);
+        //--------------button actions--------------
+        saveButton.setOnAction(event -> {
+            String[] dobValues = dobTextField.getText().split("-");
+            if (dobValues[1].length() == 1) {
+                dobValues[1] = "0" + dobValues[1];
+            }
+            if (dobValues[2].length() == 1) {
+                dobValues[2] = "0" + dobValues[2];
+            }
+            boolean passwordbool =  passwdTextField.getText().length() >= 6
+                    && passwdTextField.getText().matches(".*[!@#$%^]+.*")
+                    && passwdTextField.getText().matches(".*[A-Z]+.*")
+                    && passwdTextField.getText().matches(".*\\d+.*")
+                    && passwdTextField.getText().equals(passwdcheckLabel.getText());
+
+            if (passwordbool){
+                sqlinsert(
+                        "UPDATE user, runner, REGISTRATION STATUS \n" +
+                                "SET FirstName = "+firstnameTextField.getText()+", LastName = '"+lastnameTextField.getText()+"', Gender = '"+genderComboBox.getSelectionModel().getSelectedItem().toString()+"', DateOfBirth = '"+dobValues[0]+"-"+dobValues[1]+"-"+dobValues[2]+"', CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '" + countryComboBox.getSelectionModel().getSelectedItem().toString() + "'),REGISTRATIONSTATUS = '"+regisstatusComboBox.getSelectionModel().getSelectedItem().toString()+"', pass = '"+passwdTextField.getText()+"'"+"\n" +
+                                "WHERE email = '"+useremail+"';"
+                );
+            }
+            else {
+                sqlinsert(
+                        "UPDATE user, runner, REGISTRATIONSTATUS \n" +
+                                "SET FirstName = '"+firstnameTextField.getText()+"', LastName = '"+lastnameTextField.getText()+"', Gender = '"+genderComboBox.getSelectionModel().getSelectedItem().toString()+"', DateOfBirth = '"+dobValues[0]+"-"+dobValues[1]+"-"+dobValues[2]+"',CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '" + countryComboBox.getSelectionModel().getSelectedItem().toString() + "'),REGISTRATIONSTATUS = '"+regisstatusComboBox.getSelectionModel().getSelectedItem().toString()+"' \n" +
+                                "WHERE user.email = '"+useremail+"' and runner.email = '"+useremail+"';"
+                );
+            }
+            //these qwerys ovewwight the registwation stauses in the registwation status tablw instwead of ovewwight the uswes status
+        });
+        //-------sql---------------------------
+        ResultSet genderrs = sqlquery("select gender from gender");
+        try {
+            while (genderrs.next()) {
+                genderComboBox.getItems().add(genderrs.getString("gender"));
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+
+        ResultSet countryrs = sqlquery("select countryname from country");
+        try {
+            while (countryrs.next()) {
+                countryComboBox.getItems().addAll(countryrs.getString("countryname"));
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+
+        ResultSet statusrs = sqlquery("select registrationstatus from registrationstatus");
+        try {
+            while (statusrs.next()) {
+                regisstatusComboBox.getItems().addAll(statusrs.getString("registrationstatus"));
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    }
+
+
+    private Object[] gridpane_preset() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -2579,7 +2725,7 @@ public class Main extends Application {
     }
 
 
-    public Object[] scrollpane_preset() {
+    private Object[] scrollpane_preset() {
         //-------------------panes and scene--------------
         BorderPane root = new BorderPane();
         GridPane header = new GridPane();
@@ -2630,7 +2776,7 @@ public class Main extends Application {
     }
 
 
-    public String signin(String uemail, String upassword) {
+    private String signin(String uemail, String upassword) {
         String roleid = new String();
         Connection conn = null;
         Statement stmt = null;
@@ -2716,7 +2862,7 @@ public class Main extends Application {
     }
 
 
-    public ResultSet sqlquery(String query) {
+    private ResultSet sqlquery(String query) {
         Connection conn = null;
         Statement stmnt = null;
         try {
@@ -2743,12 +2889,12 @@ public class Main extends Application {
     }
 
 
-    public void sqlinsert(String query) {
+    private void sqlinsert(String query) {
         Connection conn = null;
         Statement stmnt = null;
         try {
 
-            String URL = "jdbc:mysql://127.0.0.1:3306/cpt01?allowPublicKeyRetrieval=true&useSSL=False";
+            String URL = "jdbc:mysql://127.0.0.1:3306/cpt01?allowprivateKeyRetrieval=true&useSSL=False";
             String USER = "root";
             String PASS = "mypass";
             conn = DriverManager.getConnection(URL, USER, PASS);
@@ -2774,7 +2920,7 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
+    private static void main(String[] args) {
         try {
             launch(args);
         } catch (Exception e) {
