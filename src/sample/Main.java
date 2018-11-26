@@ -2637,9 +2637,9 @@ public class Main extends Application {
             }
             else {
                 sqlinsert(
-                        "UPDATE user, runner, REGISTRATIONSTATUS \n" +
-                                "SET FirstName = '"+firstnameTextField.getText()+"', LastName = '"+lastnameTextField.getText()+"', Gender = '"+genderComboBox.getSelectionModel().getSelectedItem().toString()+"', DateOfBirth = '"+dobValues[0]+"-"+dobValues[1]+"-"+dobValues[2]+"',CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '" + countryComboBox.getSelectionModel().getSelectedItem().toString() + "'),REGISTRATIONSTATUS = '"+regisstatusComboBox.getSelectionModel().getSelectedItem().toString()+"' \n" +
-                                "WHERE user.email = '"+useremail+"' and runner.email = '"+useremail+"';"
+                        "UPDATE user, runner, registration \n" +
+                                "SET FirstName = '"+firstnameTextField.getText()+"', LastName = '"+lastnameTextField.getText()+"', Gender = '"+genderComboBox.getSelectionModel().getSelectedItem().toString()+"', DateOfBirth = '"+dobValues[0]+"-"+dobValues[1]+"-"+dobValues[2]+"',CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '" + countryComboBox.getSelectionModel().getSelectedItem().toString() + "'),REGISTRATIONSTATUSid = (SELECT registrationstatusid from registrationstatus WHERE registrationstatus =  '"+regisstatusComboBox.getSelectionModel().getSelectedItem().toString()+"') \n" +
+                                "WHERE user.email = '"+useremail+"' and runner.email = '"+useremail+"' and (SELECT runnerid from runner where email ='"+useremail+"') = registration.runnerid;"
                 );
             }
             //these qwerys ovewwight the registwation stauses in the registwation status tablw instwead of ovewwight the uswes status
