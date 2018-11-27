@@ -140,7 +140,7 @@ public class Main extends Application {
         primaryStage.setTitle("Marathon Skills");
         primaryStage.show();
 
-        edit_a_runner("l.strassner@ramoz.com");
+        manage_a_runner("l.strassner@ramoz.com");
     }
 
 
@@ -2526,6 +2526,12 @@ public class Main extends Application {
             }
         }catch (SQLException se){se.printStackTrace();}
         //--------------button actions--------------
+        editButton.setOnAction(event -> {
+            edit_a_runner(useremail);
+        });
+        certifButton.setOnAction(event -> {
+            preview_certificate(useremail, rightfirstnameLabel.getText(), rightlastnameLabel.getText(),rightcharityLabel.getText(),righteventLabel.getText(), righttargetLabel.getText());
+        });
     }
 
 
@@ -2631,7 +2637,7 @@ public class Main extends Application {
             if (passwordbool){
                 sqlinsert(
                         "UPDATE user, runner, REGISTRATION STATUS \n" +
-                                "SET FirstName = "+firstnameTextField.getText()+", LastName = '"+lastnameTextField.getText()+"', Gender = '"+genderComboBox.getSelectionModel().getSelectedItem().toString()+"', DateOfBirth = '"+dobValues[0]+"-"+dobValues[1]+"-"+dobValues[2]+"', CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '" + countryComboBox.getSelectionModel().getSelectedItem().toString() + "'),REGISTRATIONSTATUS = '"+regisstatusComboBox.getSelectionModel().getSelectedItem().toString()+"', pass = '"+passwdTextField.getText()+"'"+"\n" +
+                                "SET FirstName = "+firstnameTextField.getText()+", LastName = '"+lastnameTextField.getText()+"', Gender = '"+genderComboBox.getSelectionModel().getSelectedItem().toString()+"', DateOfBirth = '"+dobValues[0]+"-"+dobValues[1]+"-"+dobValues[2]+"', CountryCode = (SELECT CountryCode FROM Country WHERE CountryName = '" + countryComboBox.getSelectionModel().getSelectedItem().toString() + "'),REGISTRATIONSTATUSid = (SELECT registrationstatusid from registrationstatus WHERE registrationstatus =  '"+regisstatusComboBox.getSelectionModel().getSelectedItem().toString()+"'), pass = '"+passwdTextField.getText()+"'"+"\n" +
                                 "WHERE email = '"+useremail+"';"
                 );
             }
@@ -2642,7 +2648,6 @@ public class Main extends Application {
                                 "WHERE user.email = '"+useremail+"' and runner.email = '"+useremail+"' and (SELECT runnerid from runner where email ='"+useremail+"') = registration.runnerid;"
                 );
             }
-            //these qwerys ovewwight the registwation stauses in the registwation status tablw instwead of ovewwight the uswes status
         });
         //-------sql---------------------------
         ResultSet genderrs = sqlquery("select gender from gender");
@@ -2671,6 +2676,43 @@ public class Main extends Application {
         } catch (SQLException se) {
             se.printStackTrace();
         }
+    }
+
+
+    private void preview_certificate(String useremail, String userfirstname, String userlastname, String usercharity, String userevent, String usertarget){
+        String usertime = " ", userrank = " ", usermarathon = " ";
+        Object[] oarr = gridpane_preset();
+        GridPane main = (GridPane) oarr[1];
+        Scene scene = (Scene) oarr[0];
+        //---------------node definitions-----------
+        //buttons
+        //labels
+        Label congratsLabel = new Label("Congratulations "+userfirstname+userlastname+" for running in the "+userevent+" you ran a time of "+usertime+" and got a rank of "+userrank);
+        Label certifLabel = new Label("Certificate of participation\n in\n "+usermarathon);
+        Label targetLabel = new Label("You also raised $"+usertarget+" for "+usercharity);
+
+        congratsLabel.setWrapText(true);
+        congratsLabel.prefHeightProperty().bind(scene.heightProperty().subtract(450));
+        congratsLabel.textAlignmentProperty().setValue(TextAlignment.CENTER);
+        certifLabel.textAlignmentProperty().setValue(TextAlignment.CENTER);
+        targetLabel.textAlignmentProperty().setValue(TextAlignment.CENTER);
+        //Styling nodes
+        //image
+        //-------------------panes and scene--------------
+        Pane logoPane = new Pane();
+        VBox mainlabelVBox = new VBox(congratsLabel, certifLabel, targetLabel);
+        StackPane mainStackPane = new StackPane(logoPane, mainlabelVBox);
+        //------------------------pane properties--------------
+        GridPane[] panelist = {main};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+        mainlabelVBox.setAlignment(Pos.CENTER);
+        main.add(mainStackPane, 0, 0);
+        //------------ --button actions--------------
     }
 
 
@@ -2940,23 +2982,22 @@ public class Main extends Application {
 }
 
 
-//          Object[] oarr = gridpane_preset();
-//        GridPane main = (GridPane) oarr[1];
-//        Scene scene = (Scene) oarr[0];
-// ------------------node definitions-----------
-//    //buttons
-//    //textfields
-//    //labels
-//    //Styling nodes
-//    //-------------------panes and scene--------------
-
-//    //------------------------pane properties--------------
-//    GridPane[] panelist = {};
-//    for (GridPane pane : panelist){
-//        pane.setPadding(new Insets(10));
-//        pane.setVgap(10);
-//        pane.setHgap(10);
-//        pane.setAlignment(Pos.CENTER);
-//    }
-//    //--------------button actions--------------
+/*      Object[] oarr = gridpane_preset();
+        GridPane main = (GridPane) oarr[1];
+        Scene scene = (Scene) oarr[0];
+        //---------------node definitions-----------
+        //buttons
+        //textfields
+        //labels
+        //Styling nodes
+        //-------------------panes and scene--------------
+        //------------------------pane properties--------------
+        GridPane[] panelist = {};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+        //------------ --button actions--------------*/
 
