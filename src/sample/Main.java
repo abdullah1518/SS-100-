@@ -140,7 +140,8 @@ public class Main extends Application {
         primaryStage.setTitle("Marathon Skills");
         primaryStage.show();
 
-        manage_a_runner("l.strassner@ramoz.com");
+        sponsorship_overview();
+
     }
 
 
@@ -2698,9 +2699,32 @@ public class Main extends Application {
         targetLabel.textAlignmentProperty().setValue(TextAlignment.CENTER);
         //Styling nodes
         //image
+        ImageView certifview = null;
+        Image certifimage = null;
+        try{
+            File file = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\WSC2015_TP09_resources\\WSC2015_TP09_resources_session-5\\marathon-skills-2014-certificate-seal.png");
+            certifimage = new Image(new FileInputStream(file));
+            certifview = new ImageView(certifimage);
+        }catch (FileNotFoundException fe){
+            fe.printStackTrace();
+        }
+        //sql
+        ResultSet infoRs = sqlquery(
+                "select user.FirstName, marathon.MarathonName, marathon.MarathonId\n" +
+                        "from user inner join runner inner join registration inner join registrationevent inner join event inner join marathon\n" +
+                        "on user.Email = runner.email and runner.RunnerId = registration.RunnerId and Registration.RegistrationId = registrationevent.RegistrationId and registrationevent.EventId = event.EventID and event.MarathonId = marathon.MarathonId\n" +
+                        "where user.Email = '"+useremail+"'");
+        try {
+            while (infoRs.next()){
+                usermarathon = infoRs.getString("marathonname");
+                 certifLabel.setText("Certificate of participation\n in\n "+usermarathon);
+            }
+        }catch (SQLException se){se.printStackTrace();}
+        certifview.setFitWidth(150);
+        certifview.setPreserveRatio(true);
         //-------------------panes and scene--------------
         Pane logoPane = new Pane();
-        VBox mainlabelVBox = new VBox(congratsLabel, certifLabel, targetLabel);
+        VBox mainlabelVBox = new VBox(congratsLabel, certifLabel, targetLabel, certifview);
         StackPane mainStackPane = new StackPane(logoPane, mainlabelVBox);
         //------------------------pane properties--------------
         GridPane[] panelist = {main};
@@ -2713,6 +2737,50 @@ public class Main extends Application {
         mainlabelVBox.setAlignment(Pos.CENTER);
         main.add(mainStackPane, 0, 0);
         //------------ --button actions--------------
+    }
+
+
+    private  void sponsorship_overview(){
+        Object[] oarr = gridpane_preset();
+        GridPane main = (GridPane) oarr[1];
+        Scene scene = (Scene) oarr[0];
+        //---------------node definitions-----------
+        //buttons
+        //textfields
+        //labels
+        //Styling nodes
+        //-------------------panes and scene--------------
+        TilePane resultsTilePane = new TilePane();
+        ScrollPane resultsScrollPane = new ScrollPane(resultsTilePane);
+        //------------------------pane properties--------------
+        GridPane[] panelist = {main};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+
+        resultsTilePane.setPrefColumns(3);
+
+        ObservableList resultslist = resultsTilePane.getChildren();
+        resultslist.addAll(new Label("Logo"), new Label("info"), new Label("Amount"));
+        main.add(resultsScrollPane, 0, 1);
+        //----------------button actions--------------------
+        //sequel
+        ResultSet chirityinfoRs = sqlquery("select charityname, charityId, charitylogo from charity");
+        try {
+            while (chirityinfoRs.next()){
+                try {
+                    ImageView chaityimage = new ImageView(new Image(new FileInputStream("C:\\Users\\admin3\\Desktop\\Mskills resources\\charity images\\"+chirityinfoRs.getString("charitylogo"))));
+                    chaityimage.fitHeightProperty().bind(resultsScrollPane.heightProperty().divide(500).multiply(70));
+                    chaityimage.setPreserveRatio(true);
+                    resultslist.addAll(chaityimage);
+                }catch (FileNotFoundException fe){fe.printStackTrace();}
+                resultslist.addAll(new Label(chirityinfoRs.getString("charityname")));
+                resultslist.addAll(new Label("aadasasdasd"));
+            }
+        }catch (SQLException se){se.printStackTrace();}
     }
 
 
