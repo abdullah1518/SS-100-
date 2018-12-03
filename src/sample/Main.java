@@ -22,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.image.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -31,6 +32,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.*;
 import javafx.geometry.Pos;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import jdk.internal.dynalink.support.BottomGuardingDynamicLinker;
 
@@ -2740,7 +2742,7 @@ public class Main extends Application {
     }
 
 
-    private  void sponsorship_overview(){
+    private void sponsorship_overview(){
         Object[] oarr = gridpane_preset();
         GridPane main = (GridPane) oarr[1];
         Scene scene = (Scene) oarr[0];
@@ -2749,6 +2751,7 @@ public class Main extends Application {
         //textfields
         //labels
         //Styling nodes
+        //rectanged
         //-------------------panes and scene--------------
         TilePane resultsTilePane = new TilePane();
         ScrollPane resultsScrollPane = new ScrollPane(resultsTilePane);
@@ -2762,23 +2765,36 @@ public class Main extends Application {
         }
 
         resultsTilePane.setPrefColumns(3);
-
         ObservableList resultslist = resultsTilePane.getChildren();
-        resultslist.addAll(new Label("Logo"), new Label("info"), new Label("Amount"));
+        resultslist.addAll(new Label("Logo"),new Label("info"),new Label("Amount"));
         main.add(resultsScrollPane, 0, 1);
         //----------------button actions--------------------
         //sequel
-        ResultSet chirityinfoRs = sqlquery("select charityname, charityId, charitylogo from charity");
+        ResultSet charityinfoRs = sqlquery("select * from charity");
         try {
-            while (chirityinfoRs.next()){
+            while (charityinfoRs.next()){
                 try {
-                    ImageView chaityimage = new ImageView(new Image(new FileInputStream("C:\\Users\\admin3\\Desktop\\Mskills resources\\charity images\\"+chirityinfoRs.getString("charitylogo"))));
+                    ImageView chaityimage = new ImageView(new Image(new FileInputStream("C:\\Users\\admin3\\Desktop\\Mskills resources\\charity images\\"+charityinfoRs.getString("charitylogo"))));
                     chaityimage.fitHeightProperty().bind(resultsScrollPane.heightProperty().divide(500).multiply(70));
                     chaityimage.setPreserveRatio(true);
                     resultslist.addAll(chaityimage);
                 }catch (FileNotFoundException fe){fe.printStackTrace();}
-                resultslist.addAll(new Label(chirityinfoRs.getString("charityname")));
-                resultslist.addAll(new Label("aadasasdasd"));
+
+                Label infoLabel = new Label(charityinfoRs.getString("charityname")+"\n"+charityinfoRs.getString("charitydescription"));
+                infoLabel.setTextAlignment(TextAlignment.LEFT);
+                infoLabel.prefWidthProperty().bind(resultsScrollPane.widthProperty().divide(500).multiply(100));
+                infoLabel.setWrapText(true);
+                infoLabel.prefHeightProperty().bind(resultsScrollPane.heightProperty().divide(500).multiply(350));
+                resultslist.addAll(infoLabel);
+
+                ResultSet amountRs = sqlquery("select charityname, amount from registration inner join sponsorship inner join charity\n" +
+                        "on charity.CharityId = registration.CharityId and sponsorship.RegistrationId = registration.RegistrationId " +
+                        "where charityname = '"+charityinfoRs.getString("charityname")+"'");
+                int charityamount=0;
+                while (amountRs.next()){
+                    charityamount=charityamount+amountRs.getInt("amount");
+                }
+                resultslist.addAll(new Label(Integer.toString(charityamount)));
             }
         }catch (SQLException se){se.printStackTrace();}
     }
