@@ -35,6 +35,7 @@ import javafx.geometry.Pos;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import jdk.internal.dynalink.support.BottomGuardingDynamicLinker;
+import  java.util.Collection.*;
 
 import java.awt.*;
 import java.beans.EventHandler;
@@ -2748,6 +2749,7 @@ public class Main extends Application {
         Scene scene = (Scene) oarr[0];
         //---------------node definitions-----------
         //buttons
+        Button sortButton = new Button("Sort");
         //textfields
         //labels
         //Styling nodes
@@ -2769,13 +2771,107 @@ public class Main extends Application {
         resultslist.addAll(new Label("Logo"),new Label("info"),new Label("Amount"));
         main.add(resultsScrollPane, 0, 1);
         //----------------button actions--------------------
+        sortButton.setOnAction(event -> {
+            resultslist.remove(0, resultslist.size());
+            resultslist.addAll(new Label("Logo"),new Label("info"),new Label("Amount"));
+            if (){
+                ResultSet sortnameRs = sqlquery("select * from charity" +
+                        "ORDER by charityName ASC");
+                try {
+                    while (sortnameRs.next()){
+                        try {
+                            ImageView chaityimage = new ImageView(new Image(new FileInputStream("C:\\Users\\admin3\\Desktop\\Mskills resources\\charity images\\"+sortnameRs.getString("charitylogo"))));
+                            chaityimage.fitHeightProperty().bind(resultsScrollPane.heightProperty().divide(500).multiply(100));
+                            chaityimage.setPreserveRatio(true);
+                            resultslist.addAll(chaityimage);
+                        }catch (FileNotFoundException fe){fe.printStackTrace();}
+
+                        Label infoLabel = new Label(sortnameRs.getString("charityname")+"\n"+sortnameRs.getString("charitydescription"));
+                        infoLabel.setTextAlignment(TextAlignment.LEFT);
+                        infoLabel.prefWidthProperty().bind(resultsScrollPane.widthProperty().divide(500).multiply(100));
+                        infoLabel.setWrapText(true);
+                        infoLabel.prefHeightProperty().bind(resultsScrollPane.heightProperty().divide(500).multiply(350));
+                        resultslist.addAll(infoLabel);
+
+                        ResultSet amountRs = sqlquery("select charityname, amount from registration inner join sponsorship inner join charity\n" +
+                                "on charity.CharityId = registration.CharityId and sponsorship.RegistrationId = registration.RegistrationId " +
+                                "where charityname = '"+sortnameRs.getString("charityname")+"'");
+                        int charityamount=0;
+                        while (amountRs.next()){
+                            charityamount=charityamount+amountRs.getInt("amount");
+                        }
+                        resultslist.addAll(new Label(Integer.toString(charityamount)));
+                    }
+                }catch (SQLException se){se.printStackTrace();}
+            }
+            else {
+                //query amount -> sort -> print
+                ArrayList<String> charitynames = new ArrayList<>();
+                ArrayList<Integer> charityamounts = new ArrayList<>();
+                //query
+                ResultSet charitynameRs = sqlquery("select * from charity");
+                try {
+
+                    while (charitynameRs.next()) {
+                        ResultSet amountsortRS = sqlquery("select charityname, amount from registration inner join sponsorship inner join charity\n" +
+                                "on charity.CharityId = registration.CharityId and sponsorship.RegistrationId = registration.RegistrationId " +
+                                "where charityname = '" + charitynameRs.getString("charityname") + "'");
+                        int charityamount=0;
+                        while (amountsortRS.next()){
+                            charityamount=charityamount+amountsortRS.getInt("amount");
+                        }
+                        charitynames.add(charitynameRs.getString("charityname"));
+                        charityamounts.add(charityamount);
+                    }
+
+                }catch (SQLException se){se.printStackTrace();}
+                //sort
+                ArrayList<Integer> charityamountssorted = charityamounts;
+                Collections.sort(charityamountssorted);
+                ArrayList<String> charitynamessorted = new ArrayList<>();
+                for (int amount1 : charityamountssorted){
+                    for (int amount2 : charityamounts){
+                        if (amount2==amount1){
+                            charitynamessorted.add(charitynames.get(charityamounts.indexOf(amount2)));
+                            System.out.println(charitynames.get(charityamounts.indexOf(amount2)));
+                        }
+                    }
+                }
+                //print
+                for (String charsorted : charitynamessorted) {
+                    ResultSet charitysortedRs = sqlquery("select * from charity where charityname = '" +charsorted+ "'");
+                    try {
+                        while (charitysortedRs.next()) {
+                            try {
+                                ImageView chaityimage = new ImageView(new Image(new FileInputStream("C:\\Users\\admin3\\Desktop\\Mskills resources\\charity images\\" + charitysortedRs.getString("charitylogo"))));
+                                chaityimage.fitHeightProperty().bind(resultsScrollPane.heightProperty().divide(500).multiply(100));
+                                chaityimage.setPreserveRatio(true);
+                                resultslist.addAll(chaityimage);
+                            } catch (FileNotFoundException fe) {
+                                fe.printStackTrace();
+                            }
+                            Label infoLabel = new Label(charitysortedRs.getString("charityname") + "\n" + charitysortedRs.getString("charitydescription"));
+                            infoLabel.setTextAlignment(TextAlignment.LEFT);
+                            infoLabel.prefWidthProperty().bind(resultsScrollPane.widthProperty().divide(500).multiply(100));
+                            infoLabel.setWrapText(true);
+                            infoLabel.prefHeightProperty().bind(resultsScrollPane.heightProperty().divide(500).multiply(350));
+                            resultslist.addAll(infoLabel);
+                            Label amountLabel = new Label(Integer.toString(charityamountssorted.get(charitynamessorted.indexOf(charsorted))));
+                            resultslist.addAll(amountLabel);
+                        }
+                    } catch (SQLException se) {
+                        se.printStackTrace();
+                    }
+                }
+            }
+        });
         //sequel
         ResultSet charityinfoRs = sqlquery("select * from charity");
         try {
             while (charityinfoRs.next()){
                 try {
                     ImageView chaityimage = new ImageView(new Image(new FileInputStream("C:\\Users\\admin3\\Desktop\\Mskills resources\\charity images\\"+charityinfoRs.getString("charitylogo"))));
-                    chaityimage.fitHeightProperty().bind(resultsScrollPane.heightProperty().divide(500).multiply(70));
+                    chaityimage.fitHeightProperty().bind(resultsScrollPane.heightProperty().divide(500).multiply(100));
                     chaityimage.setPreserveRatio(true);
                     resultslist.addAll(chaityimage);
                 }catch (FileNotFoundException fe){fe.printStackTrace();}
