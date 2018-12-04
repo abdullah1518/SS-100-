@@ -143,7 +143,7 @@ public class Main extends Application {
         primaryStage.setTitle("Marathon Skills");
         primaryStage.show();
 
-        sponsorship_overview();
+        edit_user("aaaa");
 
     }
 
@@ -2750,13 +2750,16 @@ public class Main extends Application {
         //---------------node definitions-----------
         //buttons
         Button sortButton = new Button("Sort");
-        //textfields
+        //combobox
+        ComboBox comboBox = new ComboBox();
+        comboBox.getItems().addAll("Amount","Name");
         //labels
         //Styling nodes
         //rectanged
         //-------------------panes and scene--------------
         TilePane resultsTilePane = new TilePane();
         ScrollPane resultsScrollPane = new ScrollPane(resultsTilePane);
+        VBox mainVBox = new VBox(comboBox,sortButton,resultsScrollPane);
         //------------------------pane properties--------------
         GridPane[] panelist = {main};
         for (GridPane pane : panelist){
@@ -2765,17 +2768,17 @@ public class Main extends Application {
             pane.setHgap(10);
             pane.setAlignment(Pos.CENTER);
         }
-
+        mainVBox.setAlignment(Pos.CENTER);
         resultsTilePane.setPrefColumns(3);
         ObservableList resultslist = resultsTilePane.getChildren();
         resultslist.addAll(new Label("Logo"),new Label("info"),new Label("Amount"));
-        main.add(resultsScrollPane, 0, 1);
+        main.add(mainVBox, 0, 1);
         //----------------button actions--------------------
         sortButton.setOnAction(event -> {
             resultslist.remove(0, resultslist.size());
             resultslist.addAll(new Label("Logo"),new Label("info"),new Label("Amount"));
-            if (){
-                ResultSet sortnameRs = sqlquery("select * from charity" +
+            if (comboBox.getSelectionModel().getSelectedItem().toString().toLowerCase().equals("name")){
+                ResultSet sortnameRs = sqlquery("select * from charity " +
                         "ORDER by charityName ASC");
                 try {
                     while (sortnameRs.next()){
@@ -2838,8 +2841,8 @@ public class Main extends Application {
                     }
                 }
                 //print
-                for (String charsorted : charitynamessorted) {
-                    ResultSet charitysortedRs = sqlquery("select * from charity where charityname = '" +charsorted+ "'");
+                for (int i = charitynamessorted.size()-1; i >= 0; i--) {
+                    ResultSet charitysortedRs = sqlquery("select * from charity where charityname = '" +charitynamessorted.get(i)+ "'");
                     try {
                         while (charitysortedRs.next()) {
                             try {
@@ -2856,7 +2859,7 @@ public class Main extends Application {
                             infoLabel.setWrapText(true);
                             infoLabel.prefHeightProperty().bind(resultsScrollPane.heightProperty().divide(500).multiply(350));
                             resultslist.addAll(infoLabel);
-                            Label amountLabel = new Label(Integer.toString(charityamountssorted.get(charitynamessorted.indexOf(charsorted))));
+                            Label amountLabel = new Label(Integer.toString(charityamountssorted.get(charitynamessorted.indexOf(charitynamessorted.get(i)))));
                             resultslist.addAll(amountLabel);
                         }
                     } catch (SQLException se) {
@@ -2893,6 +2896,72 @@ public class Main extends Application {
                 resultslist.addAll(new Label(Integer.toString(charityamount)));
             }
         }catch (SQLException se){se.printStackTrace();}
+    }
+
+
+    private void edit_user(String useremail){
+        Object[] oarr = gridpane_preset();
+        GridPane main = (GridPane) oarr[1];
+        Scene scene = (Scene) oarr[0];
+        //---------------node definitions-----------
+        //buttons
+        Button saveButton = new Button("Save");
+        Button cancelButton = new Button("Cancel");
+        //textfields
+        TextField firstnameTextField = new TextField();
+        TextField lastnameTextField = new TextField();
+        TextField passwdTextField = new TextField();
+        TextField passwdcheckTextField = new TextField();
+        //labels
+        Label topLabel = new Label("Edit a user");
+        Label passtextLabel = new Label("Change password\nLeave these fields blank if you \ndon't want to change the password");
+
+        Label useremailLabel = new Label(useremail);
+        Label emailLabel = new Label("Email: ");
+        Label firstnameLabel = new Label("First Name: ");
+        Label lastnameLabel = new Label("Last Name: ");
+        Label roleLabel = new Label("Role: ");
+        Label passwdLabel = new Label("Password");
+        Label passwdcheckLabel = new Label("Password Again");
+        //combobreaker
+        ComboBox roleComboBox = new ComboBox();
+        //Styling nodes
+        //-------------------panes and scene--------------
+        GridPane leftGridPane = new GridPane();
+        GridPane rightGridPane = new GridPane();
+        VBox rightVBox = new VBox(passtextLabel, rightGridPane);
+        HBox midHBox = new HBox(leftGridPane,rightVBox);
+        HBox botHBox = new HBox(saveButton,cancelButton);
+        VBox mainVBox = new VBox(topLabel,midHBox,botHBox);
+        //------------------------pane properties--------------
+        GridPane[] panelist = {rightGridPane,leftGridPane};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+
+        main.add(mainVBox,0,0);
+        botHBox.setAlignment(Pos.CENTER);
+
+        leftGridPane.add(emailLabel,0,0);
+        leftGridPane.add(firstnameLabel,0,1);
+        leftGridPane.add(lastnameLabel,0,2);
+        leftGridPane.add(roleLabel,0,3);
+        leftGridPane.add(useremailLabel,1,0);
+        leftGridPane.add(firstnameTextField,1,1);
+        leftGridPane.add(lastnameTextField,1,2);
+        leftGridPane.add(roleComboBox,1,3);
+
+        rightGridPane.add(passwdLabel,0,0);
+        rightGridPane.add(passwdcheckLabel,0,1);
+        rightGridPane.add(passwdTextField,1,0);
+        rightGridPane.add(passwdcheckTextField,1,1);
+
+        primaryStage.setWidth(550);
+        primaryStage.setHeight(550);
+        //------------ --button actions--------------
     }
 
 
