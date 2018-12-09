@@ -143,7 +143,6 @@ public class Main extends Application {
         primaryStage.setTitle("Marathon Skills");
         primaryStage.show();
 
-        edit_user("aaaa");
 
     }
 
@@ -2962,6 +2961,111 @@ public class Main extends Application {
         primaryStage.setWidth(550);
         primaryStage.setHeight(550);
         //------------ --button actions--------------
+        String passwdquery = "";
+        if (passwdTextField.getText().length() >= 6
+                && passwdTextField.getText().matches(".*[!@#$%^]+.*")
+                && passwdTextField.getText().matches(".*[A-Z]+.*")
+                && passwdTextField.getText().matches(".*\\d+.*")
+                && passwdTextField.getText().equals(passwdcheckTextField.getText())){
+            passwdquery = ", password = '"+passwdcheckTextField.getText()+"'";
+        }
+        final String passquer = passwdquery;
+        saveButton.setOnAction(event -> {
+            sqlinsert("update user" +
+                    " set firstname = '"+firstnameTextField.getText()+"' , lastname = '"+lastnameTextField.getText()+"' , roleid = (select roleid from role where rolename = '"+roleComboBox.getSelectionModel().getSelectedItem().toString()+"' )"+passquer+
+                    "where email = '"+useremail+"'");
+        });
+        //sql
+        ResultSet roleResultSet = sqlquery("select * from role");
+        try {
+            while (roleResultSet.next()){
+                roleComboBox.getItems().addAll(roleResultSet.getString("rolename"));
+            }
+        }catch (SQLException se){se.printStackTrace();}
+    }
+
+
+    private void add_user(){
+        Object[] oarr = gridpane_preset();
+        GridPane main = (GridPane) oarr[1];
+        Scene scene = (Scene) oarr[0];
+        //---------------node definitions-----------
+        //buttons
+        Button saveButton = new Button("Save");
+        Button cancelButton = new Button("Cancel");
+        //textfields
+        TextField emailTextField  = new TextField();
+        TextField firstnameTextField = new TextField();
+        TextField lastnameTextField = new TextField();
+        TextField passwdTextField = new TextField();
+        TextField passwdcheckTextField = new TextField();
+        //labels
+        Label topLabel = new Label("Edit a user");
+        Label passtextLabel = new Label("Change password\nLeave these fields blank if you \ndon't want to change the password");
+
+        Label emailLabel = new Label("Email: ");
+        Label firstnameLabel = new Label("First Name: ");
+        Label lastnameLabel = new Label("Last Name: ");
+        Label roleLabel = new Label("Role: ");
+        Label passwdLabel = new Label("Password");
+        Label passwdcheckLabel = new Label("Password Again");
+        //combobreaker
+        ComboBox roleComboBox = new ComboBox();
+        //Styling nodes
+        //-------------------panes and scene--------------
+        GridPane leftGridPane = new GridPane();
+        GridPane rightGridPane = new GridPane();
+        VBox rightVBox = new VBox(passtextLabel, rightGridPane);
+        HBox midHBox = new HBox(leftGridPane,rightVBox);
+        HBox botHBox = new HBox(saveButton,cancelButton);
+        VBox mainVBox = new VBox(topLabel,midHBox,botHBox);
+        //------------------------pane properties--------------
+        GridPane[] panelist = {rightGridPane,leftGridPane};
+        for (GridPane pane : panelist){
+            pane.setPadding(new Insets(10));
+            pane.setVgap(10);
+            pane.setHgap(10);
+            pane.setAlignment(Pos.CENTER);
+        }
+
+        main.add(mainVBox,0,0);
+        botHBox.setAlignment(Pos.CENTER);
+
+        leftGridPane.add(emailLabel,0,0);
+        leftGridPane.add(firstnameLabel,0,1);
+        leftGridPane.add(lastnameLabel,0,2);
+        leftGridPane.add(roleLabel,0,3);
+        leftGridPane.add(emailTextField,1,0);
+        leftGridPane.add(firstnameTextField,1,1);
+        leftGridPane.add(lastnameTextField,1,2);
+        leftGridPane.add(roleComboBox,1,3);
+
+        rightGridPane.add(passwdLabel,0,0);
+        rightGridPane.add(passwdcheckLabel,0,1);
+        rightGridPane.add(passwdTextField,1,0);
+        rightGridPane.add(passwdcheckTextField,1,1);
+
+        primaryStage.setWidth(550);
+        primaryStage.setHeight(550);
+        //------------ --button actions--------------
+        saveButton.setOnAction(event -> {
+            if (passwdTextField.getText().length() >= 6
+                    && passwdTextField.getText().matches(".*[!@#$%^]+.*")
+                    && passwdTextField.getText().matches(".*[A-Z]+.*")
+                    && passwdTextField.getText().matches(".*\\d+.*")
+                    && passwdTextField.getText().equals(passwdcheckTextField.getText())) {
+                sqlinsert("insert user" +
+                        " set email = '"+emailTextField.getText()+"',firstname = '" + firstnameTextField.getText() + "' , lastname = '" + lastnameTextField.getText() + "' , roleid = (select roleid from role where rolename = '" + roleComboBox.getSelectionModel().getSelectedItem().toString() + "' ), password = '" + passwdcheckTextField.getText() + "'");
+            }
+        });
+
+        //sql
+        ResultSet roleResultSet = sqlquery("select * from role");
+        try {
+            while (roleResultSet.next()){
+                roleComboBox.getItems().addAll(roleResultSet.getString("rolename"));
+            }
+        }catch (SQLException se){se.printStackTrace();}
     }
 
 
