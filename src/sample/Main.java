@@ -144,6 +144,7 @@ public class Main extends Application {
         primaryStage.show();
 
 
+
     }
 
 
@@ -1720,11 +1721,11 @@ public class Main extends Application {
         ArrayList<Image> allimages = new ArrayList<>();
         ArrayList<ImageView> allimageviews = new ArrayList<>();
         try {
-            f = new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\how-long-is-a-marathon-images");
+            f = new File("src/Images/howlong");
             ArrayList<File> images = new ArrayList<>();
             System.out.println(f.listFiles().length);
             for (int i = 1; i - 1 < f.listFiles().length; i++) {
-                images.add(new File("C:\\Users\\admin3\\Desktop\\Mskills resources\\how-long-is-a-marathon-images\\" + i + ".jpg"));
+                images.add(new File("src/Images/howlong/" + i + ".jpg"));
             }
             fileInputstream = new FileInputStream(images.get(0));
             System.out.println(images.get(0));
@@ -3352,5 +3353,5 @@ public class Main extends Application {
             pane.setHgap(10);
             pane.setAlignment(Pos.CENTER);
         }
-        //------------ --button actions--------------*/
+        //--------------button actions--------------*/
 

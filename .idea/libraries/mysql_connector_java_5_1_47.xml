@@ -4,6 +4,8 @@
       <root url="jar://$PROJECT_DIR$/src/sample/mysql-connector-java-5.1.47.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$USER_HOME$/Desktop/Mskills resources" />
+    </SOURCES>
   </library>
 </component>
